@@ -53,14 +53,22 @@ body {
   min-height: 100vh; -webkit-font-smoothing: antialiased;
 }
 
-.accent-bar { height: 3px; transition: background 0.4s; }
-body.mode-current .accent-bar { background: linear-gradient(90deg,#0F0F0F,#888); }
-body.mode-ai      .accent-bar { background: linear-gradient(90deg,#6D28D9,#A78BFA); }
-body.mode-devin   .accent-bar { background: linear-gradient(90deg,#0D7490,#06B6D4); }
-body.mode-roster  .accent-bar { background: linear-gradient(90deg,#1D4ED8,#60A5FA); }
-body.mode-sop     .accent-bar { background: linear-gradient(90deg,#0F172A,#475569); }
+/* ── Top nav ── */
+.topnav { position:fixed; top:0; left:0; right:0; height:44px; background:var(--surface); border-bottom:1px solid var(--border); z-index:200; display:flex; align-items:center; }
+.topnav::after { content:''; position:absolute; bottom:-1px; left:0; right:0; height:2px; transition:background 0.4s; }
+body.mode-current .topnav::after { background:linear-gradient(90deg,#0F0F0F,#888); }
+body.mode-ai      .topnav::after { background:linear-gradient(90deg,#6D28D9,#A78BFA); }
+body.mode-devin   .topnav::after { background:linear-gradient(90deg,#0D7490,#06B6D4); }
+body.mode-roster  .topnav::after { background:linear-gradient(90deg,#1D4ED8,#60A5FA); }
+body.mode-sop     .topnav::after { background:linear-gradient(90deg,#0F172A,#475569); }
+.topnav-inner { max-width:1120px; margin:0 auto; width:100%; padding:0 36px; display:flex; align-items:center; justify-content:space-between; }
+.topnav-brand { font-size:13px; font-weight:800; color:var(--text); letter-spacing:-0.2px; display:flex; align-items:center; gap:7px; }
+.topnav-sep { color:var(--border-mid); font-weight:300; font-size:14px; }
+.topnav-tag { font-size:11px; font-weight:500; color:var(--text-3); font-family:var(--mono); }
+.topnav-link { font-size:12px; font-weight:600; color:var(--text-2); text-decoration:none; padding:6px 14px; border:1px solid var(--border); border-radius:6px; background:var(--surface); transition:all 0.12s; letter-spacing:-0.1px; }
+.topnav-link:hover { background:var(--bg); border-color:var(--border-mid); color:var(--text); }
 
-.shell { max-width: 1160px; margin: 0 auto; padding: 44px 36px 80px; }
+.shell { max-width:1120px; margin:0 auto; padding:72px 36px 80px; }
 
 /* ── Header ── */
 .header { display:flex; align-items:flex-start; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:36px; }
@@ -77,10 +85,9 @@ body.mode-sop     .page-title em { color:var(--sop); }
 
 /* ── Mode toggle ── */
 .mode-toggle { display:flex; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:4px; gap:2px; flex-shrink:0; }
-.mode-btn { display:flex; flex-direction:column; gap:1px; padding:9px 14px; border-radius:7px; cursor:pointer; border:none; background:transparent; transition:background 0.15s; text-align:left; }
+.mode-btn { display:flex; align-items:center; padding:8px 16px; border-radius:7px; cursor:pointer; border:none; background:transparent; transition:background 0.15s; white-space:nowrap; }
 .mode-btn:hover { background:var(--bg); }
-.btn-label { font-size:12px; font-weight:700; color:var(--text-2); }
-.btn-sub   { font-size:10px; color:var(--text-3); margin-top:1px; }
+.btn-label { font-size:13px; font-weight:700; color:var(--text-2); }
 .mode-btn.active.cs-btn     { background:#F2F2F2; }  .mode-btn.active.cs-btn     .btn-label { color:var(--text); }
 .mode-btn.active.ai-btn     { background:var(--ai-accent-bg); }  .mode-btn.active.ai-btn     .btn-label { color:var(--ai-accent); }
 .mode-btn.active.dev-btn    { background:var(--teal-bg); }        .mode-btn.active.dev-btn    .btn-label { color:var(--teal); }
@@ -286,22 +293,26 @@ body.mode-sop     .phase-tab.active::after { background:var(--sop); }
 </style>
 </head>
 <body class="mode-current">
-<div class="accent-bar"></div>
+<nav class="topnav">
+  <div class="topnav-inner">
+    <div class="topnav-brand">AI-First SDLC <span class="topnav-sep">/</span> <span class="topnav-tag">Developer Playbook</span></div>
+    <a class="topnav-link" href="setup.html">Setup Guide →</a>
+  </div>
+</nav>
 <div class="shell">
 
   <div class="header">
     <div class="header-left">
-      <div class="eyebrow">SDLC Reimagination &nbsp;·&nbsp; 2026</div>
+      <div class="eyebrow">Jira &nbsp;·&nbsp; Confluence &nbsp;·&nbsp; GitHub &nbsp;·&nbsp; Devin / Windsurf</div>
       <div class="page-title">Developer <em>SDLC</em></div>
-      <div class="page-sub">Architecture · Development · Code Review · Test &amp; QA · Release &amp; Deploy &nbsp;·&nbsp; Jira · Confluence · GitHub · Devin / Windsurf</div>
-      <a href="setup.html" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;text-decoration:none;color:var(--text-2);border:1px solid var(--border);border-radius:6px;padding:5px 12px;margin-top:8px;transition:all 0.1s" onmouseover="this.style.borderColor='var(--border-mid)'" onmouseout="this.style.borderColor='var(--border)'">Setup Guide →</a>
+      <div class="page-sub">Architecture · Development · Code Review · Test &amp; QA · Release &amp; Deploy</div>
     </div>
     <div class="mode-toggle">
-      <button class="mode-btn cs-btn active" onclick="setMode('current')"><span class="btn-label">Current State</span><span class="btn-sub">No AI in use</span></button>
-      <button class="mode-btn ai-btn"         onclick="setMode('ai')"     ><span class="btn-label">AI-First State</span><span class="btn-sub">Agents + humans</span></button>
-      <button class="mode-btn dev-btn"         onclick="setMode('devin')"><span class="btn-label">Devin Playbook</span><span class="btn-sub">How to activate</span></button>
-      <button class="mode-btn roster-btn"      onclick="setMode('roster')"><span class="btn-label">Agent Roster</span><span class="btn-sub">Named cloud agents</span></button>
-      <button class="mode-btn sop-btn"         onclick="setMode('sop')"  ><span class="btn-label">SOP</span><span class="btn-sub">Operating procedure</span></button>
+      <button class="mode-btn cs-btn active" onclick="setMode('current')"><span class="btn-label">Current State</span></button>
+      <button class="mode-btn ai-btn"         onclick="setMode('ai')"     ><span class="btn-label">AI-First</span></button>
+      <button class="mode-btn dev-btn"         onclick="setMode('devin')"><span class="btn-label">Devin Playbook</span></button>
+      <button class="mode-btn roster-btn"      onclick="setMode('roster')"><span class="btn-label">Agent Roster</span></button>
+      <button class="mode-btn sop-btn"         onclick="setMode('sop')"  ><span class="btn-label">SOP</span></button>
     </div>
   </div>
 

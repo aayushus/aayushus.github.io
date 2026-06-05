@@ -21,12 +21,21 @@
 }
 body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
 
+/* ── Top nav ── */
+.topnav{position:fixed;top:0;left:0;right:0;height:44px;background:var(--surface);border-bottom:1px solid var(--border);z-index:200;display:flex;align-items:center;}
+.topnav-inner{max-width:1120px;margin:0 auto;width:100%;padding:0 36px;display:flex;align-items:center;justify-content:space-between;}
+.topnav-brand{font-size:13px;font-weight:800;color:var(--ink);letter-spacing:-0.2px;display:flex;align-items:center;gap:7px;}
+.topnav-sep{color:#D0D0D0;font-weight:300;font-size:14px;}
+.topnav-tag{font-size:11px;font-weight:500;color:#9CA3AF;font-family:var(--mono);}
+.topnav-link{font-size:12px;font-weight:600;color:#5C5C5C;text-decoration:none;padding:6px 14px;border:1px solid #E8E8E8;border-radius:6px;background:#fff;transition:all 0.12s;letter-spacing:-0.1px;}
+.topnav-link:hover{background:#FAFAFA;border-color:#D0D0D0;color:var(--ink);}
+
 /* ── Progress bar ── */
-.progress-bar{position:fixed;top:0;left:0;right:0;height:3px;background:var(--border);z-index:100}
+.progress-bar{position:fixed;top:44px;left:0;right:0;height:3px;background:var(--border);z-index:150}
 .progress-fill{height:100%;background:linear-gradient(90deg,var(--ink),#475569);width:0%;transition:width 0.2s}
 
 /* ── Sidebar ── */
-.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:28px 0 40px;z-index:50}
+.sidebar{position:fixed;top:47px;left:0;bottom:0;width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:20px 0 40px;z-index:50}
 .sidebar-logo{padding:0 20px 20px;border-bottom:1px solid var(--border);margin-bottom:16px}
 .sidebar-logo a{text-decoration:none;display:block}
 .logo-eyebrow{font-size:10px;font-family:var(--mono);color:var(--text-3);letter-spacing:1px;text-transform:uppercase}
@@ -42,7 +51,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 .nav-item-time{font-size:10px;color:var(--text-3);font-family:var(--mono);margin-left:auto;flex-shrink:0}
 
 /* ── Main content ── */
-.main{margin-left:var(--sidebar-w);padding:48px 56px 100px;max-width:calc(var(--sidebar-w) + 820px)}
+.main{margin-left:var(--sidebar-w);padding:88px 56px 100px;max-width:calc(var(--sidebar-w) + 880px)}
 .page-header{margin-bottom:48px;padding-bottom:32px;border-bottom:2px solid var(--border)}
 .page-eyebrow{font-size:11px;font-family:var(--mono);color:var(--text-3);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
 .page-title{font-size:36px;font-weight:900;letter-spacing:-1px;line-height:1;color:var(--ink)}
@@ -150,15 +159,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 </head>
 <body>
 
+<nav class="topnav">
+  <div class="topnav-inner">
+    <div class="topnav-brand">Setup Guide <span class="topnav-sep">/</span> <span class="topnav-tag">AI-First SDLC</span></div>
+    <a class="topnav-link" href="index.html">← Playbook</a>
+  </div>
+</nav>
 <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
 <!-- Sidebar -->
 <nav class="sidebar">
   <div class="sidebar-logo">
-    <a href="index.html">
-      <div class="logo-eyebrow">AI-First SDLC</div>
-      <div class="logo-title">Setup Guide</div>
-    </a>
+    <div class="logo-eyebrow">AI-First SDLC</div>
+    <div class="logo-title">Setup Guide</div>
   </div>
   <div class="nav-section-label">Sections</div>
   <a class="nav-item" href="#prereqs" onclick="setActive(this)">
@@ -220,8 +233,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 
 <!-- Main -->
 <main class="main">
-
-  <a class="back-link" href="index.html">← Back to SDLC Playbook</a>
 
   <div class="page-header">
     <div class="page-eyebrow">Engineering Team · 2026</div>
