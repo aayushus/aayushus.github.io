@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Setup Guide — AI-First SDLC</title>
+<meta name="description" content="Step-by-step guide to set up the AI-first SDLC with Devin agents, playbooks, automations, and GitHub integration.">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#FAFAFA; --surface:#fff; --border:#E8E8E8; --border-mid:#D0D0D0;
+  --text:#0F0F0F; --text-2:#5C5C5C; --text-3:#9CA3AF;
+  --mono:'SF Mono','Fira Code',ui-monospace,monospace;
+  --ink:#0F172A;
+  --green:#15803D; --green-bg:#F0FDF4; --green-border:#BBF7D0;
+  --blue:#1D4ED8; --blue-bg:#EFF6FF; --blue-border:#BFDBFE;
+  --amber:#B45309; --amber-bg:#FFFBEB; --amber-border:#FDE68A;
+  --red:#B91C1C; --red-bg:#FEF2F2; --red-border:#FECACA;
+  --purple:#6D28D9; --purple-bg:#F5F0FF; --purple-border:#DDD6FE;
+  --sidebar-w:240px;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+
+/* ── Progress bar ── */
+.progress-bar{position:fixed;top:0;left:0;right:0;height:3px;background:var(--border);z-index:100}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--ink),#475569);width:0%;transition:width 0.2s}
+
+/* ── Sidebar ── */
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:28px 0 40px;z-index:50}
+.sidebar-logo{padding:0 20px 20px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.sidebar-logo a{text-decoration:none;display:block}
+.logo-eyebrow{font-size:10px;font-family:var(--mono);color:var(--text-3);letter-spacing:1px;text-transform:uppercase}
+.logo-title{font-size:15px;font-weight:800;color:var(--ink);margin-top:3px;letter-spacing:-0.3px}
+.nav-section-label{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--text-3);padding:10px 20px 4px}
+.nav-item{display:flex;align-items:center;gap:8px;padding:6px 20px;cursor:pointer;transition:background 0.1s;text-decoration:none;border-left:2px solid transparent}
+.nav-item:hover{background:var(--bg)}
+.nav-item.active{background:var(--blue-bg);border-left-color:var(--blue)}
+.nav-item.active .nav-item-text{color:var(--blue);font-weight:700}
+.nav-item.done .nav-item-num{background:var(--green);color:#fff;border-color:var(--green)}
+.nav-item-num{width:18px;height:18px;border-radius:50%;background:var(--bg);border:1.5px solid var(--border-mid);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;font-family:var(--mono);color:var(--text-3);flex-shrink:0;transition:all 0.2s}
+.nav-item-text{font-size:12px;font-weight:600;color:var(--text-2)}
+.nav-item-time{font-size:10px;color:var(--text-3);font-family:var(--mono);margin-left:auto;flex-shrink:0}
+
+/* ── Main content ── */
+.main{margin-left:var(--sidebar-w);padding:48px 56px 100px;max-width:calc(var(--sidebar-w) + 820px)}
+.page-header{margin-bottom:48px;padding-bottom:32px;border-bottom:2px solid var(--border)}
+.page-eyebrow{font-size:11px;font-family:var(--mono);color:var(--text-3);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.page-title{font-size:36px;font-weight:900;letter-spacing:-1px;line-height:1;color:var(--ink)}
+.page-subtitle{font-size:15px;color:var(--text-2);margin-top:10px;line-height:1.6;max-width:560px}
+.page-meta{display:flex;gap:16px;margin-top:20px;flex-wrap:wrap}
+.page-meta-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2)}
+.page-meta-item strong{color:var(--ink)}
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--text-2);text-decoration:none;margin-bottom:20px;padding:6px 12px;border:1px solid var(--border);border-radius:6px;transition:all 0.1s}
+.back-link:hover{border-color:var(--border-mid);color:var(--ink)}
+
+/* ── Section ── */
+.section{margin-bottom:64px;scroll-margin-top:24px}
+.section-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.section-num-wrap{flex-shrink:0}
+.section-num{width:40px;height:40px;border-radius:10px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;font-family:var(--mono)}
+.section-header-text{flex:1}
+.section-title{font-size:22px;font-weight:900;letter-spacing:-0.4px;color:var(--ink)}
+.section-desc{font-size:13px;color:var(--text-2);margin-top:4px;line-height:1.6}
+.section-time{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;font-family:var(--mono);color:var(--text-3);background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:3px 8px;margin-top:8px}
+.section-done-btn{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:5px 12px;border-radius:5px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);cursor:pointer;transition:all 0.15s;margin-left:auto;align-self:flex-start;flex-shrink:0}
+.section-done-btn:hover{border-color:var(--green-border);background:var(--green-bg);color:var(--green)}
+.section-done-btn.done{background:var(--green-bg);border-color:var(--green-border);color:var(--green)}
+
+/* ── Steps ── */
+.step{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+.step:last-child{border-bottom:none}
+.step-num{width:24px;height:24px;border-radius:6px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;font-family:var(--mono);flex-shrink:0;margin-top:1px}
+.step-body{flex:1}
+.step-title{font-size:14px;font-weight:700;color:var(--ink);line-height:1.4}
+.step-title code{font-family:var(--mono);font-size:12px;background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:1px 5px;font-weight:400}
+.step-desc{font-size:13px;color:var(--text-2);margin-top:4px;line-height:1.6}
+.step-desc code{font-family:var(--mono);font-size:11px;background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:1px 5px}
+.step-desc a{color:var(--blue);text-decoration:none}
+.step-desc a:hover{text-decoration:underline}
+
+/* ── Code blocks ── */
+.code-wrap{position:relative;margin:10px 0 4px}
+.code-block{background:#0F172A;border-radius:8px;padding:16px 18px;font-family:var(--mono);font-size:12.5px;line-height:1.7;color:#E2E8F0;overflow-x:auto;white-space:pre}
+.code-block .cm{color:#64748B} /* comment */
+.code-block .kw{color:#7DD3FC} /* keyword / nav path */
+.code-block .st{color:#86EFAC} /* string / value */
+.code-block .hl{color:#FDE68A} /* highlight / macro */
+.code-block .nt{color:#F9A8D4} /* note */
+.copy-btn{position:absolute;top:10px;right:10px;font-size:10px;font-weight:700;font-family:var(--mono);padding:4px 10px;border-radius:4px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);color:#94A3B8;cursor:pointer;transition:all 0.15s;letter-spacing:0.3px}
+.copy-btn:hover{background:rgba(255,255,255,0.15);color:#E2E8F0}
+.copy-btn.copied{background:rgba(134,239,172,0.15);color:#86EFAC;border-color:rgba(134,239,172,0.3)}
+
+/* file block header */
+.file-label{font-size:11px;font-family:var(--mono);font-weight:700;color:var(--text-3);background:var(--bg);border:1px solid var(--border);border-bottom:none;border-radius:6px 6px 0 0;padding:6px 14px;display:flex;align-items:center;gap:8px}
+.file-label-dot{width:8px;height:8px;border-radius:50%;background:var(--border-mid)}
+.file-block-wrap .code-block{border-radius:0 0 8px 8px;margin-top:0}
+
+/* callout */
+.callout{border-radius:8px;padding:14px 16px;margin:12px 0;font-size:13px;line-height:1.65;display:flex;gap:12px}
+.callout-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.callout.info   {background:var(--blue-bg);border:1px solid var(--blue-border);color:#1E3A8A}
+.callout.tip    {background:var(--green-bg);border:1px solid var(--green-border);color:#14532D}
+.callout.warn   {background:var(--amber-bg);border:1px solid var(--amber-border);color:#78350F}
+.callout.danger {background:var(--red-bg);border:1px solid var(--red-border);color:#7F1D1D}
+.callout code   {font-family:var(--mono);font-size:11px;background:rgba(255,255,255,0.6);border-radius:3px;padding:1px 5px}
+
+/* prereq checklist */
+.prereq-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin:14px 0}
+.prereq-item{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.1s}
+.prereq-item:last-child{border-bottom:none}
+.prereq-item:hover{background:var(--bg)}
+.prereq-item input[type=checkbox]{width:15px;height:15px;flex-shrink:0;margin-top:2px;accent-color:var(--ink);cursor:pointer}
+.prereq-item label{font-size:13px;line-height:1.5;cursor:pointer;flex:1}
+.prereq-item label strong{color:var(--ink)}
+.prereq-item label code{font-family:var(--mono);font-size:11px;background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:1px 5px}
+.prereq-item.checked{background:var(--green-bg)}
+.prereq-item.checked label{color:var(--green)}
+
+/* agent playbook card */
+.playbook-card{border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:14px 0}
+.playbook-card-head{padding:14px 18px;border-bottom:1px solid var(--border);background:var(--bg);display:flex;align-items:center;gap:10px}
+.playbook-emoji{font-size:20px}
+.playbook-head-info{flex:1}
+.playbook-agent-name{font-size:15px;font-weight:800;color:var(--ink)}
+.playbook-agent-role{font-size:11px;color:var(--text-3);margin-top:1px}
+.playbook-macro{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--purple);background:var(--purple-bg);border:1px solid var(--purple-border);border-radius:4px;padding:3px 9px;flex-shrink:0}
+.playbook-card-body{padding:0}
+.playbook-fields{display:grid;grid-template-columns:100px 1fr;font-size:12px}
+.pf-label{padding:9px 16px;font-weight:700;color:var(--text-3);border-bottom:1px solid var(--border);background:var(--bg);font-family:var(--mono);font-size:11px;letter-spacing:0.3px}
+.pf-value{padding:9px 16px;border-bottom:1px solid var(--border);color:var(--text);line-height:1.5}
+.pf-label:nth-last-child(-n+2),.pf-value:nth-last-child(-n+2){border-bottom:none}
+
+/* cron table */
+.cron-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+.cron-table th{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--text-3);background:var(--bg);padding:8px 14px;text-align:left;border:1px solid var(--border)}
+.cron-table td{padding:9px 14px;border:1px solid var(--border);vertical-align:top;line-height:1.5}
+.cron-table code{font-family:var(--mono);font-size:11px;background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:1px 5px}
+
+/* verify step */
+.verify-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.verify-item:last-child{border-bottom:none}
+.verify-pip{width:3px;min-height:16px;background:var(--green);border-radius:2px;flex-shrink:0;margin-top:3px}
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <a href="index.html">
+      <div class="logo-eyebrow">AI-First SDLC</div>
+      <div class="logo-title">Setup Guide</div>
+    </a>
+  </div>
+  <div class="nav-section-label">Sections</div>
+  <a class="nav-item" href="#prereqs" onclick="setActive(this)">
+    <div class="nav-item-num" id="nn-1">1</div>
+    <div class="nav-item-text">Prerequisites</div>
+    <div class="nav-item-time">5m</div>
+  </a>
+  <a class="nav-item" href="#integrations" onclick="setActive(this)">
+    <div class="nav-item-num" id="nn-2">2</div>
+    <div class="nav-item-text">Connect Integrations</div>
+    <div class="nav-item-time">20m</div>
+  </a>
+  <a class="nav-item" href="#review" onclick="setActive(this)">
+    <div class="nav-item-num" id="nn-3">3</div>
+    <div class="nav-item-text">Enable Devin Review</div>
+    <div class="nav-item-time">5m</div>
+  </a>
+  <a class="nav-item" href="#index" onclick="setActive(this)">
+    <div class="nav-item-num" id="nn-4">4</div>
+    <div class="nav-item-text">Index Repos</div>
+    <div class="nav-item-time">10m</div>
+  </a>
+  <a class="nav-item" href="#playbooks" onclick="setActive(this)">
+    <div class="nav-item-num" id="nn-5">5</div>
+    <div class="nav-item-text">Create Playbooks</div>
+    <div class="nav-item-time">30m</div>
+  </a>
+  <a class="nav-item" href="#schedules" onclick="setActive(this)">
+    <div class="nav-item-num" id="nn-6">6</div>
+    <div class="nav-item-text">Create Schedules</div>
+    <div class="nav-item-time">20m</div>
+  </a>
+  <a class="nav-item" href="#automations" onclick="setActive(this)">
+    <div class="nav-item-num" id="nn-7">7</div>
+    <div class="nav-item-text">Create Automations</div>
+    <div class="nav-item-time">30m</div>
+  </a>
+  <a class="nav-item" href="#repo-setup" onclick="setActive(this)">
+    <div class="nav-item-num" id="nn-8">8</div>
+    <div class="nav-item-text">Per-Repo Files</div>
+    <div class="nav-item-time">30m/repo</div>
+  </a>
+  <a class="nav-item" href="#knowledge" onclick="setActive(this)">
+    <div class="nav-item-num" id="nn-9">9</div>
+    <div class="nav-item-text">Knowledge Base</div>
+    <div class="nav-item-time">15m</div>
+  </a>
+  <a class="nav-item" href="#engineer" onclick="setActive(this)">
+    <div class="nav-item-num" id="nn-10">10</div>
+    <div class="nav-item-text">Per-Engineer Setup</div>
+    <div class="nav-item-time">5m each</div>
+  </a>
+  <a class="nav-item" href="#verify" onclick="setActive(this)">
+    <div class="nav-item-num" id="nn-11">11</div>
+    <div class="nav-item-text">Verify Everything</div>
+    <div class="nav-item-time">15m</div>
+  </a>
+</nav>
+
+<!-- Main -->
+<main class="main">
+
+  <a class="back-link" href="index.html">← Back to SDLC Playbook</a>
+
+  <div class="page-header">
+    <div class="page-eyebrow">Engineering Team · 2026</div>
+    <div class="page-title">Setup Guide</div>
+    <div class="page-subtitle">Follow this guide in order, top to bottom. Every step is required unless marked optional. By the end, all six agents will be running and your SDLC will be AI-first.</div>
+    <div class="page-meta">
+      <div class="page-meta-item">⏱ <strong>Total time:</strong> ~2.5 hrs (admin) + 30 min per repo</div>
+      <div class="page-meta-item">👤 <strong>Who does this:</strong> Engineering Lead (admin steps) + each engineer (Section 10)</div>
+      <div class="page-meta-item">📋 <strong>You need:</strong> Devin Teams/Enterprise, GitHub org admin, Jira admin, Slack admin</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ 1. PREREQUISITES ══════════════════ -->
+  <section class="section" id="prereqs">
+    <div class="section-header">
+      <div class="section-num-wrap"><div class="section-num">01</div></div>
+      <div class="section-header-text">
+        <div class="section-title">Prerequisites</div>
+        <div class="section-desc">Confirm you have everything before starting. Don't skip this — you'll hit blockers mid-setup otherwise.</div>
+        <div class="section-time">⏱ 5 min</div>
+      </div>
+      <button class="section-done-btn" onclick="markDone(this,1)">Mark done</button>
+    </div>
+
+    <div class="callout info"><div class="callout-icon">ℹ️</div><div>Check each item off as you confirm it. Do not proceed until all are checked.</div></div>
+
+    <div class="prereq-list">
+      <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Devin Teams or Enterprise account</strong> — Sign up at <a href="https://app.devin.ai" target="_blank" style="color:var(--blue)">app.devin.ai</a>. You need Teams or Enterprise for scheduled sessions and automations.</label></div>
+      <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Windsurf Desktop 2.0+</strong> — Download at <a href="https://windsurf.com" target="_blank" style="color:var(--blue)">windsurf.com</a>. Required for the Windsurf → Devin cloud handoff feature.</label></div>
+      <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>GitHub organization admin access</strong> — You need to install the Devin GitHub App on your org. Personal repo access is not enough.</label></div>
+      <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Jira admin access</strong> — Required to install the Jira integration and create the Devin service account user.</label></div>
+      <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Slack workspace admin access</strong> — Required to install the Devin Slack app and invite it to channels.</label></div>
+      <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Slack channels created</strong> — Create these channels before starting: <code>#dev-runs</code>, <code>#code-review</code>, <code>#qa-alerts</code>, <code>#releases</code>, <code>#engineering</code>, <code>#security</code>, <code>#incidents</code></label></div>
+      <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Repos cloned locally</strong> — You'll need to commit files (<code>AGENTS.md</code>, <code>REVIEW.md</code>, <code>SKILL.md</code>) to each repo in Section 8.</label></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ 2. INTEGRATIONS ══════════════════ -->
+  <section class="section" id="integrations">
+    <div class="section-header">
+      <div class="section-num-wrap"><div class="section-num">02</div></div>
+      <div class="section-header-text">
+        <div class="section-title">Connect Integrations</div>
+        <div class="section-desc">Wire Devin to GitHub, Jira, and Slack. Do all three before moving on.</div>
+        <div class="section-time">⏱ 20 min</div>
+      </div>
+      <button class="section-done-btn" onclick="markDone(this,2)">Mark done</button>
+    </div>
+
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin-bottom:14px;padding-top:4px">2A — GitHub</h3>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/integrations/github" target="_blank">app.devin.ai → Settings → Integrations → GitHub</a></div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Click <strong>Connect</strong></div><div class="step-desc">You'll be redirected to GitHub to install the Devin GitHub App.</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Select <strong>your organization</strong> (not "Only select repositories")</div><div class="step-desc">Grant access to all repositories. Devin needs read/write access to open PRs, push branches, and read repo contents.</div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Confirm the green <strong>Connected</strong> status in Devin settings</div></div></div>
+
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:24px 0 14px;padding-top:4px">2B — Jira</h3>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/integrations/jira" target="_blank">app.devin.ai → Settings → Integrations → Jira</a></div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Click <strong>Connect</strong> and authorize with your Jira admin account</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Create a Devin service account in Jira</div><div class="step-desc">In Jira admin: <strong>User Management → Create user</strong>. Suggested email: <code>devin@yourcompany.com</code>. This account is what Devin uses to post comments and update tickets — so they appear as "Devin" not as you.</div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">In Jira admin: create an <strong>OAuth 2.0 app</strong> for the service account</div><div class="step-desc">Atlassian admin → Security → OAuth 2.0 integration → Create. Scopes needed: <code>read:me</code>, <code>read:jira-user</code>, <code>read:jira-work</code>, <code>write:jira-work</code></div></div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Back in Devin: click <strong>Connect service account</strong> and enter the client ID + secret</div></div></div>
+    <div class="step"><div class="step-num">6</div><div class="step-body"><div class="step-title">Create these labels in your Jira project</div><div class="step-desc">Go to your Jira project → Project settings → Labels → Create: <code>devin</code>, <code>!implement</code>, <code>!write-tests</code>, <code>!design-review</code>, <code>!security-review</code></div></div></div>
+
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:24px 0 14px;padding-top:4px">2C — Slack</h3>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/integrations/slack" target="_blank">app.devin.ai → Settings → Integrations → Slack</a></div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Click <strong>Connect</strong> → <strong>Add to Slack</strong> and authorize for your workspace</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Invite <code>@Devin</code> to all seven channels</div><div class="step-desc">In each channel, type: <code>/invite @Devin</code><br>Channels: <code>#dev-runs</code> <code>#code-review</code> <code>#qa-alerts</code> <code>#releases</code> <code>#engineering</code> <code>#security</code> <code>#incidents</code></div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Test the integration</div><div class="step-desc">In <code>#engineering</code>, type: <code>@Devin hello</code> — you should get a response within 30 seconds.</div></div></div>
+  </section>
+
+  <!-- ══════════════════ 3. DEVIN REVIEW ══════════════════ -->
+  <section class="section" id="review">
+    <div class="section-header">
+      <div class="section-num-wrap"><div class="section-num">03</div></div>
+      <div class="section-header-text">
+        <div class="section-title">Enable Devin Review</div>
+        <div class="section-desc">Turns on automated PR review across all repos. This is what powers Zeus.</div>
+        <div class="section-time">⏱ 5 min</div>
+      </div>
+      <button class="section-done-btn" onclick="markDone(this,3)">Mark done</button>
+    </div>
+
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/review" target="_blank">app.devin.ai → Settings → Review</a></div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Under <strong>Repositories</strong>, click the dropdown and add all your repos</div><div class="step-desc">Add every repo the team works in. Devin will auto-review all PRs on these repos.</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Toggle <strong>Auto-review all PRs</strong> to ON</div><div class="step-desc">This triggers a review every time a PR is opened, new commits are pushed, or a draft is marked ready. If you want to start conservative, use "Auto-review Devin-authored PRs only" first and expand later.</div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Enable <strong>Insert link in PR description</strong> (default is ON, leave it)</div><div class="step-desc">This adds a Devin Review link to every PR description so reviewers can jump straight to the diff view.</div></div></div>
+    <div class="callout tip"><div class="callout-icon">💡</div><div><strong>Fast review shortcut:</strong> For any GitHub PR URL, replace <code>github.com</code> with <code>devinreview.com</code> to open the full Devin Review view instantly. Share this with your team.</div></div>
+  </section>
+
+  <!-- ══════════════════ 4. INDEX REPOS ══════════════════ -->
+  <section class="section" id="index">
+    <div class="section-header">
+      <div class="section-num-wrap"><div class="section-num">04</div></div>
+      <div class="section-header-text">
+        <div class="section-title">Index Repositories</div>
+        <div class="section-desc">Indexing enables Ask Devin, DeepWiki, and codebase-aware context in every agent session.</div>
+        <div class="section-time">⏱ 10 min (indexing runs in background)</div>
+      </div>
+      <button class="section-done-btn" onclick="markDone(this,4)">Mark done</button>
+    </div>
+
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/repositories" target="_blank">app.devin.ai → Settings → Repositories</a></div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Click <strong>Index</strong> next to each repo</div><div class="step-desc">Indexing runs in the background and takes 1–10 minutes per repo depending on size. You'll see a green status when complete.</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Verify: open <a href="https://deepwiki.com" target="_blank">deepwiki.com</a> and search for your repo</div><div class="step-desc">If indexed, you'll see auto-generated architecture docs for your repo. If not yet visible, wait a few minutes and refresh.</div></div></div>
+    <div class="callout info"><div class="callout-icon">ℹ️</div><div>You can also trigger indexing via API: <code>PUT /api/v3/organizations/{orgId}/repositories/bulk-index</code> if you have many repos to index at once.</div></div>
+  </section>
+
+  <!-- ══════════════════ 5. PLAYBOOKS ══════════════════ -->
+  <section class="section" id="playbooks">
+    <div class="section-header">
+      <div class="section-num-wrap"><div class="section-num">05</div></div>
+      <div class="section-header-text">
+        <div class="section-title">Create Playbooks</div>
+        <div class="section-desc">Playbooks are each agent's brain — the instructions they follow on every run. Create all six. Copy the prompts exactly.</div>
+        <div class="section-time">⏱ 30 min</div>
+      </div>
+      <button class="section-done-btn" onclick="markDone(this,5)">Mark done</button>
+    </div>
+
+    <div class="callout info"><div class="callout-icon">ℹ️</div><div>For each playbook: go to <a href="https://app.devin.ai/settings/playbooks" target="_blank">app.devin.ai → Settings → Library → Playbooks → Create</a>. Enter the Name, Macro, and paste the Instructions exactly.</div></div>
+
+    <!-- Hermes -->
+    <div class="playbook-card" style="margin-top:20px">
+      <div class="playbook-card-head">
+        <div class="playbook-emoji">🪽</div>
+        <div class="playbook-head-info">
+          <div class="playbook-agent-name">Hermes — Development Agent</div>
+          <div class="playbook-agent-role">Implements Jira tickets autonomously</div>
+        </div>
+        <div class="playbook-macro">!implement</div>
+      </div>
+      <div class="playbook-fields">
+        <div class="pf-label">Name</div><div class="pf-value">Implement</div>
+        <div class="pf-label">Macro</div><div class="pf-value"><code>!implement</code></div>
+        <div class="pf-label">Instructions</div>
+        <div class="pf-value" style="padding:0">
+          <div class="code-wrap" style="margin:0">
+            <button class="copy-btn" onclick="copyCode(this)">copy</button>
+            <div class="code-block">You are implementing a Jira ticket. Follow these steps exactly.
+
+<span class="cm">1. READ THE TICKET</span>
+Read the Jira ticket description, acceptance criteria, and all linked design
+documents carefully. If acceptance criteria is missing or unclear, post a
+comment on the Jira ticket asking for clarification and STOP — do not proceed
+until clarified.
+
+<span class="cm">2. UNDERSTAND THE CODEBASE</span>
+Check AGENTS.md in the repository root for architecture conventions, naming
+patterns, and constraints. Search the codebase for similar existing
+implementations before writing new code — follow established patterns.
+
+<span class="cm">3. CHECK SKILLS</span>
+List available skills with @skills. You will use @skills:test-before-pr
+before opening the PR. Do not skip this.
+
+<span class="cm">4. IMPLEMENT</span>
+Cut a feature branch: <span class="st">feature/[TICKET-ID]-short-kebab-description</span>
+
+Implement the feature end-to-end:
+- Follow existing patterns — do not invent new conventions
+- Write unit tests and integration tests as you implement, not after
+- Never leave console.log, commented-out code, or TODO comments in the PR
+- If you discover the ticket is underspecified mid-implementation, post a
+  Jira comment asking for clarification before proceeding
+
+<span class="cm">5. TEST</span>
+Run @skills:test-before-pr. Fix ALL failures before continuing.
+Do not open a PR with failing tests.
+
+<span class="cm">6. OPEN PR</span>
+- Title: <span class="st">[TICKET-ID] Short description of what changed</span>
+- Description: what changed, why, and how to test it manually
+- Link the Jira ticket URL in the PR description
+- Assign 2 reviewers
+
+<span class="cm">7. UPDATE JIRA</span>
+Post the PR link as a comment on the Jira ticket.
+Move the ticket status to "In Review".
+
+<span class="cm">8. NOTIFY</span>
+Post the PR link to the <span class="hl">#dev-runs</span> Slack channel with one sentence
+summarising what was implemented.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Zeus -->
+    <div class="playbook-card">
+      <div class="playbook-card-head">
+        <div class="playbook-emoji">⚡</div>
+        <div class="playbook-head-info">
+          <div class="playbook-agent-name">Zeus — Code Review Agent</div>
+          <div class="playbook-agent-role">Reviews all open PRs and triages CI failures</div>
+        </div>
+        <div class="playbook-macro">!review</div>
+      </div>
+      <div class="playbook-fields">
+        <div class="pf-label">Name</div><div class="pf-value">Review</div>
+        <div class="pf-label">Macro</div><div class="pf-value"><code>!review</code></div>
+        <div class="pf-label">Instructions</div>
+        <div class="pf-value" style="padding:0">
+          <div class="code-wrap" style="margin:0">
+            <button class="copy-btn" onclick="copyCode(this)">copy</button>
+            <div class="code-block">You are performing code review on all open pull requests in the organisation.
+
+<span class="cm">FOR EACH OPEN PR:</span>
+
+1. Read the linked Jira ticket and its acceptance criteria. Understand what the
+   PR is supposed to do before looking at the diff.
+
+2. Read REVIEW.md in the repository root. Apply every rule defined there.
+
+3. Review the diff for:
+   <span class="nt">🚨 SEVERE bugs</span> — high-confidence issues that will cause failures in production
+   <span class="nt">⚠️ NON-SEVERE bugs</span> — potential issues worth fixing before merge
+   <span class="nt">🔒 SECURITY</span> — injection, hardcoded secrets, insecure token handling,
+      missing input validation, error disclosure
+   <span class="nt">📊 COVERAGE</span> — flag if test coverage has dropped
+   <span class="nt">💥 BREAKING CHANGES</span> — API changes that affect downstream consumers
+
+4. Post findings as inline GitHub review comments using this format:
+   <span class="st">🚨 Severe: [what the issue is and why it will fail]</span>
+   <span class="st">⚠️ Non-severe: [what should be fixed]</span>
+   <span class="st">💡 Suggestion: [optional improvement]</span>
+
+5. If CI is failing: investigate the root cause. Post a review comment
+   explaining what is failing and why.
+
+6. Auto-approve if: the PR only changes documentation, config files, or
+   dependency patch versions with no API changes. Post a note explaining
+   why it was auto-approved.
+
+<span class="cm">AFTER REVIEWING ALL PRS:</span>
+Post a summary to <span class="hl">#code-review</span>:
+- List each PR: author, title, status (needs attention / approved / blocked)
+- Flag any PRs open more than 48 hours
+- Flag any PRs with Severe findings that must be fixed before merge</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Argus -->
+    <div class="playbook-card">
+      <div class="playbook-card-head">
+        <div class="playbook-emoji">👁</div>
+        <div class="playbook-head-info">
+          <div class="playbook-agent-name">Argus — QA & Test Agent</div>
+          <div class="playbook-agent-role">Runs nightly regression and files Jira bugs</div>
+        </div>
+        <div class="playbook-macro">!test</div>
+      </div>
+      <div class="playbook-fields">
+        <div class="pf-label">Name</div><div class="pf-value">Test</div>
+        <div class="pf-label">Macro</div><div class="pf-value"><code>!test</code></div>
+        <div class="pf-label">Instructions</div>
+        <div class="pf-value" style="padding:0">
+          <div class="code-wrap" style="margin:0">
+            <button class="copy-btn" onclick="copyCode(this)">copy</button>
+            <div class="code-block">You are running the QA and regression suite. Follow these steps.
+
+<span class="cm">1. PULL LATEST</span>
+Check out the latest main branch. Confirm the branch is up to date.
+
+<span class="cm">2. RUN TESTS</span>
+Run the full test suite with coverage:
+<span class="st">npm install && npm test -- --coverage</span>
+(Adapt the command to the actual package manager and test runner in use.)
+
+<span class="cm">3. ANALYSE RESULTS</span>
+For each FAILED test, determine:
+- <span class="nt">Real regression</span>: test was passing before a recent commit that broke it
+- <span class="nt">Flaky test</span>: passes sometimes, fails sometimes, not caused by a code change
+
+<span class="cm">4. FILE JIRA TICKETS FOR REAL REGRESSIONS</span>
+For each real regression, create a Jira bug ticket:
+- Title: <span class="st">[Regression] [test name] failing since [commit hash]</span>
+- Description: what the test verifies, why it is failing, the full stack trace
+- Steps to reproduce the failure
+- Priority: P1 if it affects a critical user-facing path, P2 otherwise
+- Label: <span class="hl">regression</span>
+
+For flaky tests: post a note to <span class="hl">#qa-alerts</span> only — do NOT file a Jira ticket.
+
+<span class="cm">5. CHECK COVERAGE</span>
+If any module's coverage has dropped below 80%, flag it in the report.
+If any module is below 60%, file a Jira ticket:
+- Title: <span class="st">[Coverage] [module name] below threshold</span>
+- Priority: P2
+
+<span class="cm">6. POST SUMMARY TO #qa-alerts</span>
+<span class="st">✅ X tests passed
+❌ Y failed (Z real regressions, W flaky)
+📊 Overall coverage: X%
+🔴 Modules below 80%: [list or "none"]
+📎 New Jira tickets: [links or "none"]</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Atlas -->
+    <div class="playbook-card">
+      <div class="playbook-card-head">
+        <div class="playbook-emoji">🌍</div>
+        <div class="playbook-head-info">
+          <div class="playbook-agent-name">Atlas — Release Agent</div>
+          <div class="playbook-agent-role">Weekly changelog, GitHub tag, Confluence, Jira close</div>
+        </div>
+        <div class="playbook-macro">!release</div>
+      </div>
+      <div class="playbook-fields">
+        <div class="pf-label">Name</div><div class="pf-value">Release</div>
+        <div class="pf-label">Macro</div><div class="pf-value"><code>!release</code></div>
+        <div class="pf-label">Instructions</div>
+        <div class="pf-value" style="padding:0">
+          <div class="code-wrap" style="margin:0">
+            <button class="copy-btn" onclick="copyCode(this)">copy</button>
+            <div class="code-block">You are performing the weekly release process. Follow every step in order.
+Do NOT skip any step. Do NOT proceed if a step fails — post to #releases and stop.
+
+<span class="cm">STEP 1 — CHECK BLOCKERS</span>
+Search Jira for open tickets with priority P1 or P2 that are unresolved.
+If any exist: post to <span class="hl">#releases</span>: "⚠️ Release blocked: [ticket list]" and STOP.
+
+<span class="cm">STEP 2 — VERIFY CI</span>
+Confirm CI is green on the main branch.
+If failing: post to <span class="hl">#releases</span>: "⚠️ Release blocked: CI failing on main" and STOP.
+
+<span class="cm">STEP 3 — COMPILE CHANGELOG</span>
+Find all pull requests merged to main since the last release tag.
+For each PR, retrieve the linked Jira ticket description if available.
+Categorise into:
+<span class="st">✨ Features — new functionality
+🐛 Bug Fixes — issues resolved
+⚡ Performance — speed or efficiency improvements
+🔧 Maintenance — dependencies, refactors, infrastructure</span>
+
+<span class="cm">STEP 4 — CREATE GITHUB RELEASE</span>
+Tag the release: <span class="st">vYYYY.MM.DD</span> (today's date, e.g. v2026.06.13)
+Create a GitHub Release with the categorised changelog as the body.
+
+<span class="cm">STEP 5 — UPDATE CONFLUENCE</span>
+Find the "Release Notes" page in Confluence.
+Add a new section at the top for this release with the full changelog.
+
+<span class="cm">STEP 6 — CLOSE JIRA VERSION</span>
+Find the current sprint release version in Jira.
+Mark all resolved tickets as belonging to this version.
+Close the version.
+
+<span class="cm">STEP 7 — NOTIFY</span>
+Post to <span class="hl">#releases</span> with the full changelog, the GitHub release link,
+and a one-sentence summary of the most significant change this release.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hephaestus -->
+    <div class="playbook-card">
+      <div class="playbook-card-head">
+        <div class="playbook-emoji">🔧</div>
+        <div class="playbook-head-info">
+          <div class="playbook-agent-name">Hephaestus — Maintenance Agent</div>
+          <div class="playbook-agent-role">Dependencies, dead code, security audit, lint</div>
+        </div>
+        <div class="playbook-macro">!maintenance</div>
+      </div>
+      <div class="playbook-fields">
+        <div class="pf-label">Name</div><div class="pf-value">Maintenance</div>
+        <div class="pf-label">Macro</div><div class="pf-value"><code>!maintenance</code></div>
+        <div class="pf-label">Instructions</div>
+        <div class="pf-value" style="padding:0">
+          <div class="code-wrap" style="margin:0">
+            <button class="copy-btn" onclick="copyCode(this)">copy</button>
+            <div class="code-block">You are performing the weekly maintenance sweep across all repos.
+
+<span class="cm">1. DEPENDENCY UPDATES</span>
+Run: <span class="st">npm outdated</span> (adapt for the package manager in use)
+
+<span class="nt">Patch updates</span> (1.2.3 → 1.2.4): open a PR immediately.
+  Title: <span class="st">chore: update [packages] patch versions</span>
+  Group multiple patches into one PR per repo.
+
+<span class="nt">Minor updates</span> (1.2.3 → 1.3.0): open a PR with a review note.
+  Title: <span class="st">chore: update [package] to [version] (minor)</span>
+  Add note: "Minor update — review changelog for any behaviour changes."
+
+<span class="nt">Major updates</span> (1.2.3 → 2.0.0): open a PR, assign to a senior engineer.
+  Title: <span class="st">chore: update [package] to [version] (MAJOR — needs review)</span>
+  Include a summary of breaking changes from the changelog.
+  ⚠️ Do NOT auto-merge major updates.
+
+<span class="nt">NEVER auto-merge</span> updates to packages touching auth, payments, or
+database connections — always flag these for human review.
+
+<span class="cm">2. SECURITY AUDIT</span>
+Run: <span class="st">npm audit</span> (or equivalent)
+For each HIGH or CRITICAL vulnerability, file a Jira ticket:
+- Title: <span class="st">[Security] CVE-XXXX in [package] — [severity]</span>
+- Priority: P1 for CRITICAL, P2 for HIGH
+- Include: CVE ID, affected version, fix version, one-line impact assessment
+
+<span class="cm">3. DEAD CODE</span>
+Look for: exported functions with no imports, files with no references,
+feature flags that are always-true or always-false.
+Open a PR to remove clearly unused code — one PR per module.
+
+<span class="cm">4. LINT</span>
+Run: <span class="st">npm run lint --fix</span>
+Commit auto-fixed issues: <span class="st">chore: auto-fix lint issues</span>
+
+<span class="cm">5. REPORT TO #engineering</span>
+<span class="st">📦 Dependencies: X patch PRs, Y minor PRs, Z major PRs (need review)
+🔒 Security: X CVEs filed (links)
+🧹 Dead code: X removal PRs opened
+✨ Lint: X issues auto-fixed</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Themis -->
+    <div class="playbook-card">
+      <div class="playbook-card-head">
+        <div class="playbook-emoji">⚖️</div>
+        <div class="playbook-head-info">
+          <div class="playbook-agent-name">Themis — Security & Compliance Agent</div>
+          <div class="playbook-agent-role">Security reviews on sensitive PRs + weekly sweep</div>
+        </div>
+        <div class="playbook-macro">!security-review</div>
+      </div>
+      <div class="playbook-fields">
+        <div class="pf-label">Name</div><div class="pf-value">Security Review</div>
+        <div class="pf-label">Macro</div><div class="pf-value"><code>!security-review</code></div>
+        <div class="pf-label">Instructions</div>
+        <div class="pf-value" style="padding:0">
+          <div class="code-wrap" style="margin:0">
+            <button class="copy-btn" onclick="copyCode(this)">copy</button>
+            <div class="code-block">You are performing a security review. This applies to PRs touching
+sensitive paths AND as a weekly codebase sweep.
+
+<span class="cm">FOR PR SECURITY REVIEW:</span>
+
+1. Read REVIEW.md for this repository's specific security rules.
+
+2. Check for each of the following. Flag every finding with severity:
+   <span class="nt">CRITICAL</span> — exploitable now, must fix before merge
+   <span class="nt">HIGH</span> — significant risk, must fix before merge
+   <span class="nt">MEDIUM</span> — should be fixed, can merge with a tracked ticket
+   <span class="nt">LOW</span> — informational, suggest fix
+
+   Checks:
+   - <span class="st">Injection</span>: SQL, command, LDAP injection via string concatenation
+   - <span class="st">Hardcoded secrets</span>: API keys, passwords, tokens in source code
+   - <span class="st">Insecure direct object references</span>: user-controlled IDs accessing
+     records without authorisation checks
+   - <span class="st">Missing input validation</span>: public endpoints accepting raw user input
+   - <span class="st">Insecure token handling</span>: tokens in URLs, logged to console,
+     stored in localStorage, or short expiry not enforced
+   - <span class="st">Error disclosure</span>: stack traces or internal details in API responses
+   - <span class="st">Broken authentication</span>: JWT validation bypasses, session fixation,
+     missing logout invalidation
+
+3. Post findings as GitHub review comments. Format:
+   <span class="st">🔴 CRITICAL: [file:line] [what it is] [how it can be exploited] [fix]</span>
+   <span class="st">🟠 HIGH: [same format]</span>
+   <span class="st">🟡 MEDIUM: [same format]</span>
+
+4. File a Jira security ticket for MEDIUM and above:
+   Title: <span class="st">[Security] [vulnerability type] in [file/component]</span>
+   Priority: P1 for CRITICAL/HIGH, P2 for MEDIUM
+
+<span class="cm">FOR WEEKLY SWEEP (no PR):</span>
+1. Scan all repos for hardcoded secrets (API key patterns, token strings)
+2. Check for packages with known CVEs: <span class="st">npm audit</span>
+3. Review recent commits (last 7 days) touching auth or authorisation code
+4. Post summary to <span class="hl">#security</span> with all findings and Jira ticket links</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ 6. SCHEDULES ══════════════════ -->
+  <section class="section" id="schedules">
+    <div class="section-header">
+      <div class="section-num-wrap"><div class="section-num">06</div></div>
+      <div class="section-header-text">
+        <div class="section-title">Create Scheduled Sessions</div>
+        <div class="section-desc">One scheduled session per agent. Go to <a href="https://app.devin.ai/settings/schedules" target="_blank">Settings → Schedules → Create Schedule</a> for each row.</div>
+        <div class="section-time">⏱ 20 min</div>
+      </div>
+      <button class="section-done-btn" onclick="markDone(this,6)">Mark done</button>
+    </div>
+
+    <table class="cron-table">
+      <tr><th>Agent</th><th>Schedule name</th><th>Cron</th><th>Playbook</th><th>Prompt to enter</th><th>Notify</th></tr>
+      <tr>
+        <td><strong>🔧 Hephaestus</strong></td>
+        <td>Hephaestus — Monday Maintenance</td>
+        <td><code>0 7 * * 1</code></td>
+        <td><code>!maintenance</code></td>
+        <td>"Run the weekly maintenance sweep across all repos. Follow the !maintenance playbook."</td>
+        <td><code>#engineering</code></td>
+      </tr>
+      <tr>
+        <td><strong>⚡ Zeus</strong></td>
+        <td>Zeus — Morning PR Review</td>
+        <td><code>0 8 * * 1-5</code></td>
+        <td><code>!review</code></td>
+        <td>"Review all open PRs in the organisation that have been open for more than 4 hours. Follow the !review playbook."</td>
+        <td><code>#code-review</code></td>
+      </tr>
+      <tr>
+        <td><strong>🪽 Hermes</strong></td>
+        <td>Hermes — Daily Dev Pickup</td>
+        <td><code>0 9 * * 1-5</code></td>
+        <td><code>!implement</code></td>
+        <td>"Check Jira for all tickets with status 'Ready for Dev' in project [YOUR-PROJECT-KEY]. Pick the top 3 by priority. Implement each one, opening a separate PR per ticket. Follow the !implement playbook."</td>
+        <td><code>#dev-runs</code></td>
+      </tr>
+      <tr>
+        <td><strong>⚖️ Themis</strong></td>
+        <td>Themis — Wednesday Security Sweep</td>
+        <td><code>0 10 * * 3</code></td>
+        <td><code>!security-review</code></td>
+        <td>"Run the weekly security sweep across all repos. Scan for hardcoded secrets, CVEs, and recent auth-related commits. Follow the !security-review playbook."</td>
+        <td><code>#security</code></td>
+      </tr>
+      <tr>
+        <td><strong>👁 Argus</strong></td>
+        <td>Argus — Nightly QA</td>
+        <td><code>0 2 * * *</code></td>
+        <td><code>!test</code></td>
+        <td>"Run the full regression suite across all repos. File Jira tickets for real failures. Post the pass/fail summary. Follow the !test playbook."</td>
+        <td><code>#qa-alerts</code></td>
+      </tr>
+      <tr>
+        <td><strong>🌍 Atlas</strong></td>
+        <td>Atlas — Friday Release</td>
+        <td><code>0 9 * * 5</code></td>
+        <td><code>!release</code></td>
+        <td>"Run the weekly release process. Follow the !release playbook exactly, stopping if any blockers are found."</td>
+        <td><code>#releases</code></td>
+      </tr>
+    </table>
+
+    <div class="callout tip"><div class="callout-icon">✅</div><div>After creating each schedule, verify it appears under <a href="https://app.devin.ai/settings/schedules" target="_blank">Settings → Schedules</a> with status <strong>Active</strong>. If status is Error, re-check the cron expression and playbook name.</div></div>
+    <div class="callout warn"><div class="callout-icon">⚠️</div><div>Replace <strong>[YOUR-PROJECT-KEY]</strong> in Hermes's prompt with your actual Jira project key (e.g. <code>CORE</code>, <code>ENG</code>). If you have multiple projects, list them: "in projects CORE, INFRA, or PLATFORM".</div></div>
+  </section>
+
+  <!-- ══════════════════ 7. AUTOMATIONS ══════════════════ -->
+  <section class="section" id="automations">
+    <div class="section-header">
+      <div class="section-num-wrap"><div class="section-num">07</div></div>
+      <div class="section-header-text">
+        <div class="section-title">Create Automations</div>
+        <div class="section-desc">Event-driven triggers that give agents real-time reflexes. Go to <a href="https://app.devin.ai/automations" target="_blank">app.devin.ai → Automations</a>.</div>
+        <div class="section-time">⏱ 30 min</div>
+      </div>
+      <button class="section-done-btn" onclick="markDone(this,7)">Mark done</button>
+    </div>
+
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin-bottom:14px">7A — CI Failure Auto-Fix (Zeus reflex)</h3>
+    <div class="callout info"><div class="callout-icon">ℹ️</div><div>Use the pre-built template: <strong>Automations → Templates → "CI failure fixer"</strong></div></div>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Click <strong>Templates</strong> → select <strong>CI failure fixer</strong></div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Set trigger: <strong>GitHub → Check run</strong> — Conclusion: <code>failure</code></div><div class="step-desc">Select all repos (or start with your most critical repo).</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Set action prompt:</div>
+      <div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">copy</button><div class="code-block">A CI check has failed on a pull request. Investigate the failure:
+1. Read the full CI logs to identify the root cause
+2. Determine: is this a real code failure or a flaky test?
+3. If it's a real failure: fix the code, commit to the same branch
+4. If it's a flaky test: post a comment on the PR explaining it's flaky
+5. Do NOT push if you are not confident in the fix — post a comment instead</div></div>
+    </div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Set <strong>ACU limit: 20</strong> per session</div><div class="step-desc">This caps the cost of each auto-fix session. Increase if your CI failures are complex.</div></div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Set <strong>Invocation limit: 10 per hour</strong></div><div class="step-desc">Prevents a noisy repo from spawning dozens of sessions during a bad deploy.</div></div></div>
+
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7B — #incidents Auto-Triage (Atlas reflex)</h3>
+    <div class="callout info"><div class="callout-icon">ℹ️</div><div>Use the pre-built template: <strong>Automations → Templates → "Triage bug reports on Slack"</strong></div></div>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Click <strong>Templates</strong> → select <strong>Triage bug reports on Slack</strong></div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Set channel: <code>#incidents</code></div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Action type: <strong>Triage Devin</strong> (persistent monitor)</div><div class="step-desc">This creates a persistent Devin session that watches the channel and spawns sub-agents for each incident report.</div></div></div>
+
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7C — Themis PR Security Trigger</h3>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Automations → <strong>New automation</strong></div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Trigger: <strong>GitHub → Pull request → opened or synchronized</strong></div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Add condition: <strong>PR files changed contains</strong> <code>auth/</code> OR <code>payments/</code> OR <code>database/</code></div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Action: <strong>Start session</strong> with this prompt:</div>
+      <div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">copy</button><div class="code-block">A pull request has been opened that touches security-sensitive paths.
+Run a full security review following the !security-review playbook.
+Post findings as GitHub review comments with severity levels (CRITICAL/HIGH/MEDIUM/LOW).
+File Jira security tickets for MEDIUM and above.</div></div>
+    </div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Set <strong>ACU limit: 30</strong> and save</div></div></div>
+
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7D — Post-Deploy Runbook Update (Atlas webhook)</h3>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Automations → <strong>New automation</strong> → Trigger: <strong>Webhook</strong></div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Copy the <strong>webhook URL</strong> that appears after saving</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Action prompt:</div>
+      <div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">copy</button><div class="code-block">A production deployment has just completed. The deploy manifest is in the payload.
+1. Read the payload to identify which services and files changed in this deploy
+2. For each changed service, find its runbook in Confluence
+3. Update the runbook to reflect any configuration, environment variable, or
+   infrastructure changes in this deploy
+4. Post a summary of what was updated to #releases</div></div>
+    </div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Wire your CI/CD pipeline to POST to the webhook URL on every production deploy</div><div class="step-desc">In GitHub Actions, add a step after your deploy step that runs:<br><code>curl -X POST [WEBHOOK_URL] -H "Content-Type: application/json" -d '{"service":"$SERVICE_NAME","commit":"$GITHUB_SHA"}'</code></div></div></div>
+  </section>
+
+  <!-- ══════════════════ 8. PER-REPO FILES ══════════════════ -->
+  <section class="section" id="repo-setup">
+    <div class="section-header">
+      <div class="section-num-wrap"><div class="section-num">08</div></div>
+      <div class="section-header-text">
+        <div class="section-title">Per-Repo Files</div>
+        <div class="section-desc">Add these four files to every repo. Devin reads them automatically at the start of every session. Commit and push — no Devin config needed.</div>
+        <div class="section-time">⏱ 30 min per repo</div>
+      </div>
+      <button class="section-done-btn" onclick="markDone(this,8)">Mark done</button>
+    </div>
+
+    <div class="callout warn"><div class="callout-icon">⚠️</div><div>The content below is a <strong>template</strong>. Customise it to match your actual tech stack, architecture, and conventions before committing. Devin takes these files literally — generic instructions produce generic output.</div></div>
+
+    <!-- AGENTS.md -->
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:20px 0 10px">AGENTS.md</h3>
+    <p style="font-size:13px;color:var(--text-2);margin-bottom:10px;line-height:1.6">Place in repo root. Devin reads this at the start of every session in this repo. Document your architecture, naming conventions, and constraints.</p>
+    <div class="file-block-wrap">
+      <div class="file-label"><div class="file-label-dot"></div>AGENTS.md</div>
+      <div class="code-wrap" style="margin-top:0">
+        <button class="copy-btn" onclick="copyCode(this)">copy</button>
+        <div class="code-block"><span class="cm"># Team AGENTS.md — Read this before starting any task in this repo</span>
+
+<span class="kw">## Architecture Conventions</span>
+- Services communicate via REST externally, gRPC internally
+- No direct database access from the API layer — use the repository pattern
+- All new services require an OpenAPI spec committed to /docs before coding starts
+- Database migrations must be backward-compatible (never drop columns, use defaults)
+
+<span class="kw">## Tech Stack</span>
+- Backend: Node.js 20 + TypeScript 5
+- Database: PostgreSQL 15 via Prisma ORM
+- Frontend: React 18 + Vite
+- Testing: Jest (unit), Playwright (e2e)
+- CI: GitHub Actions
+
+<span class="kw">## Naming Conventions</span>
+- Files: kebab-case (user-service.ts)
+- Classes: PascalCase
+- Functions and variables: camelCase
+- Database tables: snake_case
+- Environment variables: SCREAMING_SNAKE_CASE
+
+<span class="kw">## Things You Must Never Do</span>
+- Never commit secrets, API keys, or credentials to the repo
+- Never use `any` type in TypeScript — use proper types or `unknown`
+- Never write raw SQL — always use the Prisma ORM
+- Never merge to main directly — always use a PR
+- Never skip tests to make CI pass faster — fix the test
+
+<span class="kw">## Branch Naming</span>
+feature/[JIRA-KEY]-short-description
+bugfix/[JIRA-KEY]-short-description
+chore/short-description
+
+<span class="kw">## Team Playbook</span>
+Full SDLC operating procedure: https://aayushus.github.io/sdlc/</div>
+      </div>
+    </div>
+
+    <!-- REVIEW.md -->
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:24px 0 10px">REVIEW.md</h3>
+    <p style="font-size:13px;color:var(--text-2);margin-bottom:10px;line-height:1.6">Place in repo root. Zeus reads this on every PR review. Define what to always look for, what to always flag, and what to ignore.</p>
+    <div class="file-block-wrap">
+      <div class="file-label"><div class="file-label-dot"></div>REVIEW.md</div>
+      <div class="code-wrap" style="margin-top:0">
+        <button class="copy-btn" onclick="copyCode(this)">copy</button>
+        <div class="code-block"><span class="cm"># Code Review Guidelines</span>
+
+<span class="kw">## Critical Paths — Always Review These Carefully</span>
+- `src/auth/` — any change must be reviewed for auth bypass, token handling, session issues
+- `src/payments/` — review for injection, PCI compliance, idempotency
+- `src/database/migrations/` — must be backward-compatible; check for destructive changes
+- `src/api/routes/` — check input validation on every public endpoint
+
+<span class="kw">## Security Checks — Flag Every Instance</span>
+- Raw SQL string concatenation anywhere in the codebase
+- Any secret, token, or password-like string hardcoded in source files
+- User-controlled IDs used in DB queries without authorisation check
+- Error responses that include stack traces or internal system details
+- `console.log` statements containing user data or tokens
+
+<span class="kw">## Code Quality Checks</span>
+- TypeScript `any` type usage — flag every instance, suggest proper type
+- Functions longer than 50 lines — suggest refactoring
+- Deeply nested callbacks (>3 levels) — suggest async/await or extraction
+- Missing error handling on async operations
+- Test coverage dropping below 80% on changed files
+
+<span class="kw">## Anti-Patterns — Flag These</span>
+- Direct database access from API route handlers (bypass repository layer)
+- Business logic inside React components (should be in hooks or services)
+- Synchronous file I/O in request path
+- N+1 database queries in loops
+
+<span class="kw">## What to Ignore</span>
+- `src/generated/` — auto-generated files, do not review
+- `*.lock` files — only flag if the diff looks unusual
+- `.github/workflows/` — only flag security issues (secret exposure, etc.)
+- Whitespace-only changes</div>
+      </div>
+    </div>
+
+    <!-- test-before-pr SKILL.md -->
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:24px 0 10px">.agents/skills/test-before-pr/SKILL.md</h3>
+    <p style="font-size:13px;color:var(--text-2);margin-bottom:10px;line-height:1.6">Create the directory path and file. Devin invokes this automatically before opening any PR. Adapt the commands to your actual test runner.</p>
+    <div class="file-block-wrap">
+      <div class="file-label"><div class="file-label-dot"></div>.agents/skills/test-before-pr/SKILL.md</div>
+      <div class="code-wrap" style="margin-top:0">
+        <button class="copy-btn" onclick="copyCode(this)">copy</button>
+        <div class="code-block">---
+name: test-before-pr
+description: Run all quality checks before opening a pull request. Always invoke this before creating a PR.
+---
+
+## Pre-PR Checklist
+
+Run these steps in order. Stop and fix any failures before continuing.
+Do NOT open a PR if any step fails.
+
+<span class="kw">### 1. Install dependencies</span>
+```
+npm install
+```
+
+<span class="kw">### 2. Lint — fix all issues</span>
+```
+npm run lint
+```
+If lint fails, run `npm run lint --fix` to auto-fix, then commit the fixes.
+If issues remain after auto-fix, resolve them manually before continuing.
+
+<span class="kw">### 3. Type check</span>
+```
+npx tsc --noEmit
+```
+Fix all TypeScript errors. Do not use `@ts-ignore` to bypass them.
+
+<span class="kw">### 4. Run tests</span>
+```
+npm test
+```
+All tests must pass. If a test was already failing before your changes,
+note it in the PR description but do not leave your changes untested.
+
+<span class="kw">### 5. Build</span>
+```
+npm run build
+```
+The build must succeed with no errors.
+
+<span class="kw">### Done</span>
+All steps passed. You may open the PR.</div>
+      </div>
+    </div>
+
+    <!-- implement SKILL.md -->
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:24px 0 10px">.agents/skills/implement/SKILL.md</h3>
+    <p style="font-size:13px;color:var(--text-2);margin-bottom:10px;line-height:1.6">Hermes auto-discovers this and follows it when implementing tickets in this repo.</p>
+    <div class="file-block-wrap">
+      <div class="file-label"><div class="file-label-dot"></div>.agents/skills/implement/SKILL.md</div>
+      <div class="code-wrap" style="margin-top:0">
+        <button class="copy-btn" onclick="copyCode(this)">copy</button>
+        <div class="code-block">---
+name: implement
+description: How to implement a feature in this repo. Follow this whenever implementing a Jira ticket.
+---
+
+## Implementation Procedure
+
+<span class="kw">### 1. Understand before coding</span>
+- Read AGENTS.md for architecture conventions
+- Search the codebase for the most similar existing feature to understand the patterns to follow
+- If anything in the acceptance criteria is ambiguous, post a Jira comment asking for clarification
+
+<span class="kw">### 2. Cut a branch</span>
+```
+git checkout -b feature/[TICKET-ID]-short-description
+```
+Example: `feature/CORE-123-add-user-export`
+
+<span class="kw">### 3. Implement</span>
+- Follow existing code patterns — do not invent new conventions
+- Write tests alongside the implementation, not after
+- Keep commits small and focused: one logical change per commit
+- Commit message format: `[TICKET-ID] short description`
+
+<span class="kw">### 4. Before opening PR</span>
+Run @skills:test-before-pr. Fix ALL failures.
+
+<span class="kw">### 5. PR format</span>
+Title: `[TICKET-ID] Short description of what changed`
+
+Description template:
+```
+## What changed
+[1-2 sentences]
+
+## Why
+[Link to Jira ticket]
+
+## How to test
+1. Step one
+2. Step two
+3. Expected result
+
+## Screenshots (if UI change)
+```</div>
+      </div>
+    </div>
+
+    <div class="callout tip" style="margin-top:16px"><div class="callout-icon">✅</div><div>After adding these files, commit them with <code>git add . && git commit -m "chore: add Devin config files" && git push</code>. Devin picks them up automatically — no config in the Devin UI needed.</div></div>
+  </section>
+
+  <!-- ══════════════════ 9. KNOWLEDGE ══════════════════ -->
+  <section class="section" id="knowledge">
+    <div class="section-header">
+      <div class="section-num-wrap"><div class="section-num">09</div></div>
+      <div class="section-header-text">
+        <div class="section-title">Knowledge Base</div>
+        <div class="section-desc">Knowledge items are org-wide context that Devin recalls automatically. Go to <a href="https://app.devin.ai/settings/knowledge" target="_blank">Settings → Knowledge → Add Knowledge</a> for each entry.</div>
+        <div class="section-time">⏱ 15 min</div>
+      </div>
+      <button class="section-done-btn" onclick="markDone(this,9)">Mark done</button>
+    </div>
+
+    <p style="font-size:13px;color:var(--text-2);margin-bottom:16px;line-height:1.6">For each entry: enter the <strong>Trigger Description</strong> (what Devin is working on when it should recall this) and the <strong>Content</strong>. Pin each one to "all repos".</p>
+
+    <div class="step"><div class="step-num">1</div><div class="step-body">
+      <div class="step-title">Trigger: <code>when designing or implementing anything involving the database</code></div>
+      <div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">copy</button><div class="code-block">Database conventions:
+- Always use Prisma ORM. Never write raw SQL.
+- All migrations must be backward-compatible. Never drop a column directly —
+  deprecate it first, remove it in a later release.
+- Use database transactions for any operation that touches more than one table.
+- Index foreign keys and any column used in a WHERE clause on large tables.
+- Never run migrations in the application startup path.</div></div>
+    </div></div>
+
+    <div class="step"><div class="step-num">2</div><div class="step-body">
+      <div class="step-title">Trigger: <code>when working on authentication, authorisation, or security</code></div>
+      <div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">copy</button><div class="code-block">Security conventions:
+- Never hardcode secrets in source code. Use environment variables only.
+- JWTs expire in 15 minutes. Refresh tokens expire in 7 days.
+- All user inputs must be validated before reaching the database or file system.
+- Use parameterised queries everywhere. Never concatenate user input into a query string.
+- Passwords are hashed with bcrypt, cost factor 12.
+- Failed login attempts are rate-limited at 5 per 5 minutes per IP.
+- Auth changes require Themis security review before merge.</div></div>
+    </div></div>
+
+    <div class="step"><div class="step-num">3</div><div class="step-body">
+      <div class="step-title">Trigger: <code>when writing tests or checking test coverage</code></div>
+      <div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">copy</button><div class="code-block">Testing conventions:
+- Minimum coverage threshold: 80% overall, 90% for auth and payments modules.
+- Unit tests go in __tests__/ directories alongside the source file.
+- Integration tests go in tests/integration/.
+- E2E tests go in tests/e2e/ and use Playwright.
+- Test file naming: [filename].test.ts for unit, [feature].spec.ts for e2e.
+- Never mock the database in integration tests — use a test database instance.
+- Use factories (from tests/factories/) to create test data, not raw DB inserts.</div></div>
+    </div></div>
+
+    <div class="step"><div class="step-num">4</div><div class="step-body">
+      <div class="step-title">Trigger: <code>when implementing a new API endpoint or modifying an existing one</code></div>
+      <div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">copy</button><div class="code-block">API conventions:
+- All public endpoints must be documented in the OpenAPI spec at /docs/openapi.yaml
+  before or alongside implementation. Not after.
+- API versioning: all endpoints are prefixed /api/v1/. Breaking changes require a
+  new version prefix.
+- All endpoints must validate input using Zod schemas.
+- Error responses follow this format:
+  { "error": { "code": "ERROR_CODE", "message": "Human readable message" } }
+- Never expose internal IDs in public APIs — use UUIDs.
+- Rate limit all public endpoints: 100 req/min per user by default.</div></div>
+    </div></div>
+  </section>
+
+  <!-- ══════════════════ 10. PER-ENGINEER ══════════════════ -->
+  <section class="section" id="engineer">
+    <div class="section-header">
+      <div class="section-num-wrap"><div class="section-num">10</div></div>
+      <div class="section-header-text">
+        <div class="section-title">Per-Engineer Setup</div>
+        <div class="section-desc">Every engineer on the team does this once. Takes 5 minutes.</div>
+        <div class="section-time">⏱ 5 min per engineer</div>
+      </div>
+      <button class="section-done-btn" onclick="markDone(this,10)">Mark done</button>
+    </div>
+
+    <div class="callout info"><div class="callout-icon">ℹ️</div><div>Share this section URL with your team: <strong>each engineer completes steps 1–4 themselves.</strong> The admin setup in sections 1–9 does not need to be repeated.</div></div>
+
+    <div class="step"><div class="step-num">1</div><div class="step-body">
+      <div class="step-title">Create a Devin account at <a href="https://app.devin.ai" target="_blank">app.devin.ai</a></div>
+      <div class="step-desc">Use your work email. Your admin needs to invite you to the team org — ask them to do this before you start.</div>
+    </div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body">
+      <div class="step-title">Connect your GitHub account</div>
+      <div class="step-desc"><a href="https://app.devin.ai/settings/integrations/github" target="_blank">Settings → Integrations → GitHub</a> → Connect your personal GitHub account. This allows Devin to create PRs and branches as you.</div>
+    </div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body">
+      <div class="step-title">Connect your Slack account</div>
+      <div class="step-desc"><a href="https://app.devin.ai/settings/integrations/slack" target="_blank">Settings → Integrations → Slack</a> → Link your account. Your Slack email must match your Devin email. This is required to receive Devin notifications and to use <code>@Devin</code> in Slack.</div>
+    </div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body">
+      <div class="step-title">Self-enroll for auto PR review</div>
+      <div class="step-desc"><a href="https://app.devin.ai/settings/review" target="_blank">Settings → Review</a> → Click <strong>"Add myself (@yourusername)"</strong>. Zeus will now automatically review any PR you open or are assigned to.</div>
+    </div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-body">
+      <div class="step-title">Install Windsurf Desktop</div>
+      <div class="step-desc">Download from <a href="https://windsurf.com" target="_blank">windsurf.com</a>. Sign in with your work account. In the Agent Command Center, connect to Devin Cloud to enable the local → cloud handoff.</div>
+    </div></div>
+    <div class="step"><div class="step-num">6</div><div class="step-body">
+      <div class="step-title">Bookmark these two URLs</div>
+      <div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">copy</button><div class="code-block">SDLC Playbook:  https://aayushus.github.io/sdlc/
+Devin app:      https://app.devin.ai
+Fast PR review: replace github.com → devinreview.com in any PR URL</div></div>
+    </div></div>
+  </section>
+
+  <!-- ══════════════════ 11. VERIFY ══════════════════ -->
+  <section class="section" id="verify">
+    <div class="section-header">
+      <div class="section-num-wrap"><div class="section-num">11</div></div>
+      <div class="section-header-text">
+        <div class="section-title">Verify Everything Works</div>
+        <div class="section-desc">Run these checks to confirm the full setup is working before you go live.</div>
+        <div class="section-time">⏱ 15 min</div>
+      </div>
+      <button class="section-done-btn" onclick="markDone(this,11)">Mark done</button>
+    </div>
+
+    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Hermes:</strong> In Slack, send <code>@Devin !implement [any small ticket key]</code>. Within 2 minutes, Devin should respond with a session link and start working. Within ~20 min (for a small ticket), a PR should appear in GitHub.</div></div>
+    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Zeus:</strong> Open a test PR in any repo. Within 5 minutes, a Devin Review comment should appear on the PR. If not, check Settings → Review → verify the repo is listed and auto-review is ON.</div></div>
+    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Argus:</strong> Send <code>@Devin !test</code> in <code>#qa-alerts</code>. Argus should respond with a session link and post a pass/fail summary within 10–30 minutes.</div></div>
+    <div class="verify-item"><div class="verify-pip"></div><div><strong>Check schedules:</strong> Go to <a href="https://app.devin.ai/settings/schedules" target="_blank">Settings → Schedules</a>. All 6 schedules should show status <strong>Active</strong>. If any show <strong>Error</strong>, click to see the error and fix the prompt or cron expression.</div></div>
+    <div class="verify-item"><div class="verify-pip"></div><div><strong>Check automations:</strong> Go to <a href="https://app.devin.ai/automations" target="_blank">Automations</a>. All 4 automations should be enabled. Break a CI check on a test branch — within 2 minutes Devin should post a fix attempt to the PR.</div></div>
+    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test AGENTS.md:</strong> Start a session in Devin and ask: <em>"What are the architecture conventions for this repo?"</em>. Devin should accurately describe what's in your AGENTS.md.</div></div>
+    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test REVIEW.md:</strong> Open the Devin Review for any PR. In the chat sidebar, ask: <em>"What are the critical review areas for this repo?"</em>. Devin should cite your REVIEW.md.</div></div>
+    <div class="verify-item"><div class="verify-pip"></div><div><strong>Confirm Jira ↔ GitHub link:</strong> Add the <code>devin</code> label to a real Jira ticket. Within 2 minutes, Devin should post a comment on the ticket with a session link and start implementing.</div></div>
+
+    <div class="callout tip" style="margin-top:20px"><div class="callout-icon">🎉</div><div><strong>You're set up.</strong> All six agents are live. Share <a href="https://aayushus.github.io/sdlc/" target="_blank">aayushus.github.io/sdlc/</a> with the team and pin it in <code>#engineering</code>. The SOP tab in that page is your day-to-day operating reference.</div></div>
+  </section>
+
+</main>
+
+<script>
+// Progress bar
+function updateProgress(){
+  const sections=document.querySelectorAll('.section');
+  let done=0;
+  sections.forEach(s=>{const btn=s.querySelector('.section-done-btn');if(btn&&btn.classList.contains('done'))done++});
+  document.getElementById('progressFill').style.width=((done/sections.length)*100)+'%';
+}
+
+// Mark section done
+function markDone(btn,num){
+  btn.classList.toggle('done');
+  btn.textContent=btn.classList.contains('done')?'✓ Done':'Mark done';
+  const nn=document.getElementById('nn-'+num);
+  if(nn){nn.classList.toggle('done',btn.classList.contains('done'));if(btn.classList.contains('done'))nn.textContent='✓';}
+  updateProgress();
+}
+
+// Prereq toggle
+function togglePrereq(item){
+  const cb=item.querySelector('input');
+  cb.checked=!cb.checked;
+  item.classList.toggle('checked',cb.checked);
+}
+
+// Copy code
+function copyCode(btn){
+  const block=btn.nextElementSibling;
+  const text=block.innerText;
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.textContent='copied!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='copy';btn.classList.remove('copied')},2000);
+  }).catch(()=>{btn.textContent='error'});
+}
+
+// Active nav
+function setActive(el){
+  setTimeout(()=>{
+    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+    el.classList.add('active');
+  },10);
+}
+
+// Auto-highlight nav on scroll
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const id=e.target.id;
+      document.querySelectorAll('.nav-item').forEach(n=>{
+        n.classList.toggle('active',n.getAttribute('href')==='#'+id);
+      });
+    }
+  });
+},{threshold:0.3,rootMargin:'-60px 0px -40% 0px'});
+document.querySelectorAll('.section').forEach(s=>observer.observe(s));
+</script>
+</body>
+</html>
