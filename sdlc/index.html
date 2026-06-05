@@ -70,18 +70,82 @@ body.mode-sop     .topnav::after { background:linear-gradient(90deg,#0F172A,#475
 
 .shell { max-width:1120px; margin:0 auto; padding:72px 36px 80px; }
 
-/* ── Header ── */
-.header { display:flex; align-items:flex-start; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:36px; }
-.header-left { display:flex; flex-direction:column; gap:6px; }
+/* ── Landing hero ── */
+.lp-hero { padding:40px 0 36px; border-bottom:1px solid var(--border); margin-bottom:36px; display:flex; align-items:flex-end; justify-content:space-between; gap:32px; flex-wrap:wrap; }
+.lp-eyebrow { font-size:11px; font-family:var(--mono); color:var(--text-3); letter-spacing:1px; text-transform:uppercase; margin-bottom:12px; }
+.lp-h1 { font-size:42px; font-weight:900; letter-spacing:-1.5px; line-height:1.05; color:var(--text); }
+.lp-h1 em { font-style:normal; color:var(--ai-accent); }
+.lp-sub { font-size:15px; color:var(--text-2); margin-top:12px; line-height:1.65; max-width:540px; }
+.lp-hero-actions { display:flex; flex-direction:column; align-items:flex-end; gap:8px; flex-shrink:0; }
+.lp-cta-primary { display:inline-flex; align-items:center; gap:8px; font-size:14px; font-weight:800; color:#fff; background:var(--text); text-decoration:none; padding:12px 24px; border-radius:8px; letter-spacing:-0.2px; transition:background 0.15s; white-space:nowrap; }
+.lp-cta-primary:hover { background:#2D2D2D; }
+.lp-cta-note { font-size:11px; color:var(--text-3); font-family:var(--mono); }
+
+/* ── Pipeline flow ── */
+.lp-pipeline { margin-bottom:36px; }
+.lp-pipeline-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+.lp-pipeline-label { font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase; color:var(--text-3); }
+.pipeline-flow { display:flex; align-items:stretch; overflow-x:auto; border:1px solid var(--border); border-radius:10px; background:var(--surface); scrollbar-width:none; }
+.pipeline-flow::-webkit-scrollbar { display:none; }
+.pf-node { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; padding:18px 16px; min-width:110px; flex-shrink:0; text-align:center; position:relative; }
+.pf-node:not(:last-child)::after { content:'→'; position:absolute; right:-10px; top:50%; transform:translateY(-50%); font-size:16px; color:var(--border-mid); z-index:1; }
+.pf-node.start { background:var(--bg); border-right:1px solid var(--border); }
+.pf-node.agent { border-right:1px solid var(--border); }
+.pf-node.agent:last-child { border-right:none; }
+.pf-emoji { font-size:20px; line-height:1; }
+.pf-name { font-size:12px; font-weight:800; color:var(--text); letter-spacing:-0.2px; }
+.pf-role { font-size:10px; color:var(--text-3); font-weight:600; letter-spacing:0.3px; text-transform:uppercase; }
+.pf-node.highlight .pf-name { color:var(--ai-accent); }
+.pf-node.highlight { background:var(--ai-accent-bg); }
+
+/* ── Outcomes ── */
+.lp-outcomes { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:36px; }
+@media(max-width:720px){ .lp-outcomes { grid-template-columns:1fr 1fr; } }
+.outcome-card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px 18px; }
+.outcome-delta { font-size:11px; font-weight:700; font-family:var(--mono); color:var(--text-3); text-decoration:line-through; margin-bottom:4px; }
+.outcome-val { font-size:22px; font-weight:900; font-family:var(--mono); color:var(--ai-accent); letter-spacing:-0.5px; line-height:1; }
+.outcome-lbl { font-size:12px; color:var(--text-2); margin-top:4px; line-height:1.4; }
+
+/* ── Agent map ── */
+.lp-agents-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+.lp-agents-label { font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase; color:var(--text-3); }
+.lp-agent-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:10px; overflow:hidden; margin-bottom:36px; }
+@media(max-width:720px){ .lp-agent-grid { grid-template-columns:1fr 1fr; } }
+.lp-agent-card { background:var(--surface); padding:16px 18px; display:flex; flex-direction:column; gap:4px; }
+.lp-agent-card:hover { background:var(--ai-accent-bg); }
+.lac-top { display:flex; align-items:center; gap:8px; }
+.lac-emoji { font-size:18px; }
+.lac-name { font-size:14px; font-weight:800; color:var(--text); letter-spacing:-0.2px; }
+.lac-role { font-size:12px; font-weight:700; color:var(--ai-accent); }
+.lac-desc { font-size:12px; color:var(--text-2); line-height:1.5; }
+.lac-trigger { font-size:10px; font-family:var(--mono); color:var(--text-3); margin-top:3px; }
+
+/* ── Governance ── */
+.lp-governance { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:20px 24px; margin-bottom:40px; display:grid; grid-template-columns:auto 1fr; gap:20px; align-items:start; }
+.lp-gov-icon { font-size:28px; margin-top:2px; }
+.lp-gov-title { font-size:14px; font-weight:800; color:var(--text); margin-bottom:10px; letter-spacing:-0.2px; }
+.lp-gov-items { display:grid; grid-template-columns:1fr 1fr; gap:6px 24px; }
+@media(max-width:640px){ .lp-gov-items { grid-template-columns:1fr; } }
+.lp-gov-item { display:flex; align-items:flex-start; gap:8px; font-size:13px; color:var(--text-2); line-height:1.5; }
+.gov-pip { width:3px; min-height:14px; background:var(--green); border-radius:2px; flex-shrink:0; margin-top:4px; }
+
+/* ── Section divider ── */
+.lp-divider { display:flex; align-items:center; gap:16px; margin-bottom:20px; }
+.lp-divider-line { flex:1; height:1px; background:var(--border); }
+.lp-divider-label { font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase; color:var(--text-3); white-space:nowrap; }
+
+/* ── Compact interactive header ── */
+.header { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:24px; }
+.header-left { display:flex; flex-direction:column; gap:4px; }
 .eyebrow { font-size:11px; font-family:var(--mono); color:var(--text-3); letter-spacing:1px; text-transform:uppercase; }
-.page-title { font-size:30px; font-weight:900; letter-spacing:-0.8px; line-height:1; }
+.page-title { font-size:20px; font-weight:800; letter-spacing:-0.4px; line-height:1; }
 .page-title em { font-style:normal; transition:color 0.3s; }
 body.mode-current .page-title em { color:var(--text); }
 body.mode-ai      .page-title em { color:var(--ai-accent); }
 body.mode-devin   .page-title em { color:var(--teal); }
 body.mode-roster  .page-title em { color:var(--blue); }
 body.mode-sop     .page-title em { color:var(--sop); }
-.page-sub { font-size:13px; color:var(--text-2); line-height:1.5; max-width:540px; }
+.page-sub { font-size:12px; color:var(--text-3); line-height:1.4; }
 
 /* ── Mode toggle ── */
 .mode-toggle { display:flex; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:4px; gap:2px; flex-shrink:0; }
@@ -301,11 +365,165 @@ body.mode-sop     .phase-tab.active::after { background:var(--sop); }
 </nav>
 <div class="shell">
 
+  <!-- ── Hero ── -->
+  <div class="lp-hero">
+    <div>
+      <div class="lp-eyebrow">AI-First SDLC · Jira · GitHub · Devin / Windsurf</div>
+      <h1 class="lp-h1">The <em>AI-First</em><br>SDLC Playbook</h1>
+      <p class="lp-sub">A practical operating model for engineering teams. Six named AI agents handle implementation, code review, QA, security, releases, and maintenance — autonomously, overnight, on a schedule. Humans write requirements and approve the critical decisions.</p>
+    </div>
+    <div class="lp-hero-actions">
+      <a class="lp-cta-primary" href="setup.html">Set up in ~2.5 hrs →</a>
+      <div class="lp-cta-note">Devin Teams / Enterprise required</div>
+    </div>
+  </div>
+
+  <!-- ── Pipeline flow ── -->
+  <div class="lp-pipeline">
+    <div class="lp-pipeline-head">
+      <div class="lp-pipeline-label">The pipeline — one ticket to production</div>
+    </div>
+    <div class="pipeline-flow">
+      <div class="pf-node start">
+        <div class="pf-emoji">📋</div>
+        <div class="pf-name">Jira Ticket</div>
+        <div class="pf-role">Engineer writes</div>
+      </div>
+      <div class="pf-node agent highlight">
+        <div class="pf-emoji">🪽</div>
+        <div class="pf-name">Hermes</div>
+        <div class="pf-role">Implements</div>
+      </div>
+      <div class="pf-node agent highlight">
+        <div class="pf-emoji">⚡</div>
+        <div class="pf-name">Zeus</div>
+        <div class="pf-role">Reviews</div>
+      </div>
+      <div class="pf-node agent highlight">
+        <div class="pf-emoji">👁</div>
+        <div class="pf-name">Argus</div>
+        <div class="pf-role">Tests</div>
+      </div>
+      <div class="pf-node agent highlight">
+        <div class="pf-emoji">⚖️</div>
+        <div class="pf-name">Themis</div>
+        <div class="pf-role">Security</div>
+      </div>
+      <div class="pf-node agent highlight">
+        <div class="pf-emoji">🌍</div>
+        <div class="pf-name">Atlas</div>
+        <div class="pf-role">Releases</div>
+      </div>
+      <div class="pf-node agent highlight" style="border-right:none">
+        <div class="pf-emoji">🔧</div>
+        <div class="pf-name">Hephaestus</div>
+        <div class="pf-role">Maintains</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Outcomes ── -->
+  <div class="lp-outcomes">
+    <div class="outcome-card">
+      <div class="outcome-delta">was 24–48 hrs</div>
+      <div class="outcome-val">&lt; 1hr</div>
+      <div class="outcome-lbl">Pull request review cycle — Zeus pre-reviews before humans touch it</div>
+    </div>
+    <div class="outcome-card">
+      <div class="outcome-delta">was manual, next-day</div>
+      <div class="outcome-val">Overnight</div>
+      <div class="outcome-lbl">Tickets implemented — Hermes works while the team sleeps</div>
+    </div>
+    <div class="outcome-card">
+      <div class="outcome-delta">was ad-hoc, inconsistent</div>
+      <div class="outcome-val">Enforced</div>
+      <div class="outcome-lbl">Test coverage — Argus blocks merge if it drops below threshold</div>
+    </div>
+    <div class="outcome-card">
+      <div class="outcome-delta">was manual copy-paste</div>
+      <div class="outcome-val">Auto-written</div>
+      <div class="outcome-lbl">Release notes — Atlas compiles from PRs and Jira every Friday</div>
+    </div>
+    <div class="outcome-card">
+      <div class="outcome-delta">was tribal knowledge</div>
+      <div class="outcome-val">Gated</div>
+      <div class="outcome-lbl">Security paths — Themis reviews every PR touching auth, payments, or data</div>
+    </div>
+    <div class="outcome-card">
+      <div class="outcome-delta">was forgotten or deferred</div>
+      <div class="outcome-val">Monday 7am</div>
+      <div class="outcome-lbl">Dependencies, dead code, lint — Hephaestus runs every week without being asked</div>
+    </div>
+  </div>
+
+  <!-- ── Agent map ── -->
+  <div class="lp-agents-head">
+    <div class="lp-agents-label">Six named agents — each owns a phase</div>
+  </div>
+  <div class="lp-agent-grid">
+    <div class="lp-agent-card">
+      <div class="lac-top"><span class="lac-emoji">🪽</span><span class="lac-name">Hermes</span></div>
+      <div class="lac-role">Development Agent</div>
+      <div class="lac-desc">Picks up Jira tickets, implements end-to-end, opens pull requests with full descriptions.</div>
+      <div class="lac-trigger">Daily 9am · @Devin !implement</div>
+    </div>
+    <div class="lp-agent-card">
+      <div class="lac-top"><span class="lac-emoji">⚡</span><span class="lac-name">Zeus</span></div>
+      <div class="lac-role">Code Review Agent</div>
+      <div class="lac-desc">Reviews every pull request for bugs, security, and coverage before a human touches it.</div>
+      <div class="lac-trigger">Auto on every PR · @Devin !review</div>
+    </div>
+    <div class="lp-agent-card">
+      <div class="lac-top"><span class="lac-emoji">👁</span><span class="lac-name">Argus</span></div>
+      <div class="lac-role">QA & Test Agent</div>
+      <div class="lac-desc">Runs full regression nightly, files Jira bugs for failures, enforces coverage thresholds.</div>
+      <div class="lac-trigger">Nightly 2am · @Devin !test</div>
+    </div>
+    <div class="lp-agent-card">
+      <div class="lac-top"><span class="lac-emoji">🌍</span><span class="lac-name">Atlas</span></div>
+      <div class="lac-role">Release Agent</div>
+      <div class="lac-desc">Compiles changelog, tags release in GitHub, updates Confluence, closes Jira version.</div>
+      <div class="lac-trigger">Friday 9am · @Devin !release</div>
+    </div>
+    <div class="lp-agent-card">
+      <div class="lac-top"><span class="lac-emoji">🔧</span><span class="lac-name">Hephaestus</span></div>
+      <div class="lac-role">Maintenance Agent</div>
+      <div class="lac-desc">Scans for outdated dependencies, dead code, and security CVEs. Opens fix PRs.</div>
+      <div class="lac-trigger">Monday 7am · @Devin !maintenance</div>
+    </div>
+    <div class="lp-agent-card">
+      <div class="lac-top"><span class="lac-emoji">⚖️</span><span class="lac-name">Themis</span></div>
+      <div class="lac-role">Security Agent</div>
+      <div class="lac-desc">Deep security review on every PR touching auth, payments, or data access paths.</div>
+      <div class="lac-trigger">On sensitive PRs · @Devin !security-review</div>
+    </div>
+  </div>
+
+  <!-- ── Governance ── -->
+  <div class="lp-governance">
+    <div class="lp-gov-icon">⚖️</div>
+    <div>
+      <div class="lp-gov-title">Humans stay in control — agents stop, ask, and wait</div>
+      <div class="lp-gov-items">
+        <div class="lp-gov-item"><div class="gov-pip"></div><span>Agents never merge without human approval. Branch protections apply equally to agents and engineers.</span></div>
+        <div class="lp-gov-item"><div class="gov-pip"></div><span>If acceptance criteria are missing or ambiguous, Hermes posts a Jira comment asking for clarification and stops.</span></div>
+        <div class="lp-gov-item"><div class="gov-pip"></div><span>No auto-merge for auth, payments, or database changes — Themis flags these for mandatory human review.</span></div>
+        <div class="lp-gov-item"><div class="gov-pip"></div><span>Override any running agent from Slack at any time. Send <code style="font-family:monospace;font-size:11px">EXIT</code> to end a session immediately.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Playbook deep-dive ── -->
+  <div class="lp-divider">
+    <div class="lp-divider-line"></div>
+    <div class="lp-divider-label">Explore the playbook</div>
+    <div class="lp-divider-line"></div>
+  </div>
+
   <div class="header">
     <div class="header-left">
-      <div class="eyebrow">Jira &nbsp;·&nbsp; Confluence &nbsp;·&nbsp; GitHub &nbsp;·&nbsp; Devin / Windsurf</div>
       <div class="page-title">Developer <em>SDLC</em></div>
-      <div class="page-sub">Architecture · Development · Code Review · Test &amp; QA · Release &amp; Deploy</div>
+      <div class="page-sub">Current state · AI-first workflow · Devin features · Agent roster · SOP</div>
     </div>
     <div class="mode-toggle">
       <button class="mode-btn cs-btn active" onclick="setMode('current')"><span class="btn-label">Current State</span></button>
