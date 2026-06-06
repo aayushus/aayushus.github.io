@@ -5,245 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Setup Guide — AI-First SDLC</title>
 <meta name="description" content="Step-by-step guide to set up the AI-first SDLC with Devin agents, playbooks, automations, and GitHub integration.">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#FAFAFA; --surface:#fff; --border:#E8E8E8; --border-mid:#D0D0D0;
-  --text:#0F0F0F; --text-2:#5C5C5C; --text-3:#9CA3AF;
-  --mono:'SF Mono','Fira Code',ui-monospace,monospace;
-  --ink:#0F172A;
-  --green:#15803D; --green-bg:#F0FDF4; --green-border:#BBF7D0;
-  --blue:#1D4ED8; --blue-bg:#EFF6FF; --blue-border:#BFDBFE;
-  --amber:#B45309; --amber-bg:#FFFBEB; --amber-border:#FDE68A;
-  --red:#B91C1C; --red-bg:#FEF2F2; --red-border:#FECACA;
-  --purple:#6D28D9; --purple-bg:#F5F0FF; --purple-border:#DDD6FE;
-  --sidebar-w:240px;
-}
-body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
-
-/* ── Top nav ── */
-.topnav{position:fixed;top:0;left:0;right:0;height:44px;background:var(--surface);border-bottom:1px solid var(--border);z-index:200;display:flex;align-items:center;}
-.topnav-inner{max-width:1120px;margin:0 auto;width:100%;padding:0 36px;display:flex;align-items:center;justify-content:space-between;}
-.topnav-brand{font-size:13px;font-weight:800;color:var(--ink);letter-spacing:-0.2px;display:flex;align-items:center;gap:7px;}
-.topnav-sep{color:#D0D0D0;font-weight:300;font-size:14px;}
-.topnav-tag{font-size:11px;font-weight:500;color:#9CA3AF;font-family:var(--mono);}
-.topnav-link{font-size:12px;font-weight:600;color:#5C5C5C;text-decoration:none;padding:6px 14px;border:1px solid #E8E8E8;border-radius:6px;background:#fff;transition:all 0.12s;letter-spacing:-0.1px;}
-.topnav-link:hover{background:#FAFAFA;border-color:#D0D0D0;color:var(--ink);}
-
-/* ── Progress bar ── */
-.progress-bar{position:fixed;top:44px;left:0;right:0;height:3px;background:var(--border);z-index:150}
-.progress-fill{height:100%;background:linear-gradient(90deg,var(--ink),#475569);width:0%;transition:width 0.2s}
-
-/* ── Sidebar ── */
-.sidebar{position:fixed;top:47px;left:0;bottom:0;width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:20px 0 40px;z-index:50}
-.sidebar-logo{padding:0 20px 20px;border-bottom:1px solid var(--border);margin-bottom:16px}
-.sidebar-logo a{text-decoration:none;display:block}
-.logo-eyebrow{font-size:10px;font-family:var(--mono);color:var(--text-3);letter-spacing:1px;text-transform:uppercase}
-.logo-title{font-size:15px;font-weight:800;color:var(--ink);margin-top:3px;letter-spacing:-0.3px}
-.nav-section-label{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--text-3);padding:10px 20px 4px}
-.nav-item{display:flex;align-items:center;gap:8px;padding:6px 20px;cursor:pointer;transition:background 0.1s;text-decoration:none;border-left:2px solid transparent}
-.nav-item:hover{background:var(--bg)}
-.nav-item.active{background:var(--blue-bg);border-left-color:var(--blue)}
-.nav-item.active .nav-item-text{color:var(--blue);font-weight:700}
-.nav-item.done .nav-item-num{background:var(--green);color:#fff;border-color:var(--green)}
-.nav-item-num{width:18px;height:18px;border-radius:50%;background:var(--bg);border:1.5px solid var(--border-mid);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;font-family:var(--mono);color:var(--text-3);flex-shrink:0;transition:all 0.2s}
-.nav-item-text{font-size:12px;font-weight:600;color:var(--text-2)}
-.nav-item-time{font-size:10px;color:var(--text-3);font-family:var(--mono);margin-left:auto;flex-shrink:0}
-
-/* ── Main content ── */
-.main{margin-left:var(--sidebar-w);padding:88px 56px 100px;max-width:calc(var(--sidebar-w) + 880px)}
-.page-header{margin-bottom:48px;padding-bottom:32px;border-bottom:2px solid var(--border)}
-.page-eyebrow{font-size:11px;font-family:var(--mono);color:var(--text-3);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
-.page-title{font-size:36px;font-weight:900;letter-spacing:-1px;line-height:1;color:var(--ink)}
-.page-subtitle{font-size:15px;color:var(--text-2);margin-top:10px;line-height:1.6;max-width:560px}
-.page-meta{display:flex;gap:16px;margin-top:20px;flex-wrap:wrap}
-.page-meta-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2)}
-.page-meta-item strong{color:var(--ink)}
-.back-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--text-2);text-decoration:none;margin-bottom:20px;padding:6px 12px;border:1px solid var(--border);border-radius:6px;transition:all 0.1s}
-.back-link:hover{border-color:var(--border-mid);color:var(--ink)}
-
-/* ── Section ── */
-.section{margin-bottom:64px;scroll-margin-top:24px}
-.section-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border)}
-.section-num-wrap{flex-shrink:0}
-.section-num{width:40px;height:40px;border-radius:10px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;font-family:var(--mono)}
-.section-header-text{flex:1}
-.section-title{font-size:22px;font-weight:900;letter-spacing:-0.4px;color:var(--ink)}
-.section-desc{font-size:13px;color:var(--text-2);margin-top:4px;line-height:1.6}
-.section-time{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;font-family:var(--mono);color:var(--text-3);background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:3px 8px;margin-top:8px}
-.section-done-btn{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:5px 12px;border-radius:5px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);cursor:pointer;transition:all 0.15s;margin-left:auto;align-self:flex-start;flex-shrink:0}
-.section-done-btn:hover{border-color:var(--green-border);background:var(--green-bg);color:var(--green)}
-.section-done-btn.done{background:var(--green-bg);border-color:var(--green-border);color:var(--green)}
-
-/* ── Steps ── */
-.step{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
-.step:last-child{border-bottom:none}
-.step-num{width:24px;height:24px;border-radius:6px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;font-family:var(--mono);flex-shrink:0;margin-top:1px}
-.step-body{flex:1}
-.step-title{font-size:14px;font-weight:700;color:var(--ink);line-height:1.4}
-.step-title code{font-family:var(--mono);font-size:12px;background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:1px 5px;font-weight:400}
-.step-desc{font-size:13px;color:var(--text-2);margin-top:4px;line-height:1.6}
-.step-desc code{font-family:var(--mono);font-size:11px;background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:1px 5px}
-.step-desc a{color:var(--blue);text-decoration:none}
-.step-desc a:hover{text-decoration:underline}
-
-/* ── Code blocks ── */
-.code-wrap{position:relative;margin:10px 0 4px}
-.code-block{background:#0F172A;border-radius:8px;padding:16px 18px;font-family:var(--mono);font-size:12.5px;line-height:1.7;color:#E2E8F0;overflow-x:auto;white-space:pre}
-.code-block .cm{color:#64748B} /* comment */
-.code-block .kw{color:#7DD3FC} /* keyword / nav path */
-.code-block .st{color:#86EFAC} /* string / value */
-.code-block .hl{color:#FDE68A} /* highlight / macro */
-.code-block .nt{color:#F9A8D4} /* note */
-.copy-btn{position:absolute;top:10px;right:10px;font-size:10px;font-weight:700;font-family:var(--mono);padding:4px 10px;border-radius:4px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);color:#94A3B8;cursor:pointer;transition:all 0.15s;letter-spacing:0.3px}
-.copy-btn:hover{background:rgba(255,255,255,0.15);color:#E2E8F0}
-.copy-btn.copied{background:rgba(134,239,172,0.15);color:#86EFAC;border-color:rgba(134,239,172,0.3)}
-
-/* file block header */
-.file-label{font-size:11px;font-family:var(--mono);font-weight:700;color:var(--text-3);background:var(--bg);border:1px solid var(--border);border-bottom:none;border-radius:6px 6px 0 0;padding:6px 14px;display:flex;align-items:center;gap:8px}
-.file-label-dot{width:8px;height:8px;border-radius:50%;background:var(--border-mid)}
-.file-block-wrap .code-block{border-radius:0 0 8px 8px;margin-top:0}
-
-/* callout */
-.callout{border-radius:8px;padding:14px 16px;margin:12px 0;font-size:13px;line-height:1.65;display:flex;gap:12px}
-.callout-icon{font-size:18px;flex-shrink:0;margin-top:1px}
-.callout.info   {background:var(--blue-bg);border:1px solid var(--blue-border);color:#1E3A8A}
-.callout.tip    {background:var(--green-bg);border:1px solid var(--green-border);color:#14532D}
-.callout.warn   {background:var(--amber-bg);border:1px solid var(--amber-border);color:#78350F}
-.callout.danger {background:var(--red-bg);border:1px solid var(--red-border);color:#7F1D1D}
-.callout code   {font-family:var(--mono);font-size:11px;background:rgba(255,255,255,0.6);border-radius:3px;padding:1px 5px}
-
-/* prereq checklist */
-.prereq-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin:14px 0}
-.prereq-item{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.1s}
-.prereq-item:last-child{border-bottom:none}
-.prereq-item:hover{background:var(--bg)}
-.prereq-item input[type=checkbox]{width:15px;height:15px;flex-shrink:0;margin-top:2px;accent-color:var(--ink);cursor:pointer}
-.prereq-item label{font-size:13px;line-height:1.5;cursor:pointer;flex:1}
-.prereq-item label strong{color:var(--ink)}
-.prereq-item label code{font-family:var(--mono);font-size:11px;background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:1px 5px}
-.prereq-item.checked{background:var(--green-bg)}
-.prereq-item.checked label{color:var(--green)}
-
-/* agent playbook card */
-.playbook-card{border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:14px 0}
-.playbook-card-head{padding:14px 18px;border-bottom:1px solid var(--border);background:var(--bg);display:flex;align-items:center;gap:10px}
-.playbook-emoji{font-size:20px}
-.playbook-head-info{flex:1}
-.playbook-agent-name{font-size:15px;font-weight:800;color:var(--ink)}
-.playbook-agent-role{font-size:11px;color:var(--text-3);margin-top:1px}
-.playbook-macro{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--purple);background:var(--purple-bg);border:1px solid var(--purple-border);border-radius:4px;padding:3px 9px;flex-shrink:0}
-.playbook-card-body{padding:0}
-/* playbook strip — replaces old grid layout */
-.playbook-strip{display:flex;align-items:center;padding:12px 18px;border-bottom:1px solid var(--border);background:var(--bg);gap:0;flex-wrap:wrap}
-.ps-item{display:flex;flex-direction:column;gap:3px;padding:0 16px}
-.ps-item:first-child{padding-left:0}
-.ps-sep{width:1px;height:30px;background:var(--border);flex-shrink:0}
-.ps-label{font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--text-3)}
-.ps-val{font-size:13px;font-weight:600;color:var(--ink);line-height:1.3}
-.ps-val.mono{font-family:var(--mono);color:var(--purple);font-size:13px}
-.playbook-instr{padding:16px 18px 18px}
-.instr-label{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--text-3);margin-bottom:10px}
-
-/* cron table */
-.cron-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
-.cron-table th{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--text-3);background:var(--bg);padding:8px 14px;text-align:left;border:1px solid var(--border)}
-.cron-table td{padding:9px 14px;border:1px solid var(--border);vertical-align:top;line-height:1.5}
-.cron-table code{font-family:var(--mono);font-size:11px;background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:1px 5px}
-
-/* verify step */
-.verify-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
-.verify-item:last-child{border-bottom:none}
-.verify-pip{width:3px;min-height:16px;background:var(--green);border-radius:2px;flex-shrink:0;margin-top:3px}
-</style>
+<link rel="stylesheet" href="assets/book.css">
 </head>
-<body>
+<body data-chapter="setup">
 
-<nav class="topnav">
-  <div class="topnav-inner">
-    <div class="topnav-brand">Setup Guide <span class="topnav-sep">/</span> <span class="topnav-tag">AI-First SDLC</span></div>
-    <a class="topnav-link" href="index.html">← Playbook</a>
-  </div>
-</nav>
+<nav class="topnav"><div class="topnav-inner"><a class="topnav-brand" href="index.html">AI-First SDLC <span class="topnav-sep">/</span> <span class="topnav-tag">Developer Playbook</span></a></div></nav>
+<aside class="booknav" id="booknav"></aside>
 <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
-<!-- Sidebar -->
-<nav class="sidebar">
-  <div class="sidebar-logo">
-    <div class="logo-eyebrow">AI-First SDLC</div>
-    <div class="logo-title">Setup Guide</div>
-  </div>
-  <div class="nav-section-label">Sections</div>
-  <a class="nav-item" href="#prereqs" onclick="setActive(this)">
-    <div class="nav-item-num" id="nn-1">1</div>
-    <div class="nav-item-text">Prerequisites</div>
-    <div class="nav-item-time">5m</div>
-  </a>
-  <a class="nav-item" href="#integrations" onclick="setActive(this)">
-    <div class="nav-item-num" id="nn-2">2</div>
-    <div class="nav-item-text">Connect Integrations</div>
-    <div class="nav-item-time">20m</div>
-  </a>
-  <a class="nav-item" href="#review" onclick="setActive(this)">
-    <div class="nav-item-num" id="nn-3">3</div>
-    <div class="nav-item-text">Enable Devin Review</div>
-    <div class="nav-item-time">5m</div>
-  </a>
-  <a class="nav-item" href="#index" onclick="setActive(this)">
-    <div class="nav-item-num" id="nn-4">4</div>
-    <div class="nav-item-text">Index Repos</div>
-    <div class="nav-item-time">10m</div>
-  </a>
-  <a class="nav-item" href="#playbooks" onclick="setActive(this)">
-    <div class="nav-item-num" id="nn-5">5</div>
-    <div class="nav-item-text">Create Playbooks</div>
-    <div class="nav-item-time">30m</div>
-  </a>
-  <a class="nav-item" href="#schedules" onclick="setActive(this)">
-    <div class="nav-item-num" id="nn-6">6</div>
-    <div class="nav-item-text">Create Schedules</div>
-    <div class="nav-item-time">20m</div>
-  </a>
-  <a class="nav-item" href="#automations" onclick="setActive(this)">
-    <div class="nav-item-num" id="nn-7">7</div>
-    <div class="nav-item-text">Create Automations</div>
-    <div class="nav-item-time">30m</div>
-  </a>
-  <a class="nav-item" href="#repo-setup" onclick="setActive(this)">
-    <div class="nav-item-num" id="nn-8">8</div>
-    <div class="nav-item-text">Per-Repo Files</div>
-    <div class="nav-item-time">30m/repo</div>
-  </a>
-  <a class="nav-item" href="#knowledge" onclick="setActive(this)">
-    <div class="nav-item-num" id="nn-9">9</div>
-    <div class="nav-item-text">Knowledge Base</div>
-    <div class="nav-item-time">15m</div>
-  </a>
-  <a class="nav-item" href="#engineer" onclick="setActive(this)">
-    <div class="nav-item-num" id="nn-10">10</div>
-    <div class="nav-item-text">Per-Engineer Setup</div>
-    <div class="nav-item-time">5m each</div>
-  </a>
-  <a class="nav-item" href="#verify" onclick="setActive(this)">
-    <div class="nav-item-num" id="nn-11">11</div>
-    <div class="nav-item-text">Verify Everything</div>
-    <div class="nav-item-time">15m</div>
-  </a>
-</nav>
 
-<!-- Main -->
-<main class="main">
+<main class="book-main">
 
-  <div class="page-header">
-    <div class="page-eyebrow">Engineering Team · 2026</div>
-    <div class="page-title">Setup Guide</div>
-    <div class="page-subtitle">Follow this guide in order, top to bottom. Every step is required unless marked optional. By the end, all six agents will be running and your SDLC will be AI-first.</div>
-    <div class="page-meta">
-      <div class="page-meta-item">⏱ <strong>Total time:</strong> ~2.5 hrs (admin) + 30 min per repo</div>
-      <div class="page-meta-item">👤 <strong>Who does this:</strong> Engineering Lead (admin steps) + each engineer (Section 10)</div>
-      <div class="page-meta-item">📋 <strong>You need:</strong> Devin Teams/Enterprise, GitHub org admin, Jira admin, Slack admin</div>
+  <header class="chapter-header">
+    <div class="chapter-eyebrow">Chapter 06 · Setup Guide</div>
+    <div class="chapter-title">Set up the <em>AI-first SDLC</em></div>
+    <div class="chapter-sub">Follow this guide in order, top to bottom. Every step is required unless marked optional. By the end, all six agents are running.</div>
+    <div style="display:flex;gap:18px;margin-top:18px;flex-wrap:wrap;font-size:12px;color:var(--text-2)">
+      <div>⏱ <strong style="color:var(--ink)">Total:</strong> ~3.5 hrs admin + 30 min/repo + 5 min/engineer</div>
+      <div>👤 <strong style="color:var(--ink)">Who:</strong> Engineering Lead (admin) + each engineer (per-engineer section)</div>
+      <div>📋 <strong style="color:var(--ink)">Need:</strong> Devin Teams/Enterprise, GitHub / Jira / Teams admin</div>
     </div>
-  </div>
+  </header>
 
   <!-- ══════════════════ 1. PREREQUISITES ══════════════════ -->
   <section class="section" id="prereqs">
@@ -254,18 +36,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
         <div class="section-desc">Confirm you have everything before starting. Don't skip this — you'll hit blockers mid-setup otherwise.</div>
         <div class="section-time">⏱ 5 min</div>
       </div>
-      <button class="section-done-btn" onclick="markDone(this,1)">Mark done</button>
+      <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
     <div class="callout info"><div class="callout-icon">ℹ️</div><div>Check each item off as you confirm it. Do not proceed until all are checked.</div></div>
 
     <div class="prereq-list">
       <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Devin Teams or Enterprise account</strong> — Sign up at <a href="https://app.devin.ai" target="_blank" style="color:var(--blue)">app.devin.ai</a>. You need Teams or Enterprise for scheduled sessions and automations.</label></div>
-      <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Windsurf Desktop 2.0+</strong> — Download at <a href="https://windsurf.com" target="_blank" style="color:var(--blue)">windsurf.com</a>. Required for the Windsurf → Devin cloud handoff feature.</label></div>
+      <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Devin Desktop 2.0+ (formerly Windsurf)</strong> — Download at <a href="https://windsurf.com" target="_blank" style="color:var(--blue)">windsurf.com</a>. Required for the Devin Desktop → Devin cloud handoff feature.</label></div>
       <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>GitHub organization admin access</strong> — You need to install the Devin GitHub App on your org. Personal repo access is not enough.</label></div>
       <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Jira admin access</strong> — Required to install the Jira integration and create the Devin service account user.</label></div>
-      <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Slack workspace admin access</strong> — Required to install the Devin Slack app and invite it to channels.</label></div>
-      <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Slack channels created</strong> — Create these channels before starting: <code>#dev-runs</code>, <code>#code-review</code>, <code>#qa-alerts</code>, <code>#releases</code>, <code>#engineering</code>, <code>#security</code>, <code>#incidents</code></label></div>
+      <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Microsoft Teams admin access</strong> — Required to install the Devin app for Microsoft Teams and add it to channels.</label></div>
+      <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Teams channels created</strong> — Create these channels before starting: <code>#dev-runs</code>, <code>#code-review</code>, <code>#qa-alerts</code>, <code>#releases</code>, <code>#engineering</code>, <code>#security</code>, <code>#incidents</code></label></div>
       <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Repos cloned locally</strong> — You'll need to commit files (<code>AGENTS.md</code>, <code>REVIEW.md</code>, <code>SKILL.md</code>) to each repo in Section 8.</label></div>
     </div>
   </section>
@@ -276,10 +58,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
       <div class="section-num-wrap"><div class="section-num">02</div></div>
       <div class="section-header-text">
         <div class="section-title">Connect Integrations</div>
-        <div class="section-desc">Wire Devin to GitHub, Jira, and Slack. Do all three before moving on.</div>
+        <div class="section-desc">Wire Devin to GitHub, Jira, and Teams. Do all three before moving on.</div>
         <div class="section-time">⏱ 20 min</div>
       </div>
-      <button class="section-done-btn" onclick="markDone(this,2)">Mark done</button>
+      <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
     <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin-bottom:14px;padding-top:4px">2A — GitHub</h3>
@@ -294,16 +76,52 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Create a Devin service account in Jira</div><div class="step-desc">In Jira admin: <strong>User Management → Create user</strong>. Suggested email: <code>devin@yourcompany.com</code>. This account is what Devin uses to post comments and update tickets — so they appear as "Devin" not as you.</div></div></div>
     <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">In Jira admin: create an <strong>OAuth 2.0 app</strong> for the service account</div><div class="step-desc">Atlassian admin → Security → OAuth 2.0 integration → Create. Scopes needed: <code>read:me</code>, <code>read:jira-user</code>, <code>read:jira-work</code>, <code>write:jira-work</code></div></div></div>
     <div class="step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Back in Devin: click <strong>Connect service account</strong> and enter the client ID + secret</div></div></div>
-    <div class="step"><div class="step-num">6</div><div class="step-body"><div class="step-title">Create these labels in your Jira project</div><div class="step-desc">Go to your Jira project → Project settings → Labels → Create: <code>devin</code>, <code>!implement</code>, <code>!write-tests</code>, <code>!design-review</code>, <code>!security-review</code></div></div></div>
+    <div class="step"><div class="step-num">6</div><div class="step-body"><div class="step-title">Create these labels in your Jira project</div><div class="step-desc">Go to your Jira project → Project settings → Labels → Create: <code>devin</code>, <code>!write-tests</code>, <code>!design-review</code>, <code>!security-review</code></div></div></div>
 
-    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:24px 0 14px;padding-top:4px">2C — Slack</h3>
-    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/integrations/slack" target="_blank">app.devin.ai → Settings → Integrations → Slack</a></div></div></div>
-    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Click <strong>Connect</strong> → <strong>Add to Slack</strong> and authorize for your workspace</div></div></div>
-    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Invite <code>@Devin</code> to all seven channels</div><div class="step-desc">In each channel, type: <code>/invite @Devin</code><br>Channels: <code>#dev-runs</code> <code>#code-review</code> <code>#qa-alerts</code> <code>#releases</code> <code>#engineering</code> <code>#security</code> <code>#incidents</code></div></div></div>
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:24px 0 14px;padding-top:4px">2C — Microsoft Teams</h3>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/integrations/microsoft-teams" target="_blank">app.devin.ai → Settings → Integrations → Microsoft Teams</a></div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Click <strong>Connect</strong> → <strong>Add to Teams</strong> and authorize for your Microsoft 365 tenant (admin consent)</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Add the <code>@Devin</code> app to all seven channels</div><div class="step-desc">In each channel: <strong>···</strong> → <strong>Manage channel → Apps</strong> and add Devin (or @mention <code>@Devin</code> once to invite).<br>Channels: <code>#dev-runs</code> <code>#code-review</code> <code>#qa-alerts</code> <code>#releases</code> <code>#engineering</code> <code>#security</code> <code>#incidents</code></div></div></div>
     <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Test the integration</div><div class="step-desc">In <code>#engineering</code>, type: <code>@Devin hello</code> — you should get a response within 30 seconds.</div></div></div>
   </section>
 
   <!-- ══════════════════ 3. DEVIN REVIEW ══════════════════ -->
+  <!-- ══════════════════ ENVIRONMENT & SECRETS ══════════════════ -->
+  <section class="section" id="environment">
+    <div class="section-header">
+      <div class="section-num-wrap"><div class="section-num">00</div></div>
+      <div class="section-header-text">
+        <div class="section-title">Configure Environment &amp; Secrets</div>
+        <div class="section-desc">Give every session a working dev environment and the credentials it needs. Skip this and agents fail to install dependencies, run tests, or reach internal services.</div>
+        <div class="section-time">⏱ 25 min</div>
+      </div>
+      <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
+    </div>
+
+    <div class="callout info"><div class="callout-icon">ℹ️</div><div>Every Devin session boots from a <strong>snapshot</strong> — a pre-built machine image. Configure it once and every Hermes / Argus run starts with your repos cloned, tools installed, and dependencies ready.</div></div>
+
+    <h3 class="subhead">A — Environment (Blueprints)</h3>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/repositories" target="_blank">Settings → Repositories</a> → pick a repo → <strong>Configure environment</strong></div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Choose <strong>Declarative configuration</strong> (a YAML <em>blueprint</em>) — recommended — or the classic interactive wizard</div><div class="step-desc">Blueprints version-control your environment and rebuild automatically. <a href="https://docs.devin.ai/onboard-devin/environment/blueprints" target="_blank">Blueprints docs</a> · <a href="https://docs.devin.ai/onboard-devin/repo-setup" target="_blank">classic wizard</a></div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Define how the machine is built</div>
+      <div class="file-block-wrap"><div class="file-label"><div class="file-label-dot"></div>blueprint.yaml (example)</div><div class="code-wrap" style="margin-top:0"><button class="copy-btn" onclick="copyCode(this)">copy</button><div class="code-block"><span class="kw">install:</span>
+  <span class="cm"># runs once when the snapshot is built</span>
+  - npm ci
+<span class="kw">maintain:</span>
+  - npm run build
+<span class="kw">test:</span>
+  - npm test
+<span class="kw">env:</span>
+  NODE_ENV: test</div></div></div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Trigger a <strong>build</strong> and wait for green</div><div class="step-desc">The build produces the snapshot every session boots from. Re-run it whenever your toolchain changes.</div></div></div>
+    <div class="callout tip"><div class="callout-icon">✅</div><div><strong>Verify:</strong> start a session and run your test command. If <code>npm test</code> passes with no manual setup, agents are good to go.</div></div>
+
+    <h3 class="subhead">B — Secrets</h3>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/secrets" target="_blank">Settings → Secrets</a> → add what agents need at runtime</div><div class="step-desc">Test database URL, sandbox API keys, package-registry tokens, internal service credentials. Pin each to the relevant repos. <a href="https://docs.devin.ai/product-guides/secrets" target="_blank">Secrets docs</a></div></div></div>
+    <div class="callout danger"><div class="callout-icon">🔒</div><div><strong>Never</strong> put secrets in <code>AGENTS.md</code>, playbooks, or Knowledge — those are readable context. Real credentials belong only in Secrets, scoped to least privilege (read-only / sandbox where possible).</div></div>
+    <div class="callout info"><div class="callout-icon">🌐</div><div><strong>Internal network?</strong> If agents must reach services behind your VPN, configure it at <a href="https://docs.devin.ai/onboard-devin/vpn" target="_blank">VPN setup</a>.</div></div>
+  </section>
+
   <section class="section" id="review">
     <div class="section-header">
       <div class="section-num-wrap"><div class="section-num">03</div></div>
@@ -312,7 +130,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
         <div class="section-desc">Turns on automated PR review across all repos. This is what powers Zeus.</div>
         <div class="section-time">⏱ 5 min</div>
       </div>
-      <button class="section-done-btn" onclick="markDone(this,3)">Mark done</button>
+      <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
     <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/review" target="_blank">app.devin.ai → Settings → Review</a></div></div></div>
@@ -331,7 +149,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
         <div class="section-desc">Indexing enables Ask Devin, DeepWiki, and codebase-aware context in every agent session.</div>
         <div class="section-time">⏱ 10 min (indexing runs in background)</div>
       </div>
-      <button class="section-done-btn" onclick="markDone(this,4)">Mark done</button>
+      <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
     <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/repositories" target="_blank">app.devin.ai → Settings → Repositories</a></div></div></div>
@@ -349,7 +167,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
         <div class="section-desc">Playbooks are each agent's brain — the instructions they follow on every run. Create all six. Copy the prompts exactly.</div>
         <div class="section-time">⏱ 30 min</div>
       </div>
-      <button class="section-done-btn" onclick="markDone(this,5)">Mark done</button>
+      <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
     <div class="callout info"><div class="callout-icon">ℹ️</div><div>For each playbook: go to <a href="https://app.devin.ai/settings/playbooks" target="_blank">app.devin.ai → Settings → Library → Playbooks → Create</a>. Enter the Name, Macro, and paste the Instructions exactly.</div></div>
@@ -417,7 +235,7 @@ Post the PR link as a comment on the Jira ticket.
 Move the ticket status to "In Review".
 
 <span class="cm">8. NOTIFY</span>
-Post the PR link to the <span class="hl">#dev-runs</span> Slack channel with one sentence
+Post the PR link to the <span class="hl">#dev-runs</span> Teams channel with one sentence
 summarising what was implemented.</div>
           </div>
         </div>
@@ -529,8 +347,8 @@ For each real regression, create a Jira bug ticket:
 For flaky tests: post a note to <span class="hl">#qa-alerts</span> only — do NOT file a Jira ticket.
 
 <span class="cm">5. CHECK COVERAGE</span>
-If any module's coverage has dropped below 80%, flag it in the report.
-If any module is below 60%, file a Jira ticket:
+If any module's coverage drops below 80% (90% for auth/payments), flag it in the report.
+If any module is below 60%, file a P2 Jira ticket:
 - Title: <span class="st">[Coverage] [module name] below threshold</span>
 - Priority: P2
 
@@ -746,7 +564,7 @@ sensitive paths AND as a weekly codebase sweep.
         <div class="section-desc">One scheduled session per agent. Go to <a href="https://app.devin.ai/settings/schedules" target="_blank">Settings → Schedules → Create Schedule</a> for each row.</div>
         <div class="section-time">⏱ 20 min</div>
       </div>
-      <button class="section-done-btn" onclick="markDone(this,6)">Mark done</button>
+      <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
     <table class="cron-table">
@@ -814,7 +632,7 @@ sensitive paths AND as a weekly codebase sweep.
         <div class="section-desc">Event-driven triggers that give agents real-time reflexes. Go to <a href="https://app.devin.ai/automations" target="_blank">app.devin.ai → Automations</a>.</div>
         <div class="section-time">⏱ 30 min</div>
       </div>
-      <button class="section-done-btn" onclick="markDone(this,7)">Mark done</button>
+      <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
     <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin-bottom:14px">7A — CI Failure Auto-Fix (Zeus reflex)</h3>
@@ -833,8 +651,8 @@ sensitive paths AND as a weekly codebase sweep.
     <div class="step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Set <strong>Invocation limit: 10 per hour</strong></div><div class="step-desc">Prevents a noisy repo from spawning dozens of sessions during a bad deploy.</div></div></div>
 
     <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7B — #incidents Auto-Triage (Atlas reflex)</h3>
-    <div class="callout info"><div class="callout-icon">ℹ️</div><div>Use the pre-built template: <strong>Automations → Templates → "Triage bug reports on Slack"</strong></div></div>
-    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Click <strong>Templates</strong> → select <strong>Triage bug reports on Slack</strong></div></div></div>
+    <div class="callout info"><div class="callout-icon">ℹ️</div><div>Use the pre-built template: <strong>Automations → Templates → "Triage bug reports on Teams"</strong></div></div>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Click <strong>Templates</strong> → select <strong>Triage bug reports on Teams</strong></div></div></div>
     <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Set channel: <code>#incidents</code></div></div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Action type: <strong>Triage Devin</strong> (persistent monitor)</div><div class="step-desc">This creates a persistent Devin session that watches the channel and spawns sub-agents for each incident report.</div></div></div>
 
@@ -861,7 +679,7 @@ File Jira security tickets for MEDIUM and above.</div></div>
    infrastructure changes in this deploy
 4. Post a summary of what was updated to #releases</div></div>
     </div></div>
-    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Wire your CI/CD pipeline to POST to the webhook URL on every production deploy</div><div class="step-desc">In GitHub Actions, add a step after your deploy step that runs:<br><code>curl -X POST [WEBHOOK_URL] -H "Content-Type: application/json" -d '{"service":"$SERVICE_NAME","commit":"$GITHUB_SHA"}'</code></div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Wire your CI/CD pipeline to POST to the webhook URL on every production deploy</div><div class="step-desc">In GitHub Actions, add a step after your deploy step that runs:<br><code>curl -X POST [WEBHOOK_URL] -H "Content-Type: application/json" -d "{\"service\":\"$SERVICE_NAME\",\"commit\":\"$GITHUB_SHA\"}"</code></div></div></div>
   </section>
 
   <!-- ══════════════════ 8. PER-REPO FILES ══════════════════ -->
@@ -873,10 +691,12 @@ File Jira security tickets for MEDIUM and above.</div></div>
         <div class="section-desc">Add these four files to every repo. Devin reads them automatically at the start of every session. Commit and push — no Devin config needed.</div>
         <div class="section-time">⏱ 30 min per repo</div>
       </div>
-      <button class="section-done-btn" onclick="markDone(this,8)">Mark done</button>
+      <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
     <div class="callout warn"><div class="callout-icon">⚠️</div><div>The content below is a <strong>template</strong>. Customise it to match your actual tech stack, architecture, and conventions before committing. Devin takes these files literally — generic instructions produce generic output.</div></div>
+
+    <div class="callout tip"><div class="callout-icon">📝</div><div><strong>PR templates:</strong> if a repo has <code>.github/pull_request_template.md</code>, Hermes fills it out automatically. To give Devin its own, add <code>.github/PULL_REQUEST_TEMPLATE/devin.md</code> — keep it short (what changed, why, how to test). <a href="https://docs.devin.ai/integrations/pr-templates" target="_blank">PR templates docs</a></div></div>
 
     <!-- AGENTS.md -->
     <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:20px 0 10px">AGENTS.md</h3>
@@ -951,7 +771,7 @@ Full SDLC operating procedure: https://aayushus.github.io/sdlc/</div>
 - Functions longer than 50 lines — suggest refactoring
 - Deeply nested callbacks (>3 levels) — suggest async/await or extraction
 - Missing error handling on async operations
-- Test coverage dropping below 80% on changed files
+- Test coverage on changed files: flag below 80% (below 90% for auth/payments)
 
 <span class="kw">## Anti-Patterns — Flag These</span>
 - Direct database access from API route handlers (bypass repository layer)
@@ -1087,7 +907,7 @@ Description template:
         <div class="section-desc">Knowledge items are org-wide context that Devin recalls automatically. Go to <a href="https://app.devin.ai/settings/knowledge" target="_blank">Settings → Knowledge → Add Knowledge</a> for each entry.</div>
         <div class="section-time">⏱ 15 min</div>
       </div>
-      <button class="section-done-btn" onclick="markDone(this,9)">Mark done</button>
+      <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
     <p style="font-size:13px;color:var(--text-2);margin-bottom:16px;line-height:1.6">For each entry: enter the <strong>Trigger Description</strong> (what Devin is working on when it should recall this) and the <strong>Content</strong>. Pin each one to "all repos".</p>
@@ -1118,7 +938,7 @@ Description template:
     <div class="step"><div class="step-num">3</div><div class="step-body">
       <div class="step-title">Trigger: <code>when writing tests or checking test coverage</code></div>
       <div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">copy</button><div class="code-block">Testing conventions:
-- Minimum coverage threshold: 80% overall, 90% for auth and payments modules.
+- Coverage policy (the standard the agents enforce): 80% on changed files, 90% for auth and payments modules. Below 80% is flagged on the PR; below 60% in any module is a P2 Jira ticket.
 - Unit tests go in __tests__/ directories alongside the source file.
 - Integration tests go in tests/integration/.
 - E2E tests go in tests/e2e/ and use Playwright.
@@ -1143,6 +963,45 @@ Description template:
   </section>
 
   <!-- ══════════════════ 10. PER-ENGINEER ══════════════════ -->
+  <!-- ══════════════════ OBSERVABILITY & COST ══════════════════ -->
+  <section class="section" id="observability">
+    <div class="section-header">
+      <div class="section-num-wrap"><div class="section-num">00</div></div>
+      <div class="section-header-text">
+        <div class="section-title">Observability &amp; Cost</div>
+        <div class="section-desc">Know what the agents are doing, whether it's working, and what it costs — before usage surprises you.</div>
+        <div class="section-time">⏱ 15 min</div>
+      </div>
+      <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
+    </div>
+
+    <div class="callout tip"><div class="callout-icon">🎁</div><div>When you first connect GitHub to Devin you get up to <strong>$50 in usage credits</strong> to trial it before it draws on your plan quota.</div></div>
+
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Turn on <strong>Session Insights</strong></div><div class="step-desc">Devin analyses each session and gives actionable feedback on what worked and where prompts / playbooks need work — your feedback loop for improving the agents. <a href="https://docs.devin.ai/product-guides/session-insights" target="_blank">Session Insights docs</a></div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Bookmark the <strong>Usage</strong> dashboard</div><div class="step-desc"><a href="https://app.devin.ai/settings/usage" target="_blank">Settings → Usage</a> shows ACU consumption, sessions, searches, and PR metrics. Review weekly. <a href="https://docs.devin.ai/admin/billing/usage" target="_blank">How usage is metered</a></div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Set <strong>ACU limits</strong> on automations and schedules</div><div class="step-desc">Cap per-session cost (e.g. 20 ACU for a CI fix). Prevents a noisy repo or a stuck session from burning quota — a session that stops mid-task may have hit its limit.</div></div></div>
+    <div class="callout info"><div class="callout-icon">📊</div><div><strong>Programmatic:</strong> the v3 metrics API (sessions, searches, PRs, active users) can feed a custom dashboard for trends over time. <a href="https://docs.devin.ai/api-reference/overview" target="_blank">API overview</a></div></div>
+  </section>
+
+  <!-- ══════════════════ ACCESS & SECURITY ══════════════════ -->
+  <section class="section" id="security">
+    <div class="section-header">
+      <div class="section-num-wrap"><div class="section-num">00</div></div>
+      <div class="section-header-text">
+        <div class="section-title">Access &amp; Security</div>
+        <div class="section-desc">Decide who can do what, lock down access, and keep an audit trail. Several items below are Enterprise-plan features.</div>
+        <div class="section-time">⏱ 20 min</div>
+      </div>
+      <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
+    </div>
+
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Scope the Devin <strong>service account</strong> to least privilege</div><div class="step-desc">The Jira / GitHub service user Hermes acts as should have only the access it needs. Use <a href="https://docs.devin.ai/enterprise/security-access/custom-roles" target="_blank">custom roles &amp; RBAC</a> to limit who can change playbooks, schedules, and org settings.</div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Enforce <strong>SSO</strong> for the team</div><div class="step-desc">SAML / OIDC / Okta / Azure AD. <a href="https://docs.devin.ai/enterprise/security-access/sso/guide" target="_blank">SSO onboarding guide</a></div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Restrict access with an <strong>IP access list</strong></div><div class="step-desc">Limit web app + API access to your office / VPN ranges. <a href="https://docs.devin.ai/enterprise/security-access/ip-access-lists" target="_blank">IP access lists</a></div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Know where the <strong>audit log</strong> and <strong>kill switch</strong> are</div><div class="step-desc">Audit logs record every agent and admin action — review them when something looks off. Any running session can be stopped from Teams (<code>EXIT</code>) or terminated in the web app / via API. <a href="https://docs.devin.ai/admin/security" target="_blank">Security at Cognition</a></div></div></div>
+    <div class="callout warn"><div class="callout-icon">⚠️</div><div>Org-wide write access to repos, Jira, and Teams is powerful. Pair it with branch protections (agents can't merge), scoped secrets, and a habit of reviewing the audit log. Revisit permissions quarterly.</div></div>
+  </section>
+
   <section class="section" id="engineer">
     <div class="section-header">
       <div class="section-num-wrap"><div class="section-num">10</div></div>
@@ -1151,10 +1010,10 @@ Description template:
         <div class="section-desc">Every engineer on the team does this once. Takes 5 minutes.</div>
         <div class="section-time">⏱ 5 min per engineer</div>
       </div>
-      <button class="section-done-btn" onclick="markDone(this,10)">Mark done</button>
+      <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
-    <div class="callout info"><div class="callout-icon">ℹ️</div><div>Share this section URL with your team: <strong>each engineer completes steps 1–4 themselves.</strong> The admin setup in sections 1–9 does not need to be repeated.</div></div>
+    <div class="callout info"><div class="callout-icon">ℹ️</div><div>Share this section URL with your team: <strong>each engineer completes these steps themselves.</strong> The admin setup (earlier sections) does not need to be repeated.</div></div>
 
     <div class="step"><div class="step-num">1</div><div class="step-body">
       <div class="step-title">Create a Devin account at <a href="https://app.devin.ai" target="_blank">app.devin.ai</a></div>
@@ -1165,18 +1024,22 @@ Description template:
       <div class="step-desc"><a href="https://app.devin.ai/settings/integrations/github" target="_blank">Settings → Integrations → GitHub</a> → Connect your personal GitHub account. This allows Devin to create PRs and branches as you.</div>
     </div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body">
-      <div class="step-title">Connect your Slack account</div>
-      <div class="step-desc"><a href="https://app.devin.ai/settings/integrations/slack" target="_blank">Settings → Integrations → Slack</a> → Link your account. Your Slack email must match your Devin email. This is required to receive Devin notifications and to use <code>@Devin</code> in Slack.</div>
+      <div class="step-title">Connect your Microsoft Teams account</div>
+      <div class="step-desc"><a href="https://app.devin.ai/settings/integrations/microsoft-teams" target="_blank">Settings → Integrations → Microsoft Teams</a> → Link your account. Your Teams email must match your Devin email. This is required to receive Devin notifications and to use <code>@Devin</code> in Teams.</div>
     </div></div>
     <div class="step"><div class="step-num">4</div><div class="step-body">
       <div class="step-title">Self-enroll for auto PR review</div>
       <div class="step-desc"><a href="https://app.devin.ai/settings/review" target="_blank">Settings → Review</a> → Click <strong>"Add myself (@yourusername)"</strong>. Zeus will now automatically review any PR you open or are assigned to.</div>
     </div></div>
     <div class="step"><div class="step-num">5</div><div class="step-body">
-      <div class="step-title">Install Windsurf Desktop</div>
+      <div class="step-title">Install Devin Desktop</div>
       <div class="step-desc">Download from <a href="https://windsurf.com" target="_blank">windsurf.com</a>. Sign in with your work account. In the Agent Command Center, connect to Devin Cloud to enable the local → cloud handoff.</div>
     </div></div>
     <div class="step"><div class="step-num">6</div><div class="step-body">
+      <div class="step-title">(Optional) Install the <strong>Devin CLI</strong> for local work</div>
+      <div class="step-desc">A local command-line agent for quick fixes and code exploration, with <code>/handoff</code> to send longer tasks to cloud Devin.<br><code>curl -fsSL https://cli.devin.ai/install.sh | bash</code> · <a href="https://docs.devin.ai/work-with-devin/devin-cli" target="_blank">Devin CLI docs</a></div>
+    </div></div>
+    <div class="step"><div class="step-num">7</div><div class="step-body">
       <div class="step-title">Bookmark these two URLs</div>
       <div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">copy</button><div class="code-block">SDLC Playbook:  https://aayushus.github.io/sdlc/
 Devin app:      https://app.devin.ai
@@ -1193,10 +1056,10 @@ Fast PR review: replace github.com → devinreview.com in any PR URL</div></div>
         <div class="section-desc">Run these checks to confirm the full setup is working before you go live.</div>
         <div class="section-time">⏱ 15 min</div>
       </div>
-      <button class="section-done-btn" onclick="markDone(this,11)">Mark done</button>
+      <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
-    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Hermes:</strong> In Slack, send <code>@Devin !implement [any small ticket key]</code>. Within 2 minutes, Devin should respond with a session link and start working. Within ~20 min (for a small ticket), a PR should appear in GitHub.</div></div>
+    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Hermes:</strong> In Teams, send <code>@Devin !implement [any small ticket key]</code>. Within 2 minutes, Devin should respond with a session link and start working. Within ~20 min (for a small ticket), a PR should appear in GitHub.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Zeus:</strong> Open a test PR in any repo. Within 5 minutes, a Devin Review comment should appear on the PR. If not, check Settings → Review → verify the repo is listed and auto-review is ON.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Argus:</strong> Send <code>@Devin !test</code> in <code>#qa-alerts</code>. Argus should respond with a session link and post a pass/fail summary within 10–30 minutes.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Check schedules:</strong> Go to <a href="https://app.devin.ai/settings/schedules" target="_blank">Settings → Schedules</a>. All 6 schedules should show status <strong>Active</strong>. If any show <strong>Error</strong>, click to see the error and fix the prompt or cron expression.</div></div>
@@ -1210,61 +1073,49 @@ Fast PR review: replace github.com → devinreview.com in any PR URL</div></div>
 
 </main>
 
+<script src="assets/nav.js"></script>
 <script>
-// Progress bar
+function sections(){return [...document.querySelectorAll('main .section')];}
 function updateProgress(){
-  const sections=document.querySelectorAll('.section');
-  let done=0;
-  sections.forEach(s=>{const btn=s.querySelector('.section-done-btn');if(btn&&btn.classList.contains('done'))done++});
-  document.getElementById('progressFill').style.width=((done/sections.length)*100)+'%';
+  const secs=sections();
+  const done=secs.filter(s=>{const b=s.querySelector('.section-done-btn');return b&&b.classList.contains('done');}).length;
+  const f=document.getElementById('progressFill'); if(f) f.style.width=((done/secs.length)*100)+'%';
 }
-
-// Mark section done
-function markDone(btn,num){
+const LS_KEY='sdlc-setup-progress-v2';
+function loadState(){try{return JSON.parse(localStorage.getItem(LS_KEY))||{}}catch(e){return{}}}
+function saveState(s){try{localStorage.setItem(LS_KEY,JSON.stringify(s))}catch(e){}}
+function persistSection(num,done){const s=loadState();s.sections=s.sections||{};s.sections[num]=done;saveState(s);}
+function persistPrereq(idx,checked){const s=loadState();s.prereqs=s.prereqs||{};s.prereqs[idx]=checked;saveState(s);}
+function markDone(btn){
   btn.classList.toggle('done');
-  btn.textContent=btn.classList.contains('done')?'✓ Done':'Mark done';
-  const nn=document.getElementById('nn-'+num);
-  if(nn){nn.classList.toggle('done',btn.classList.contains('done'));if(btn.classList.contains('done'))nn.textContent='✓';}
+  const done=btn.classList.contains('done');
+  btn.textContent=done?'✓ Done':'Mark done';
+  persistSection(sections().indexOf(btn.closest('.section'))+1,done);
   updateProgress();
 }
-
-// Prereq toggle
 function togglePrereq(item){
   const cb=item.querySelector('input');
   cb.checked=!cb.checked;
   item.classList.toggle('checked',cb.checked);
+  persistPrereq([...document.querySelectorAll('.prereq-item')].indexOf(item),cb.checked);
 }
-
-// Copy code
-function copyCode(btn){
-  const block=btn.nextElementSibling;
-  const text=block.innerText;
-  navigator.clipboard.writeText(text).then(()=>{
-    btn.textContent='copied!';btn.classList.add('copied');
-    setTimeout(()=>{btn.textContent='copy';btn.classList.remove('copied')},2000);
-  }).catch(()=>{btn.textContent='error'});
+function restoreState(){
+  const s=loadState();
+  if(s.sections){ sections().forEach((sec,i)=>{ if(s.sections[i+1]){const b=sec.querySelector('.section-done-btn');if(b){b.classList.add('done');b.textContent='✓ Done';}} }); }
+  if(s.prereqs){ const items=[...document.querySelectorAll('.prereq-item')]; items.forEach((it,idx)=>{if(s.prereqs[idx]){const cb=it.querySelector('input');if(cb)cb.checked=true;it.classList.add('checked');}}); }
+  updateProgress();
 }
-
-// Active nav
-function setActive(el){
-  setTimeout(()=>{
-    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-    el.classList.add('active');
-  },10);
-}
-
-// Auto-highlight nav on scroll
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      const id=e.target.id;
-      document.querySelectorAll('.nav-item').forEach(n=>{
-        n.classList.toggle('active',n.getAttribute('href')==='#'+id);
-      });
-    }
-  });
-},{threshold:0.3,rootMargin:'-60px 0px -40% 0px'});
-document.querySelectorAll('.section').forEach(s=>observer.observe(s));
+// auto-number section headers + build the sidebar sub-nav from the DOM
+sections().forEach((sec,i)=>{
+  sec.setAttribute('data-spy','');
+  const n=sec.querySelector('.section-num'); if(n) n.textContent=String(i+1).padStart(2,'0');
+});
+window.BOOK_SUBNAV=sections().map((sec,i)=>{
+  const t=sec.querySelector('.section-title');
+  return {id:sec.id,label:(i+1)+' · '+(t?t.textContent:sec.id)};
+});
+mountBook();
+restoreState();
 </script>
 </body>
 </html>

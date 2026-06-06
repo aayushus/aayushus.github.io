@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Devin Playbook — AI-First SDLC</title>
+<meta name="description" content="The specific Devin Desktop features that power each SDLC phase, with setup steps and examples.">
+<link rel="stylesheet" href="assets/book.css">
+</head>
+<body data-chapter="devin">
+<nav class="topnav"><div class="topnav-inner"><a class="topnav-brand" href="index.html">AI-First SDLC <span class="topnav-sep">/</span> <span class="topnav-tag">Developer Playbook</span></a></div></nav>
+<aside class="booknav" id="booknav"></aside>
+
+<main class="book-main">
+  <header class="chapter-header">
+    <div class="chapter-eyebrow">Chapter 03 · Devin Playbook</div>
+    <div class="chapter-title">Devin Desktop, <em>mapped to every phase</em></div>
+    <div class="chapter-sub">The specific Devin features that power each phase — knowledge, playbooks, scheduled sessions, automations, and review. Every card links to the documentation so you can set it up directly.</div>
+  </header>
+  <div id="stats"></div>
+  <div id="content"></div>
+  <footer class="prevnext" id="prevnext"></footer>
+</main>
+
+<script src="assets/data.js"></script>
+<script src="assets/nav.js"></script>
+<script>
+  document.getElementById('stats').innerHTML = buildStats('devin');
+  document.getElementById('content').innerHTML = phases.map(buildDevinSection).join('');
+  window.BOOK_SUBNAV = phases.map(p=>({ id:p.id, label:`${p.num} · ${p.name}` }));
+  mountBook();
+</script>
+</body>
+</html>
