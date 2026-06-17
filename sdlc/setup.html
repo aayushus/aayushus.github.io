@@ -647,8 +647,7 @@ sensitive paths AND as a weekly codebase sweep.
 4. If it's a flaky test: post a comment on the PR explaining it's flaky
 5. Do NOT push if you are not confident in the fix — post a comment instead</div></div>
     </div></div>
-    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Set <strong>ACU limit: 20</strong> per session</div><div class="step-desc">This caps the cost of each auto-fix session. Increase if your CI failures are complex.</div></div></div>
-    <div class="step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Set <strong>Invocation limit: 10 per hour</strong></div><div class="step-desc">Prevents a noisy repo from spawning dozens of sessions during a bad deploy.</div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Set <strong>Invocation limit: 10 per hour</strong></div><div class="step-desc">Prevents a noisy repo from spawning dozens of sessions during a bad deploy.</div></div></div>
 
     <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7B — #incidents Auto-Triage (Atlas reflex)</h3>
     <div class="callout info"><div class="callout-icon">ℹ️</div><div>Use the pre-built template: <strong>Automations → Templates → "Triage bug reports on Teams"</strong></div></div>
@@ -666,7 +665,7 @@ Run a full security review following the !security-review playbook.
 Post findings as GitHub review comments with severity levels (CRITICAL/HIGH/MEDIUM/LOW).
 File Jira security tickets for MEDIUM and above.</div></div>
     </div></div>
-    <div class="step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Set <strong>ACU limit: 30</strong> and save</div></div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Save and enable the automation</div></div></div>
 
     <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7D — Post-Deploy Runbook Update (Atlas webhook)</h3>
     <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Automations → <strong>New automation</strong> → Trigger: <strong>Webhook</strong></div></div></div>
@@ -968,18 +967,15 @@ Description template:
     <div class="section-header">
       <div class="section-num-wrap"><div class="section-num">00</div></div>
       <div class="section-header-text">
-        <div class="section-title">Observability &amp; Cost</div>
-        <div class="section-desc">Know what the agents are doing, whether it's working, and what it costs — before usage surprises you.</div>
+        <div class="section-title">Observability</div>
+        <div class="section-desc">Know what the agents are doing and whether it's working — tune playbooks from real session data.</div>
         <div class="section-time">⏱ 15 min</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
-    <div class="callout tip"><div class="callout-icon">🎁</div><div>When you first connect GitHub to Devin you get up to <strong>$50 in usage credits</strong> to trial it before it draws on your plan quota.</div></div>
-
     <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Turn on <strong>Session Insights</strong></div><div class="step-desc">Devin analyses each session and gives actionable feedback on what worked and where prompts / playbooks need work — your feedback loop for improving the agents. <a href="https://docs.devin.ai/product-guides/session-insights" target="_blank">Session Insights docs</a></div></div></div>
-    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Bookmark the <strong>Usage</strong> dashboard</div><div class="step-desc"><a href="https://app.devin.ai/settings/usage" target="_blank">Settings → Usage</a> shows ACU consumption, sessions, searches, and PR metrics. Review weekly. <a href="https://docs.devin.ai/admin/billing/usage" target="_blank">How usage is metered</a></div></div></div>
-    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Set <strong>ACU limits</strong> on automations and schedules</div><div class="step-desc">Cap per-session cost (e.g. 20 ACU for a CI fix). Prevents a noisy repo or a stuck session from burning quota — a session that stops mid-task may have hit its limit.</div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Bookmark the <strong>Usage</strong> dashboard</div><div class="step-desc"><a href="https://app.devin.ai/settings/usage" target="_blank">Settings → Usage</a> shows session volume, searches, and PR metrics. Review weekly to spot trends and tune agent behavior. <a href="https://docs.devin.ai/admin/billing/usage" target="_blank">How usage is metered</a></div></div></div>
     <div class="callout info"><div class="callout-icon">📊</div><div><strong>Programmatic:</strong> the v3 metrics API (sessions, searches, PRs, active users) can feed a custom dashboard for trends over time. <a href="https://docs.devin.ai/api-reference/overview" target="_blank">API overview</a></div></div>
   </section>
 
