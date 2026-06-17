@@ -21,7 +21,6 @@
     <div class="chapter-title">Set up the <em>AI-first SDLC</em></div>
     <div class="chapter-sub">Follow this guide in order, top to bottom. Every step is required unless marked optional. By the end, all six agents are running.</div>
     <div style="display:flex;gap:18px;margin-top:18px;flex-wrap:wrap;font-size:12px;color:var(--text-2)">
-      <div>⏱ <strong style="color:var(--ink)">Total:</strong> ~3.5 hrs admin + 30 min/repo + 5 min/engineer</div>
       <div>👤 <strong style="color:var(--ink)">Who:</strong> Engineering Lead (admin) + each engineer (per-engineer section)</div>
       <div>📋 <strong style="color:var(--ink)">Need:</strong> Devin Teams/Enterprise, GitHub / Jira / Teams admin</div>
     </div>
@@ -34,7 +33,6 @@
       <div class="section-header-text">
         <div class="section-title">Prerequisites</div>
         <div class="section-desc">Confirm you have everything before starting. Don't skip this — you'll hit blockers mid-setup otherwise.</div>
-        <div class="section-time">⏱ 5 min</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -59,7 +57,6 @@
       <div class="section-header-text">
         <div class="section-title">Connect Integrations</div>
         <div class="section-desc">Wire Devin to GitHub, Jira, and Teams. Do all three before moving on.</div>
-        <div class="section-time">⏱ 20 min</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -93,7 +90,6 @@
       <div class="section-header-text">
         <div class="section-title">Configure Environment &amp; Secrets</div>
         <div class="section-desc">Give every session a working dev environment and the credentials it needs. Skip this and agents fail to install dependencies, run tests, or reach internal services.</div>
-        <div class="section-time">⏱ 25 min</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -128,7 +124,6 @@
       <div class="section-header-text">
         <div class="section-title">Enable Devin Review</div>
         <div class="section-desc">Turns on automated PR review across all repos. This is what powers Critic.</div>
-        <div class="section-time">⏱ 5 min</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -147,7 +142,6 @@
       <div class="section-header-text">
         <div class="section-title">Index Repositories</div>
         <div class="section-desc">Indexing enables Ask Devin, DeepWiki, and codebase-aware context in every agent session.</div>
-        <div class="section-time">⏱ 10 min (indexing runs in background)</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -165,7 +159,6 @@
       <div class="section-header-text">
         <div class="section-title">Create Playbooks</div>
         <div class="section-desc">Playbooks are each agent's brain — the instructions they follow on every run. Create all six. Copy the prompts exactly.</div>
-        <div class="section-time">⏱ 30 min</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -562,7 +555,6 @@ sensitive paths AND as a weekly codebase sweep.
       <div class="section-header-text">
         <div class="section-title">Create Scheduled Sessions</div>
         <div class="section-desc">One scheduled session per agent. Go to <a href="https://app.devin.ai/settings/schedules" target="_blank">Settings → Schedules → Create Schedule</a> for each row.</div>
-        <div class="section-time">⏱ 20 min</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -630,7 +622,6 @@ sensitive paths AND as a weekly codebase sweep.
       <div class="section-header-text">
         <div class="section-title">Create Automations</div>
         <div class="section-desc">Event-driven triggers that give agents real-time reflexes. Go to <a href="https://app.devin.ai/automations" target="_blank">app.devin.ai → Automations</a>.</div>
-        <div class="section-time">⏱ 30 min</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -688,7 +679,6 @@ File Jira security tickets for MEDIUM and above.</div></div>
       <div class="section-header-text">
         <div class="section-title">Per-Repo Files</div>
         <div class="section-desc">Add these four files to every repo. Devin reads them automatically at the start of every session. Commit and push — no Devin config needed.</div>
-        <div class="section-time">⏱ 30 min per repo</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -904,7 +894,6 @@ Description template:
       <div class="section-header-text">
         <div class="section-title">Knowledge Base</div>
         <div class="section-desc">Knowledge items are org-wide context that Devin recalls automatically. Go to <a href="https://app.devin.ai/settings/knowledge" target="_blank">Settings → Knowledge → Add Knowledge</a> for each entry.</div>
-        <div class="section-time">⏱ 15 min</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -969,7 +958,6 @@ Description template:
       <div class="section-header-text">
         <div class="section-title">Observability</div>
         <div class="section-desc">Know what the agents are doing and whether it's working — tune playbooks from real session data.</div>
-        <div class="section-time">⏱ 15 min</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -986,7 +974,6 @@ Description template:
       <div class="section-header-text">
         <div class="section-title">Access &amp; Security</div>
         <div class="section-desc">Decide who can do what, lock down access, and keep an audit trail. Several items below are Enterprise-plan features.</div>
-        <div class="section-time">⏱ 20 min</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -1004,7 +991,6 @@ Description template:
       <div class="section-header-text">
         <div class="section-title">Per-Engineer Setup</div>
         <div class="section-desc">Every engineer on the team does this once. Takes 5 minutes.</div>
-        <div class="section-time">⏱ 5 min per engineer</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -1050,7 +1036,6 @@ Fast PR review: replace github.com → devinreview.com in any PR URL</div></div>
       <div class="section-header-text">
         <div class="section-title">Verify Everything Works</div>
         <div class="section-desc">Run these checks to confirm the full setup is working before you go live.</div>
-        <div class="section-time">⏱ 15 min</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>

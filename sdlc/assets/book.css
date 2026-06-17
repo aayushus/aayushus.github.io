@@ -230,7 +230,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 .agent-meta-item{display:flex;align-items:center;gap:6px}
 .meta-label{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-3)}
 .meta-val{font-family:var(--mono);font-size:11px;font-weight:700;background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border);padding:2px 7px;border-radius:4px}
-.meta-val.slack{background:var(--green-bg);color:var(--green);border-color:var(--green-border)}
+.meta-val.teams{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-border)}
 .meta-val.phase{background:var(--bg);color:var(--text-2);border-color:var(--border)}
 .agent-status-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;flex-shrink:0;align-self:flex-start}
 .status-active{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
@@ -284,7 +284,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 .checklist-group-title{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--text-3);padding:8px 0;border-bottom:1px solid var(--border);margin-bottom:4px}
 .checklist-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);cursor:pointer}
 .checklist-item:last-child{border-bottom:none}
-.checklist-item input[type=checkbox]{width:15px;height:15px;flex-shrink:0;margin-top:2px;accent-color:var(--sop);cursor:pointer}
+.checklist-item input[type=checkbox]{width:15px;height:15px;flex-shrink:0;margin-top:2px;accent-color:var(--sop);pointer-events:none}
 .checklist-item label{font-size:13px;line-height:1.5;cursor:pointer}
 .checklist-item label code{font-family:var(--mono);font-size:11px;background:var(--sop-bg);border:1px solid var(--sop-border);border-radius:3px;padding:1px 5px}
 .checklist-item.checked label{color:var(--text-3);text-decoration:line-through}
@@ -342,7 +342,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 .prereq-item{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s}
 .prereq-item:last-child{border-bottom:none}
 .prereq-item:hover{background:var(--bg)}
-.prereq-item input[type=checkbox]{width:15px;height:15px;flex-shrink:0;margin-top:2px;accent-color:var(--ink);cursor:pointer}
+.prereq-item input[type=checkbox]{width:15px;height:15px;flex-shrink:0;margin-top:2px;accent-color:var(--ink);pointer-events:none}
 .prereq-item label{font-size:13px;line-height:1.5;cursor:pointer;flex:1}
 .prereq-item label strong{color:var(--ink)}
 .prereq-item label code{font-family:var(--mono);font-size:11px;background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:1px 5px}
@@ -385,4 +385,90 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
   .booknav{position:static;width:auto;height:auto;border-right:none;border-bottom:1px solid var(--border)}
   .book-main{margin-left:0;padding:64px 22px 64px}
   .progress-bar{left:0}
+}
+
+/* ── Agent Badges ── */
+.agent-badge {
+  display: inline-block;
+  width: 56px;
+  height: 56px;
+  vertical-align: middle;
+}
+.agent-badge svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.agent-badge-wrap {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.playbook-badge-wrap {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.pf-badge-wrap {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-bottom: 4px;
+}
+.lp-cross-badge-wrap {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Light Mode Colors */
+.coder-badge .badge-bg { fill: #EFF6FF; }
+.coder-badge .badge-icon { stroke: #1D4ED8; }
+
+.critic-badge .badge-bg { fill: #F5F0FF; }
+.critic-badge .badge-icon { stroke: #6D28D9; }
+
+.checker-badge .badge-bg { fill: #F0FDF4; }
+.checker-badge .badge-icon { stroke: #15803D; }
+
+.shipper-badge .badge-bg { fill: #FFF7ED; }
+.shipper-badge .badge-icon { stroke: #C2410C; }
+
+.janitor-badge .badge-bg { fill: #F3F4F6; }
+.janitor-badge .badge-icon { stroke: #4B5563; }
+
+.sentinel-badge .badge-bg { fill: #FEF2F2; }
+.sentinel-badge .badge-icon { stroke: #B91C1C; }
+
+/* Dark Mode Colors */
+@media (prefers-color-scheme: dark) {
+  .coder-badge .badge-bg { fill: #1E3A8A; }
+  .coder-badge .badge-icon { stroke: #93C5FD; }
+
+  .critic-badge .badge-bg { fill: #4C1D95; }
+  .critic-badge .badge-icon { stroke: #C084FC; }
+
+  .checker-badge .badge-bg { fill: #064E3B; }
+  .checker-badge .badge-icon { stroke: #86EFAC; }
+
+  .shipper-badge .badge-bg { fill: #7C2D12; }
+  .shipper-badge .badge-icon { stroke: #FDBA74; }
+
+  .janitor-badge .badge-bg { fill: #374151; }
+  .janitor-badge .badge-icon { stroke: #D1D5DB; }
+
+  .sentinel-badge .badge-bg { fill: #7F1D1D; }
+  .sentinel-badge .badge-icon { stroke: #FCA5A5; }
 }

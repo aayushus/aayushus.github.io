@@ -102,7 +102,7 @@ const sopSections=[
 </div>`},
 {id:'setup',num:'§4',name:'Setup Checklist',render:()=>{
   const groups=[
-    {title:'Admin Setup (Engineering Lead — ~3.5 hours)',items:[
+    {title:'Admin Setup (Engineering Lead)',items:[
       {id:'s1',text:'Connect GitHub: Settings → Integrations → GitHub → Connect all repos'},
       {id:'s2',text:'Connect Jira: Settings → Integrations → Jira → Connect, create Devin service account in Jira'},
       {id:'s3',text:'Connect Teams: Settings → Integrations → Microsoft Teams → Connect, invite Devin to all team channels'},
@@ -117,7 +117,7 @@ const sopSections=[
       {id:'s12',text:'Turn on <code>Session Insights</code> and bookmark <code>Settings → Usage</code>'},
       {id:'s13',text:'Lock down access: service-account least privilege, SSO, IP allowlist, audit-log review'}
     ]},
-    {title:'Per-Repo Setup (Each Team Lead — ~30 min per repo)',items:[
+    {title:'Per-Repo Setup (Each Team Lead)',items:[
       {id:'r1',text:'Add <code>AGENTS.md</code> to repo root: architecture conventions, module boundaries, naming patterns'},
       {id:'r2',text:'Add <code>REVIEW.md</code> to repo root: critical paths, security rules, anti-patterns, what to ignore'},
       {id:'r3',text:'Add <code>.agents/skills/implement/SKILL.md</code>: test commands, lint, branch naming, PR conventions'},
@@ -125,7 +125,7 @@ const sopSections=[
       {id:'r5',text:'Create Jira labels: <code>devin</code> (implement), <code>!write-tests</code>, <code>!design-review</code>, <code>!security-review</code>'},
       {id:'r6',text:'Add Architecture Knowledge: Settings → Knowledge → Add (trigger: "architecture" or "API design")'}
     ]},
-    {title:'Per-Engineer Setup (~5 min)',items:[
+    {title:'Per-Engineer Setup',items:[
       {id:'e1',text:'Connect personal Teams account: Devin Settings → Integrations → Microsoft Teams → link your account'},
       {id:'e2',text:'Connect GitHub account: Devin Settings → Integrations → GitHub'},
       {id:'e3',text:'Self-enroll for auto-review: Settings → Review → "Add myself (@username)"'},
@@ -136,7 +136,7 @@ const sopSections=[
     <div class="sop-section-header">
       <div class="sop-section-num">Section 4</div>
       <div class="sop-section-name">Setup Checklist</div>
-      <div class="sop-section-desc">One-time setup to activate all agents and integrations. Estimated total: ~3.5 hrs admin setup + 30 min per repo + 5 min per engineer.</div>
+      <div class="sop-section-desc">One-time setup to activate all agents and integrations. The pace depends on how much work goes into your AGENTS.md / REVIEW.md files, environment blueprints, and access approvals.</div>
     </div>
     <div class="sop-callout tip"><div class="sop-callout-icon">✅</div><div>Check items off as you complete them — progress is saved in your browser. Print or screenshot this section to track setup progress with your team.</div></div>
     ${groups.map(g=>`
@@ -303,9 +303,9 @@ const sopSections=[
 const statsData={
   current:[{num:'5',lbl:'phases in scope',hi:false},{num:'0 / 5',lbl:'phases using AI today',hi:false},{num:'~60%',lbl:'of handoffs are manual',hi:false},{num:'4+',lbl:'disconnected tool contexts per sprint',hi:false}],
   ai:[{num:'5 / 5',lbl:'phases with AI in the loop',hi:true,c:'var(--ai-accent)'},{num:'~80%',lbl:'of routine toil targeted for automation',hi:true,c:'var(--ai-accent)'},{num:'< 1hr',lbl:'PR review cycle with AI pre-triage',hi:true,c:'var(--ai-accent)'},{num:'0',lbl:'manual Jira ↔ GitHub syncs needed',hi:true,c:'var(--ai-accent)'}],
-  devin:[{num:'17',lbl:'specific Devin features mapped',hi:true,c:'var(--teal)'},{num:'4',lbl:'automation templates ready to deploy',hi:true,c:'var(--teal)'},{num:'0 code',lbl:'required — all config-driven',hi:true,c:'var(--teal)'},{num:'~3.5 hr',lbl:'to activate the core setup (+ per repo)',hi:true,c:'var(--teal)'}],
+  devin:[{num:'17',lbl:'specific Devin features mapped',hi:true,c:'var(--teal)'},{num:'4',lbl:'automation templates ready to deploy',hi:true,c:'var(--teal)'},{num:'0 code',lbl:'required — all config-driven',hi:true,c:'var(--teal)'},{num:'3',lbl:'core integrations: GitHub · Jira · Teams',hi:true,c:'var(--teal)'}],
   roster:[{num:'6',lbl:'named cloud agents',hi:true,c:'var(--blue)'},{num:'24/7',lbl:'agents run headlessly',hi:true,c:'var(--blue)'},{num:'Teams',lbl:'is the control plane for all agents',hi:true,c:'var(--blue)'},{num:'Cron',lbl:'+ event triggers — agents start without manual kickoff',hi:true,c:'var(--blue)'}],
-  sop:[{num:'7',lbl:'sections in this SOP',hi:true,c:'var(--sop)'},{num:'~15 min',lbl:'to read end-to-end',hi:true,c:'var(--sop)'},{num:'~3.5 hr',lbl:'admin setup + 30 min per repo',hi:true,c:'var(--sop)'},{num:'Living',lbl:'document — agents keep parts updated',hi:true,c:'var(--sop)'}]
+  sop:[{num:'7',lbl:'sections in this SOP',hi:true,c:'var(--sop)'},{num:'~15 min',lbl:'to read end-to-end',hi:true,c:'var(--sop)'},{num:'6',lbl:'agents covered end-to-end',hi:true,c:'var(--sop)'},{num:'Living',lbl:'document — agents keep parts updated',hi:true,c:'var(--sop)'}]
 };
 
 /* ══════════════════════════════════════

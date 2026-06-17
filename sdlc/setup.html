@@ -21,7 +21,6 @@
     <div class="chapter-title">Set up the <em>AI-first SDLC</em></div>
     <div class="chapter-sub">Follow this guide in order, top to bottom. Every step is required unless marked optional. By the end, all six agents are running.</div>
     <div style="display:flex;gap:18px;margin-top:18px;flex-wrap:wrap;font-size:12px;color:var(--text-2)">
-      <div>⏱ <strong style="color:var(--ink)">Total:</strong> ~3.5 hrs admin + 30 min/repo + 5 min/engineer</div>
       <div>👤 <strong style="color:var(--ink)">Who:</strong> Engineering Lead (admin) + each engineer (per-engineer section)</div>
       <div>📋 <strong style="color:var(--ink)">Need:</strong> Devin Teams/Enterprise, GitHub / Jira / Teams admin</div>
     </div>
@@ -34,7 +33,6 @@
       <div class="section-header-text">
         <div class="section-title">Prerequisites</div>
         <div class="section-desc">Confirm you have everything before starting. Don't skip this — you'll hit blockers mid-setup otherwise.</div>
-        <div class="section-time">⏱ 5 min</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -47,7 +45,7 @@
       <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>GitHub organization admin access</strong> — You need to install the Devin GitHub App on your org. Personal repo access is not enough.</label></div>
       <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Jira admin access</strong> — Required to install the Jira integration and create the Devin service account user.</label></div>
       <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Microsoft Teams admin access</strong> — Required to install the Devin app for Microsoft Teams and add it to channels.</label></div>
-      <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Teams channels created</strong> — Create these channels before starting: <code>#dev-runs</code>, <code>#code-review</code>, <code>#qa-alerts</code>, <code>#releases</code>, <code>#engineering</code>, <code>#security</code>, <code>#incidents</code></label></div>
+      <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Dedicated Teams Space Created</strong> — We highly recommend creating a dedicated Team in Microsoft Teams named <strong>"Devin Agents"</strong> (or "AI-First SDLC") to keep notifications organized and avoid cluttering general spaces. Inside this Team, create these channels: <code>dev-runs</code>, <code>code-review</code>, <code>qa-alerts</code>, <code>releases</code>, <code>engineering</code>, <code>security</code>, <code>incidents</code></label></div>
       <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Repos cloned locally</strong> — You'll need to commit files (<code>AGENTS.md</code>, <code>REVIEW.md</code>, <code>SKILL.md</code>) to each repo in Section 8.</label></div>
     </div>
   </section>
@@ -59,7 +57,6 @@
       <div class="section-header-text">
         <div class="section-title">Connect Integrations</div>
         <div class="section-desc">Wire Devin to GitHub, Jira, and Teams. Do all three before moving on.</div>
-        <div class="section-time">⏱ 20 min</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -81,8 +78,8 @@
     <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:24px 0 14px;padding-top:4px">2C — Microsoft Teams</h3>
     <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/integrations/microsoft-teams" target="_blank">app.devin.ai → Settings → Integrations → Microsoft Teams</a></div></div></div>
     <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Click <strong>Connect</strong> → <strong>Add to Teams</strong> and authorize for your Microsoft 365 tenant (admin consent)</div></div></div>
-    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Add the <code>@Devin</code> app to all seven channels</div><div class="step-desc">In each channel: <strong>···</strong> → <strong>Manage channel → Apps</strong> and add Devin (or @mention <code>@Devin</code> once to invite).<br>Channels: <code>#dev-runs</code> <code>#code-review</code> <code>#qa-alerts</code> <code>#releases</code> <code>#engineering</code> <code>#security</code> <code>#incidents</code></div></div></div>
-    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Test the integration</div><div class="step-desc">In <code>#engineering</code>, type: <code>@Devin hello</code> — you should get a response within 30 seconds.</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Add the <code>@Devin</code> app to your dedicated Team space and channels</div><div class="step-desc">In your dedicated <strong>"Devin Agents"</strong> Team: click <strong>···</strong> → <strong>Manage team → Apps</strong> → <strong>More apps</strong>, find Devin, and add it. Then, ensure Devin is added to all seven channels: <code>dev-runs</code>, <code>code-review</code>, <code>qa-alerts</code>, <code>releases</code>, <code>engineering</code>, <code>security</code>, and <code>incidents</code>.</div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Test the integration</div><div class="step-desc">In the <code>engineering</code> channel, type: <code>@Devin hello</code> — you should get a response within 30 seconds.</div></div></div>
   </section>
 
   <!-- ══════════════════ 3. DEVIN REVIEW ══════════════════ -->
@@ -93,12 +90,11 @@
       <div class="section-header-text">
         <div class="section-title">Configure Environment &amp; Secrets</div>
         <div class="section-desc">Give every session a working dev environment and the credentials it needs. Skip this and agents fail to install dependencies, run tests, or reach internal services.</div>
-        <div class="section-time">⏱ 25 min</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
-    <div class="callout info"><div class="callout-icon">ℹ️</div><div>Every Devin session boots from a <strong>snapshot</strong> — a pre-built machine image. Configure it once and every Hermes / Argus run starts with your repos cloned, tools installed, and dependencies ready.</div></div>
+    <div class="callout info"><div class="callout-icon">ℹ️</div><div>Every Devin session boots from a <strong>snapshot</strong> — a pre-built machine image. Configure it once and every Coder / Checker run starts with your repos cloned, tools installed, and dependencies ready.</div></div>
 
     <h3 class="subhead">A — Environment (Blueprints)</h3>
     <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/repositories" target="_blank">Settings → Repositories</a> → pick a repo → <strong>Configure environment</strong></div></div></div>
@@ -127,8 +123,7 @@
       <div class="section-num-wrap"><div class="section-num">03</div></div>
       <div class="section-header-text">
         <div class="section-title">Enable Devin Review</div>
-        <div class="section-desc">Turns on automated PR review across all repos. This is what powers Zeus.</div>
-        <div class="section-time">⏱ 5 min</div>
+        <div class="section-desc">Turns on automated PR review across all repos. This is what powers Critic.</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -147,7 +142,6 @@
       <div class="section-header-text">
         <div class="section-title">Index Repositories</div>
         <div class="section-desc">Indexing enables Ask Devin, DeepWiki, and codebase-aware context in every agent session.</div>
-        <div class="section-time">⏱ 10 min (indexing runs in background)</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -165,19 +159,18 @@
       <div class="section-header-text">
         <div class="section-title">Create Playbooks</div>
         <div class="section-desc">Playbooks are each agent's brain — the instructions they follow on every run. Create all six. Copy the prompts exactly.</div>
-        <div class="section-time">⏱ 30 min</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
     <div class="callout info"><div class="callout-icon">ℹ️</div><div>For each playbook: go to <a href="https://app.devin.ai/settings/playbooks" target="_blank">app.devin.ai → Settings → Library → Playbooks → Create</a>. Enter the Name, Macro, and paste the Instructions exactly.</div></div>
 
-    <!-- Hermes -->
+    <!-- Coder -->
     <div class="playbook-card" style="margin-top:20px">
       <div class="playbook-card-head">
-        <div class="playbook-emoji">🪽</div>
+        <div class="playbook-badge-wrap"><span class="agent-badge coder-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M8 7 L3 12 L8 17 M16 7 L21 12 L16 17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/></svg></span></div>
         <div class="playbook-head-info">
-          <div class="playbook-agent-name">Hermes — Development Agent</div>
+          <div class="playbook-agent-name">Coder — Development Agent</div>
           <div class="playbook-agent-role">Implements Jira tickets autonomously</div>
         </div>
         <div class="playbook-macro">!implement</div>
@@ -235,18 +228,18 @@ Post the PR link as a comment on the Jira ticket.
 Move the ticket status to "In Review".
 
 <span class="cm">8. NOTIFY</span>
-Post the PR link to the <span class="hl">#dev-runs</span> Teams channel with one sentence
+Post the PR link to the <span class="hl">dev-runs</span> Teams channel with one sentence
 summarising what was implemented.</div>
           </div>
         </div>
     </div>
 
-    <!--Zeus -->
+    <!-- Critic -->
     <div class="playbook-card">
       <div class="playbook-card-head">
-        <div class="playbook-emoji">⚡</div>
+        <div class="playbook-badge-wrap"><span class="agent-badge critic-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><circle cx="6" cy="6" r="2.5" class="badge-icon" fill="none" stroke-width="1.8"/><circle cx="6" cy="18" r="2.5" class="badge-icon" fill="none" stroke-width="1.8"/><circle cx="18" cy="18" r="2.5" class="badge-icon" fill="none" stroke-width="1.8"/><path d="M6 8.5 L6 15.5 M18 15.5 L18 12 A2.5 2.5 0 0 0 15.5 9.5 L8.5 9.5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/></svg></span></div>
         <div class="playbook-head-info">
-          <div class="playbook-agent-name">Zeus — Code Review Agent</div>
+          <div class="playbook-agent-name">Critic — Code Review Agent</div>
           <div class="playbook-agent-role">Reviews all open PRs and triages CI failures</div>
         </div>
         <div class="playbook-macro">!review</div>
@@ -292,7 +285,7 @@ summarising what was implemented.</div>
    why it was auto-approved.
 
 <span class="cm">AFTER REVIEWING ALL PRS:</span>
-Post a summary to <span class="hl">#code-review</span>:
+Post a summary to the <span class="hl">code-review</span> channel:
 - List each PR: author, title, status (needs attention / approved / blocked)
 - Flag any PRs open more than 48 hours
 - Flag any PRs with Severe findings that must be fixed before merge</div>
@@ -300,12 +293,12 @@ Post a summary to <span class="hl">#code-review</span>:
         </div>
     </div>
 
-    <!--Argus -->
+    <!-- Checker -->
     <div class="playbook-card">
       <div class="playbook-card-head">
-        <div class="playbook-emoji">👁</div>
+        <div class="playbook-badge-wrap"><span class="agent-badge checker-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><rect x="8" y="7" width="8" height="10" rx="4" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M9 7 A3 3 0 0 1 15 7" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M5 9 L8 10 M5 12 L8 12 M5 15 L8 14 M19 9 L16 10 M19 12 L16 12 M19 15 L16 14" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/><path d="M10 5 C9 3, 8 3, 8 3 M14 5 C15 3, 16 3, 16 3" stroke-width="1.5" stroke-linecap="round" class="badge-icon"/></svg></span></div>
         <div class="playbook-head-info">
-          <div class="playbook-agent-name">Argus — QA & Test Agent</div>
+          <div class="playbook-agent-name">Checker — QA & Testing Agent</div>
           <div class="playbook-agent-role">Runs nightly regression and files Jira bugs</div>
         </div>
         <div class="playbook-macro">!test</div>
@@ -344,7 +337,7 @@ For each real regression, create a Jira bug ticket:
 - Priority: P1 if it affects a critical user-facing path, P2 otherwise
 - Label: <span class="hl">regression</span>
 
-For flaky tests: post a note to <span class="hl">#qa-alerts</span> only — do NOT file a Jira ticket.
+For flaky tests: post a note to the <span class="hl">qa-alerts</span> channel only — do NOT file a Jira ticket.
 
 <span class="cm">5. CHECK COVERAGE</span>
 If any module's coverage drops below 80% (90% for auth/payments), flag it in the report.
@@ -352,7 +345,7 @@ If any module is below 60%, file a P2 Jira ticket:
 - Title: <span class="st">[Coverage] [module name] below threshold</span>
 - Priority: P2
 
-<span class="cm">6. POST SUMMARY TO #qa-alerts</span>
+<span class="cm">6. POST SUMMARY TO QA-ALERTS CHANNEL</span>
 <span class="st">✅ X tests passed
 ❌ Y failed (Z real regressions, W flaky)
 📊 Overall coverage: X%
@@ -362,12 +355,12 @@ If any module is below 60%, file a P2 Jira ticket:
         </div>
     </div>
 
-    <!--Atlas -->
+    <!-- Shipper -->
     <div class="playbook-card">
       <div class="playbook-card-head">
-        <div class="playbook-emoji">🌍</div>
+        <div class="playbook-badge-wrap"><span class="agent-badge shipper-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M12 3 C15 6, 17 10, 17 14 C17 17, 15 19, 12 19 C9 19, 7 17, 7 14 C7 10, 9 6, 12 3 Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><path d="M7 14 L4 17 L4 19 L7 18 M17 14 L20 17 L20 19 L17 18" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><circle cx="12" cy="11" r="1.5" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M10 19 L12 22 L14 19" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/></svg></span></div>
         <div class="playbook-head-info">
-          <div class="playbook-agent-name">Atlas — Release Agent</div>
+          <div class="playbook-agent-name">Shipper — Release Agent</div>
           <div class="playbook-agent-role">Weekly changelog, GitHub tag, Confluence, Jira close</div>
         </div>
         <div class="playbook-macro">!release</div>
@@ -384,15 +377,15 @@ If any module is below 60%, file a P2 Jira ticket:
         <div class="code-wrap">
             <button class="copy-btn" onclick="copyCode(this)">copy</button>
             <div class="code-block">You are performing the weekly release process. Follow every step in order.
-Do NOT skip any step. Do NOT proceed if a step fails — post to #releases and stop.
+Do NOT skip any step. Do NOT proceed if a step fails — post to the releases channel and stop.
 
 <span class="cm">STEP 1 — CHECK BLOCKERS</span>
 Search Jira for open tickets with priority P1 or P2 that are unresolved.
-If any exist: post to <span class="hl">#releases</span>: "⚠️ Release blocked: [ticket list]" and STOP.
+If any exist: post to the <span class="hl">releases</span> channel: "⚠️ Release blocked: [ticket list]" and STOP.
 
 <span class="cm">STEP 2 — VERIFY CI</span>
 Confirm CI is green on the main branch.
-If failing: post to <span class="hl">#releases</span>: "⚠️ Release blocked: CI failing on main" and STOP.
+If failing: post to the <span class="hl">releases</span> channel: "⚠️ Release blocked: CI failing on main" and STOP.
 
 <span class="cm">STEP 3 — COMPILE CHANGELOG</span>
 Find all pull requests merged to main since the last release tag.
@@ -417,18 +410,18 @@ Mark all resolved tickets as belonging to this version.
 Close the version.
 
 <span class="cm">STEP 7 — NOTIFY</span>
-Post to <span class="hl">#releases</span> with the full changelog, the GitHub release link,
+Post to the <span class="hl">releases</span> channel with the full changelog, the GitHub release link,
 and a one-sentence summary of the most significant change this release.</div>
           </div>
         </div>
     </div>
 
-    <!--Hephaestus -->
+    <!-- Janitor -->
     <div class="playbook-card">
       <div class="playbook-card-head">
-        <div class="playbook-emoji">🔧</div>
+        <div class="playbook-badge-wrap"><span class="agent-badge janitor-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M18.4 5.6 a4.3 4.3 0 0 0 -6.1 0 c-1.1 1.1 -1.4 2.7 -0.9 4 L4 17.1 a1.5 1.5 0 0 0 2.1 2.1 l7.5 -7.5 c1.3 0.5 2.9 0.2 4 -0.9 a4.3 4.3 0 0 0 0 -6.1 Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><path d="M15 8 L18 5" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/></svg></span></div>
         <div class="playbook-head-info">
-          <div class="playbook-agent-name">Hephaestus — Maintenance Agent</div>
+          <div class="playbook-agent-name">Janitor — Maintenance Agent</div>
           <div class="playbook-agent-role">Dependencies, dead code, security audit, lint</div>
         </div>
         <div class="playbook-macro">!maintenance</div>
@@ -481,7 +474,7 @@ Open a PR to remove clearly unused code — one PR per module.
 Run: <span class="st">npm run lint --fix</span>
 Commit auto-fixed issues: <span class="st">chore: auto-fix lint issues</span>
 
-<span class="cm">5. REPORT TO #engineering</span>
+<span class="cm">5. REPORT TO ENGINEERING CHANNEL</span>
 <span class="st">📦 Dependencies: X patch PRs, Y minor PRs, Z major PRs (need review)
 🔒 Security: X CVEs filed (links)
 🧹 Dead code: X removal PRs opened
@@ -490,12 +483,12 @@ Commit auto-fixed issues: <span class="st">chore: auto-fix lint issues</span>
         </div>
     </div>
 
-    <!--Themis -->
+    <!-- Sentinel -->
     <div class="playbook-card">
       <div class="playbook-card-head">
-        <div class="playbook-emoji">⚖️</div>
+        <div class="playbook-badge-wrap"><span class="agent-badge sentinel-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M12 21.5 C12 21.5, 19 18, 19 12 L19 5.5 L12 2.5 L5 5.5 L5 12 C5 18, 12 21.5, 12 21.5 Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><rect x="10" y="11" width="4" height="3" rx="1" stroke-width="1.5" fill="none" class="badge-icon"/><path d="M11 11 L11 9 A1 1 0 0 1 13 9 L13 11" stroke-width="1.5" fill="none" class="badge-icon"/></svg></span></div>
         <div class="playbook-head-info">
-          <div class="playbook-agent-name">Themis — Security & Compliance Agent</div>
+          <div class="playbook-agent-name">Sentinel — Security & Compliance Agent</div>
           <div class="playbook-agent-role">Security reviews on sensitive PRs + weekly sweep</div>
         </div>
         <div class="playbook-macro">!security-review</div>
@@ -549,7 +542,7 @@ sensitive paths AND as a weekly codebase sweep.
 1. Scan all repos for hardcoded secrets (API key patterns, token strings)
 2. Check for packages with known CVEs: <span class="st">npm audit</span>
 3. Review recent commits (last 7 days) touching auth or authorisation code
-4. Post summary to <span class="hl">#security</span> with all findings and Jira ticket links</div>
+4. Post summary to the <span class="hl">security</span> channel with all findings and Jira ticket links</div>
           </div>
         </div>
     </div>
@@ -562,7 +555,6 @@ sensitive paths AND as a weekly codebase sweep.
       <div class="section-header-text">
         <div class="section-title">Create Scheduled Sessions</div>
         <div class="section-desc">One scheduled session per agent. Go to <a href="https://app.devin.ai/settings/schedules" target="_blank">Settings → Schedules → Create Schedule</a> for each row.</div>
-        <div class="section-time">⏱ 20 min</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -570,57 +562,57 @@ sensitive paths AND as a weekly codebase sweep.
     <table class="cron-table">
       <tr><th>Agent</th><th>Schedule name</th><th>Cron</th><th>Playbook</th><th>Prompt to enter</th><th>Notify</th></tr>
       <tr>
-        <td><strong>🔧 Hephaestus</strong></td>
-        <td>Hephaestus — Monday Maintenance</td>
+        <td><div style="display:flex;align-items:center"><span class="agent-badge janitor-badge" style="width:24px;height:24px;margin-right:6px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M18.4 5.6 a4.3 4.3 0 0 0 -6.1 0 c-1.1 1.1 -1.4 2.7 -0.9 4 L4 17.1 a1.5 1.5 0 0 0 2.1 2.1 l7.5 -7.5 c1.3 0.5 2.9 0.2 4 -0.9 a4.3 4.3 0 0 0 0 -6.1 Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><path d="M15 8 L18 5" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/></svg></span><strong>Janitor</strong></div></td>
+        <td>Janitor — Monday Maintenance</td>
         <td><code>0 7 * * 1</code></td>
         <td><code>!maintenance</code></td>
         <td>"Run the weekly maintenance sweep across all repos. Follow the !maintenance playbook."</td>
-        <td><code>#engineering</code></td>
+        <td><code>engineering</code></td>
       </tr>
       <tr>
-        <td><strong>⚡ Zeus</strong></td>
-        <td>Zeus — Morning PR Review</td>
+        <td><div style="display:flex;align-items:center"><span class="agent-badge critic-badge" style="width:24px;height:24px;margin-right:6px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><circle cx="6" cy="6" r="2.5" class="badge-icon" fill="none" stroke-width="1.8"/><circle cx="6" cy="18" r="2.5" class="badge-icon" fill="none" stroke-width="1.8"/><circle cx="18" cy="18" r="2.5" class="badge-icon" fill="none" stroke-width="1.8"/><path d="M6 8.5 L6 15.5 M18 15.5 L18 12 A2.5 2.5 0 0 0 15.5 9.5 L8.5 9.5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/></svg></span><strong>Critic</strong></div></td>
+        <td>Critic — Morning PR Review</td>
         <td><code>0 8 * * 1-5</code></td>
         <td><code>!review</code></td>
         <td>"Review all open PRs in the organisation that have been open for more than 4 hours. Follow the !review playbook."</td>
-        <td><code>#code-review</code></td>
+        <td><code>code-review</code></td>
       </tr>
       <tr>
-        <td><strong>🪽 Hermes</strong></td>
-        <td>Hermes — Daily Dev Pickup</td>
+        <td><div style="display:flex;align-items:center"><span class="agent-badge coder-badge" style="width:24px;height:24px;margin-right:6px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M8 7 L3 12 L8 17 M16 7 L21 12 L16 17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/></svg></span><strong>Coder</strong></div></td>
+        <td>Coder — Daily Dev Pickup</td>
         <td><code>0 9 * * 1-5</code></td>
         <td><code>!implement</code></td>
         <td>"Check Jira for all tickets with status 'Ready for Dev' in project [YOUR-PROJECT-KEY]. Pick the top 3 by priority. Implement each one, opening a separate PR per ticket. Follow the !implement playbook."</td>
-        <td><code>#dev-runs</code></td>
+        <td><code>dev-runs</code></td>
       </tr>
       <tr>
-        <td><strong>⚖️ Themis</strong></td>
-        <td>Themis — Wednesday Security Sweep</td>
+        <td><div style="display:flex;align-items:center"><span class="agent-badge sentinel-badge" style="width:24px;height:24px;margin-right:6px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M12 21.5 C12 21.5, 19 18, 19 12 L19 5.5 L12 2.5 L5 5.5 L5 12 C5 18, 12 21.5, 12 21.5 Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><rect x="10" y="11" width="4" height="3" rx="1" stroke-width="1.5" fill="none" class="badge-icon"/><path d="M11 11 L11 9 A1 1 0 0 1 13 9 L13 11" stroke-width="1.5" fill="none" class="badge-icon"/></svg></span><strong>Sentinel</strong></div></td>
+        <td>Sentinel — Wednesday Security Sweep</td>
         <td><code>0 10 * * 3</code></td>
         <td><code>!security-review</code></td>
         <td>"Run the weekly security sweep across all repos. Scan for hardcoded secrets, CVEs, and recent auth-related commits. Follow the !security-review playbook."</td>
-        <td><code>#security</code></td>
+        <td><code>security</code></td>
       </tr>
       <tr>
-        <td><strong>👁 Argus</strong></td>
-        <td>Argus — Nightly QA</td>
+        <td><div style="display:flex;align-items:center"><span class="agent-badge checker-badge" style="width:24px;height:24px;margin-right:6px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><rect x="8" y="7" width="8" height="10" rx="4" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M9 7 A3 3 0 0 1 15 7" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M5 9 L8 10 M5 12 L8 12 M5 15 L8 14 M19 9 L16 10 M19 12 L16 12 M19 15 L16 14" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/><path d="M10 5 C9 3, 8 3, 8 3 M14 5 C15 3, 16 3, 16 3" stroke-width="1.5" stroke-linecap="round" class="badge-icon"/></svg></span><strong>Checker</strong></div></td>
+        <td>Checker — Nightly QA</td>
         <td><code>0 2 * * *</code></td>
         <td><code>!test</code></td>
         <td>"Run the full regression suite across all repos. File Jira tickets for real failures. Post the pass/fail summary. Follow the !test playbook."</td>
-        <td><code>#qa-alerts</code></td>
+        <td><code>qa-alerts</code></td>
       </tr>
       <tr>
-        <td><strong>🌍 Atlas</strong></td>
-        <td>Atlas — Friday Release</td>
+        <td><div style="display:flex;align-items:center"><span class="agent-badge shipper-badge" style="width:24px;height:24px;margin-right:6px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M12 3 C15 6, 17 10, 17 14 C17 17, 15 19, 12 19 C9 19, 7 17, 7 14 C7 10, 9 6, 12 3 Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><path d="M7 14 L4 17 L4 19 L7 18 M17 14 L20 17 L20 19 L17 18" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><circle cx="12" cy="11" r="1.5" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M10 19 L12 22 L14 19" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/></svg></span><strong>Shipper</strong></div></td>
+        <td>Shipper — Friday Release</td>
         <td><code>0 9 * * 5</code></td>
         <td><code>!release</code></td>
         <td>"Run the weekly release process. Follow the !release playbook exactly, stopping if any blockers are found."</td>
-        <td><code>#releases</code></td>
+        <td><code>releases</code></td>
       </tr>
     </table>
 
     <div class="callout tip"><div class="callout-icon">✅</div><div>After creating each schedule, verify it appears under <a href="https://app.devin.ai/settings/schedules" target="_blank">Settings → Schedules</a> with status <strong>Active</strong>. If status is Error, re-check the cron expression and playbook name.</div></div>
-    <div class="callout warn"><div class="callout-icon">⚠️</div><div>Replace <strong>[YOUR-PROJECT-KEY]</strong> in Hermes's prompt with your actual Jira project key (e.g. <code>CORE</code>, <code>ENG</code>). If you have multiple projects, list them: "in projects CORE, INFRA, or PLATFORM".</div></div>
+    <div class="callout warn"><div class="callout-icon">⚠️</div><div>Replace <strong>[YOUR-PROJECT-KEY]</strong> in Coder's prompt with your actual Jira project key (e.g. <code>CORE</code>, <code>ENG</code>). If you have multiple projects, list them: "in projects CORE, INFRA, or PLATFORM".</div></div>
   </section>
 
   <!-- ══════════════════ 7. AUTOMATIONS ══════════════════ -->
@@ -630,12 +622,11 @@ sensitive paths AND as a weekly codebase sweep.
       <div class="section-header-text">
         <div class="section-title">Create Automations</div>
         <div class="section-desc">Event-driven triggers that give agents real-time reflexes. Go to <a href="https://app.devin.ai/automations" target="_blank">app.devin.ai → Automations</a>.</div>
-        <div class="section-time">⏱ 30 min</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
-    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin-bottom:14px">7A — CI Failure Auto-Fix (Zeus reflex)</h3>
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin-bottom:14px">7A — CI Failure Auto-Fix (Critic reflex)</h3>
     <div class="callout info"><div class="callout-icon">ℹ️</div><div>Use the pre-built template: <strong>Automations → Templates → "CI failure fixer"</strong></div></div>
     <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Click <strong>Templates</strong> → select <strong>CI failure fixer</strong></div></div></div>
     <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Set trigger: <strong>GitHub → Check run</strong> — Conclusion: <code>failure</code></div><div class="step-desc">Select all repos (or start with your most critical repo).</div></div></div>
@@ -649,13 +640,13 @@ sensitive paths AND as a weekly codebase sweep.
     </div></div>
     <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Set <strong>Invocation limit: 10 per hour</strong></div><div class="step-desc">Prevents a noisy repo from spawning dozens of sessions during a bad deploy.</div></div></div>
 
-    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7B — #incidents Auto-Triage (Atlas reflex)</h3>
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7B — incidents Auto-Triage (Shipper reflex)</h3>
     <div class="callout info"><div class="callout-icon">ℹ️</div><div>Use the pre-built template: <strong>Automations → Templates → "Triage bug reports on Teams"</strong></div></div>
     <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Click <strong>Templates</strong> → select <strong>Triage bug reports on Teams</strong></div></div></div>
-    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Set channel: <code>#incidents</code></div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Set channel: <code>incidents</code></div></div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Action type: <strong>Triage Devin</strong> (persistent monitor)</div><div class="step-desc">This creates a persistent Devin session that watches the channel and spawns sub-agents for each incident report.</div></div></div>
 
-    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7C — Themis PR Security Trigger</h3>
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7C — Sentinel PR Security Trigger</h3>
     <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Automations → <strong>New automation</strong></div></div></div>
     <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Trigger: <strong>GitHub → Pull request → opened or synchronized</strong></div></div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Add condition: <strong>PR files changed contains</strong> <code>auth/</code> OR <code>payments/</code> OR <code>database/</code></div></div></div>
@@ -667,7 +658,7 @@ File Jira security tickets for MEDIUM and above.</div></div>
     </div></div>
     <div class="step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Save and enable the automation</div></div></div>
 
-    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7D — Post-Deploy Runbook Update (Atlas webhook)</h3>
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7D — Post-Deploy Runbook Update (Shipper webhook)</h3>
     <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Automations → <strong>New automation</strong> → Trigger: <strong>Webhook</strong></div></div></div>
     <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Copy the <strong>webhook URL</strong> that appears after saving</div></div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Action prompt:</div>
@@ -676,7 +667,7 @@ File Jira security tickets for MEDIUM and above.</div></div>
 2. For each changed service, find its runbook in Confluence
 3. Update the runbook to reflect any configuration, environment variable, or
    infrastructure changes in this deploy
-4. Post a summary of what was updated to #releases</div></div>
+4. Post a summary of what was updated to the releases channel</div></div>
     </div></div>
     <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Wire your CI/CD pipeline to POST to the webhook URL on every production deploy</div><div class="step-desc">In GitHub Actions, add a step after your deploy step that runs:<br><code>curl -X POST [WEBHOOK_URL] -H "Content-Type: application/json" -d "{\"service\":\"$SERVICE_NAME\",\"commit\":\"$GITHUB_SHA\"}"</code></div></div></div>
   </section>
@@ -688,14 +679,13 @@ File Jira security tickets for MEDIUM and above.</div></div>
       <div class="section-header-text">
         <div class="section-title">Per-Repo Files</div>
         <div class="section-desc">Add these four files to every repo. Devin reads them automatically at the start of every session. Commit and push — no Devin config needed.</div>
-        <div class="section-time">⏱ 30 min per repo</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
     <div class="callout warn"><div class="callout-icon">⚠️</div><div>The content below is a <strong>template</strong>. Customise it to match your actual tech stack, architecture, and conventions before committing. Devin takes these files literally — generic instructions produce generic output.</div></div>
 
-    <div class="callout tip"><div class="callout-icon">📝</div><div><strong>PR templates:</strong> if a repo has <code>.github/pull_request_template.md</code>, Hermes fills it out automatically. To give Devin its own, add <code>.github/PULL_REQUEST_TEMPLATE/devin.md</code> — keep it short (what changed, why, how to test). <a href="https://docs.devin.ai/integrations/pr-templates" target="_blank">PR templates docs</a></div></div>
+    <div class="callout tip"><div class="callout-icon">📝</div><div><strong>PR templates:</strong> if a repo has <code>.github/pull_request_template.md</code>, Coder fills it out automatically. To give Devin its own, add <code>.github/PULL_REQUEST_TEMPLATE/devin.md</code> — keep it short (what changed, why, how to test). <a href="https://docs.devin.ai/integrations/pr-templates" target="_blank">PR templates docs</a></div></div>
 
     <!-- AGENTS.md -->
     <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:20px 0 10px">AGENTS.md</h3>
@@ -745,7 +735,7 @@ Full SDLC operating procedure: https://aayushus.github.io/sdlc/</div>
 
     <!-- REVIEW.md -->
     <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:24px 0 10px">REVIEW.md</h3>
-    <p style="font-size:13px;color:var(--text-2);margin-bottom:10px;line-height:1.6">Place in repo root. Zeus reads this on every PR review. Define what to always look for, what to always flag, and what to ignore.</p>
+    <p style="font-size:13px;color:var(--text-2);margin-bottom:10px;line-height:1.6">Place in repo root. Critic reads this on every PR review. Define what to always look for, what to always flag, and what to ignore.</p>
     <div class="file-block-wrap">
       <div class="file-label"><div class="file-label-dot"></div>REVIEW.md</div>
       <div class="code-wrap" style="margin-top:0">
@@ -841,7 +831,7 @@ All steps passed. You may open the PR.</div>
 
     <!-- implement SKILL.md -->
     <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:24px 0 10px">.agents/skills/implement/SKILL.md</h3>
-    <p style="font-size:13px;color:var(--text-2);margin-bottom:10px;line-height:1.6">Hermes auto-discovers this and follows it when implementing tickets in this repo.</p>
+    <p style="font-size:13px;color:var(--text-2);margin-bottom:10px;line-height:1.6">Coder auto-discovers this and follows it when implementing tickets in this repo.</p>
     <div class="file-block-wrap">
       <div class="file-label"><div class="file-label-dot"></div>.agents/skills/implement/SKILL.md</div>
       <div class="code-wrap" style="margin-top:0">
@@ -904,7 +894,6 @@ Description template:
       <div class="section-header-text">
         <div class="section-title">Knowledge Base</div>
         <div class="section-desc">Knowledge items are org-wide context that Devin recalls automatically. Go to <a href="https://app.devin.ai/settings/knowledge" target="_blank">Settings → Knowledge → Add Knowledge</a> for each entry.</div>
-        <div class="section-time">⏱ 15 min</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -931,7 +920,7 @@ Description template:
 - Use parameterised queries everywhere. Never concatenate user input into a query string.
 - Passwords are hashed with bcrypt, cost factor 12.
 - Failed login attempts are rate-limited at 5 per 5 minutes per IP.
-- Auth changes require Themis security review before merge.</div></div>
+- Auth changes require Sentinel security review before merge.</div></div>
     </div></div>
 
     <div class="step"><div class="step-num">3</div><div class="step-body">
@@ -969,7 +958,6 @@ Description template:
       <div class="section-header-text">
         <div class="section-title">Observability</div>
         <div class="section-desc">Know what the agents are doing and whether it's working — tune playbooks from real session data.</div>
-        <div class="section-time">⏱ 15 min</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -986,12 +974,11 @@ Description template:
       <div class="section-header-text">
         <div class="section-title">Access &amp; Security</div>
         <div class="section-desc">Decide who can do what, lock down access, and keep an audit trail. Several items below are Enterprise-plan features.</div>
-        <div class="section-time">⏱ 20 min</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
-    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Scope the Devin <strong>service account</strong> to least privilege</div><div class="step-desc">The Jira / GitHub service user Hermes acts as should have only the access it needs. Use <a href="https://docs.devin.ai/enterprise/security-access/custom-roles" target="_blank">custom roles &amp; RBAC</a> to limit who can change playbooks, schedules, and org settings.</div></div></div>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Scope the Devin <strong>service account</strong> to least privilege</div><div class="step-desc">The Jira / GitHub service user Coder acts as should have only the access it needs. Use <a href="https://docs.devin.ai/enterprise/security-access/custom-roles" target="_blank">custom roles &amp; RBAC</a> to limit who can change playbooks, schedules, and org settings.</div></div></div>
     <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Enforce <strong>SSO</strong> for the team</div><div class="step-desc">SAML / OIDC / Okta / Azure AD. <a href="https://docs.devin.ai/enterprise/security-access/sso/guide" target="_blank">SSO onboarding guide</a></div></div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Restrict access with an <strong>IP access list</strong></div><div class="step-desc">Limit web app + API access to your office / VPN ranges. <a href="https://docs.devin.ai/enterprise/security-access/ip-access-lists" target="_blank">IP access lists</a></div></div></div>
     <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Know where the <strong>audit log</strong> and <strong>kill switch</strong> are</div><div class="step-desc">Audit logs record every agent and admin action — review them when something looks off. Any running session can be stopped from Teams (<code>EXIT</code>) or terminated in the web app / via API. <a href="https://docs.devin.ai/admin/security" target="_blank">Security at Cognition</a></div></div></div>
@@ -1004,7 +991,6 @@ Description template:
       <div class="section-header-text">
         <div class="section-title">Per-Engineer Setup</div>
         <div class="section-desc">Every engineer on the team does this once. Takes 5 minutes.</div>
-        <div class="section-time">⏱ 5 min per engineer</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -1025,7 +1011,7 @@ Description template:
     </div></div>
     <div class="step"><div class="step-num">4</div><div class="step-body">
       <div class="step-title">Self-enroll for auto PR review</div>
-      <div class="step-desc"><a href="https://app.devin.ai/settings/review" target="_blank">Settings → Review</a> → Click <strong>"Add myself (@yourusername)"</strong>. Zeus will now automatically review any PR you open or are assigned to.</div>
+      <div class="step-desc"><a href="https://app.devin.ai/settings/review" target="_blank">Settings → Review</a> → Click <strong>"Add myself (@yourusername)"</strong>. Critic will now automatically review any PR you open or are assigned to.</div>
     </div></div>
     <div class="step"><div class="step-num">5</div><div class="step-body">
       <div class="step-title">Install Devin Desktop</div>
@@ -1050,21 +1036,20 @@ Fast PR review: replace github.com → devinreview.com in any PR URL</div></div>
       <div class="section-header-text">
         <div class="section-title">Verify Everything Works</div>
         <div class="section-desc">Run these checks to confirm the full setup is working before you go live.</div>
-        <div class="section-time">⏱ 15 min</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
-    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Hermes:</strong> In Teams, send <code>@Devin !implement [any small ticket key]</code>. Within 2 minutes, Devin should respond with a session link and start working. Within ~20 min (for a small ticket), a PR should appear in GitHub.</div></div>
-    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Zeus:</strong> Open a test PR in any repo. Within 5 minutes, a Devin Review comment should appear on the PR. If not, check Settings → Review → verify the repo is listed and auto-review is ON.</div></div>
-    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Argus:</strong> Send <code>@Devin !test</code> in <code>#qa-alerts</code>. Argus should respond with a session link and post a pass/fail summary within 10–30 minutes.</div></div>
+    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Coder:</strong> In Teams, send <code>@Devin !implement [any small ticket key]</code>. Within 2 minutes, Devin should respond with a session link and start working. Within ~20 min (for a small ticket), a PR should appear in GitHub.</div></div>
+    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Critic:</strong> Open a test PR in any repo. Within 5 minutes, a Devin Review comment should appear on the PR. If not, check Settings → Review → verify the repo is listed and auto-review is ON.</div></div>
+    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Checker:</strong> Send <code>@Devin !test</code> in the <code>qa-alerts</code> channel. Checker should respond with a session link and post a pass/fail summary within 10–30 minutes.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Check schedules:</strong> Go to <a href="https://app.devin.ai/settings/schedules" target="_blank">Settings → Schedules</a>. All 6 schedules should show status <strong>Active</strong>. If any show <strong>Error</strong>, click to see the error and fix the prompt or cron expression.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Check automations:</strong> Go to <a href="https://app.devin.ai/automations" target="_blank">Automations</a>. All 4 automations should be enabled. Break a CI check on a test branch — within 2 minutes Devin should post a fix attempt to the PR.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Test AGENTS.md:</strong> Start a session in Devin and ask: <em>"What are the architecture conventions for this repo?"</em>. Devin should accurately describe what's in your AGENTS.md.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Test REVIEW.md:</strong> Open the Devin Review for any PR. In the chat sidebar, ask: <em>"What are the critical review areas for this repo?"</em>. Devin should cite your REVIEW.md.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Confirm Jira ↔ GitHub link:</strong> Add the <code>devin</code> label to a real Jira ticket. Within 2 minutes, Devin should post a comment on the ticket with a session link and start implementing.</div></div>
 
-    <div class="callout tip" style="margin-top:20px"><div class="callout-icon">🎉</div><div><strong>You're set up.</strong> All six agents are live. Share <a href="https://aayushus.github.io/sdlc/" target="_blank">aayushus.github.io/sdlc/</a> with the team and pin it in <code>#engineering</code>. The SOP tab in that page is your day-to-day operating reference.</div></div>
+    <div class="callout tip" style="margin-top:20px"><div class="callout-icon">🎉</div><div><strong>You're set up.</strong> All six agents are live. Share <a href="https://aayushus.github.io/sdlc/" target="_blank">aayushus.github.io/sdlc/</a> with the team and pin it in the <code>engineering</code> channel. The SOP tab in that page is your day-to-day operating reference.</div></div>
   </section>
 
 </main>
