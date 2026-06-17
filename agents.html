@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Roster — AI-First SDLC</title>
+<meta name="description" content="The six named agents — Hermes, Zeus, Argus, Atlas, Hephaestus, Themis — their schedules, jobs, and setup.">
+<link rel="stylesheet" href="assets/book.css">
+</head>
+<body data-chapter="agents">
+<nav class="topnav"><div class="topnav-inner"><a class="topnav-brand" href="index.html">AI-First SDLC <span class="topnav-sep">/</span> <span class="topnav-tag">Developer Playbook</span></a></div></nav>
+<aside class="booknav" id="booknav"></aside>
+
+<main class="book-main">
+  <header class="chapter-header">
+    <div class="chapter-eyebrow">Chapter 04 · Agent Roster</div>
+    <div class="chapter-title">The six <em>named agents</em></div>
+    <div class="chapter-sub">Each agent is a Devin Scheduled Session plus a Playbook, running headlessly on cloud VMs. Trigger any of them from Teams, or let the schedule do it.</div>
+  </header>
+  <div id="stats"></div>
+  <div class="roster-how">
+    <div class="roster-how-icon">💡</div>
+    <div class="roster-how-text"><strong>How named agents work:</strong> each agent is a Devin <strong>Scheduled Session</strong> + a <strong>Playbook</strong> + optional <strong>Automations</strong>. Trigger manually from Teams — <code style="background:#DBEAFE;padding:1px 5px;border-radius:3px">@Devin !review</code>, <code style="background:#DBEAFE;padding:1px 5px;border-radius:3px">@Devin !implement PROJ-123</code> — or wait for the cron schedule. All agents report to their designated Teams channel.</div>
+  </div>
+  <div id="content"></div>
+  <footer class="prevnext" id="prevnext"></footer>
+</main>
+
+<script src="assets/data.js"></script>
+<script src="assets/nav.js"></script>
+<script>
+  document.getElementById('stats').innerHTML = buildStats('roster');
+  document.getElementById('content').innerHTML = agents.map(buildAgentPanel).join('');
+  window.BOOK_SUBNAV = agents.map(a=>({ id:a.id, label:`${a.emoji} ${a.name}` }));
+  mountBook();
+</script>
+</body>
+</html>
