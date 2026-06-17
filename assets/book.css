@@ -440,12 +440,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
   flex-shrink: 0;
 }
 
-/* Light Mode Colors */
-.coder-badge .badge-bg { fill: #EFF6FF; }
-.coder-badge .badge-icon { stroke: #1D4ED8; }
+/* Light Mode Colors — six distinct hues: cyan, magenta, green, orange, slate, red */
+.coder-badge .badge-bg { fill: #ECFEFF; }
+.coder-badge .badge-icon { stroke: #0E7490; }
 
-.critic-badge .badge-bg { fill: #F5F0FF; }
-.critic-badge .badge-icon { stroke: #6D28D9; }
+.critic-badge .badge-bg { fill: #FDF2F8; }
+.critic-badge .badge-icon { stroke: #BE185D; }
 
 .checker-badge .badge-bg { fill: #F0FDF4; }
 .checker-badge .badge-icon { stroke: #15803D; }
@@ -453,28 +453,28 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 .shipper-badge .badge-bg { fill: #FFF7ED; }
 .shipper-badge .badge-icon { stroke: #C2410C; }
 
-.janitor-badge .badge-bg { fill: #F3F4F6; }
-.janitor-badge .badge-icon { stroke: #4B5563; }
+.janitor-badge .badge-bg { fill: #F1F5F9; }
+.janitor-badge .badge-icon { stroke: #475569; }
 
 .sentinel-badge .badge-bg { fill: #FEF2F2; }
 .sentinel-badge .badge-icon { stroke: #B91C1C; }
 
 /* Dark Mode Colors */
 @media (prefers-color-scheme: dark) {
-  .coder-badge .badge-bg { fill: #1E3A8A; }
-  .coder-badge .badge-icon { stroke: #93C5FD; }
+  .coder-badge .badge-bg { fill: #164E63; }
+  .coder-badge .badge-icon { stroke: #67E8F9; }
 
-  .critic-badge .badge-bg { fill: #4C1D95; }
-  .critic-badge .badge-icon { stroke: #C084FC; }
+  .critic-badge .badge-bg { fill: #831843; }
+  .critic-badge .badge-icon { stroke: #F9A8D4; }
 
-  .checker-badge .badge-bg { fill: #064E3B; }
+  .checker-badge .badge-bg { fill: #14532D; }
   .checker-badge .badge-icon { stroke: #86EFAC; }
 
   .shipper-badge .badge-bg { fill: #7C2D12; }
   .shipper-badge .badge-icon { stroke: #FDBA74; }
 
-  .janitor-badge .badge-bg { fill: #374151; }
-  .janitor-badge .badge-icon { stroke: #D1D5DB; }
+  .janitor-badge .badge-bg { fill: #334155; }
+  .janitor-badge .badge-icon { stroke: #CBD5E1; }
 
   .sentinel-badge .badge-bg { fill: #7F1D1D; }
   .sentinel-badge .badge-icon { stroke: #FCA5A5; }
