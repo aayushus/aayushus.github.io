@@ -13,11 +13,10 @@ const AGENT_BADGES = {
   sentinel: `<span class="agent-badge sentinel-badge" title="Sentinel"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M12 21.5 C12 21.5, 19 18, 19 12 L19 5.5 L12 2.5 L5 5.5 L5 12 C5 18, 12 21.5, 12 21.5 Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><rect x="10" y="11" width="4" height="3" rx="1" stroke-width="1.5" fill="none" class="badge-icon"/><path d="M11 11 L11 9 A1 1 0 0 1 13 9 L13 11" stroke-width="1.5" fill="none" class="badge-icon"/></svg></span>`
 };
 
-function getAgentBadge(id, size = 56) {
+function getAgentBadge(id, size = 48) {
   const badgeHtml = AGENT_BADGES[id];
   if (!badgeHtml) return '';
-  if (size === 56) return badgeHtml;
-  return badgeHtml.replace('class="agent-badge', `class="agent-badge" style="width:${size}px;height:${size}px;"`);
+  return badgeHtml.replace('<span ', `<span style="width:${size}px;height:${size}px;" `);
 }
 
 const CHAPTERS = [
@@ -183,7 +182,7 @@ function buildAgentPanel(ag){
   return `<section class="book-section" id="${ag.id}" data-spy>
     <div class="agent-panel">
       <div class="agent-head">
-        <div class="agent-badge-wrap">${getAgentBadge(ag.id, 56)}</div>
+        <div class="agent-badge-wrap">${getAgentBadge(ag.id, 48)}</div>
         <div class="agent-head-info">
           <div class="agent-eyebrow">Named Agent · ${ag.trigger}</div>
           <div class="agent-name">${ag.name}</div>
