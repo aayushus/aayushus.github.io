@@ -106,6 +106,7 @@ const sopSections=[
     {title:'Admin Setup (Engineering Lead)',items:[
       {id:'s1',text:'Connect GitHub: Settings → Integrations → GitHub → Connect all repos'},
       {id:'s2',text:'Connect Jira: Settings → Integrations → Jira → Connect, create Devin service account in Jira'},
+      {id:'s2b',text:'Define the <strong>Ready</strong> gate in Jira: a status (<code>Ready for Dev</code>) or <code>ready-for-dev</code> label meaning "acceptance criteria complete, context chain linked, agent may pick up". Agents pull only from this state — never Draft.'},
       {id:'s3',text:'Connect Teams: Settings → Integrations → Microsoft Teams → Connect, invite Devin to all team channels'},
       {id:'s4',text:'Enable Devin Review: Settings → Review → Add all repos → toggle auto-review ON'},
       {id:'s5',text:'Index repos: Settings → Repositories → Index all repos (enables Ask Devin and DeepWiki)'},
@@ -196,6 +197,19 @@ const sopSections=[
     </div>
   </div>
   <div class="sop-callout tip"><div class="sop-callout-icon">📎</div><div><strong>Templates &amp; examples:</strong> <a href="https://docs.devin.ai/essential-guidelines/good-vs-bad-instructions" target="_blank">Good vs. Bad Instructions</a> · <a href="https://docs.devin.ai/essential-guidelines/prompt-templates-cheat-sheet" target="_blank">Prompt Templates Cheat Sheet</a> · <a href="https://docs.devin.ai/essential-guidelines/when-to-use-devin" target="_blank">When to Use Devin</a></div></div>
+  <div class="sop-h3">Ticket lifecycle &amp; the Ready gate</div>
+  <div class="sop-prose"><p>Agents key off Jira status, so map your workflow to these six states and the guardrails below. The <strong>Ready</strong> gate is the single rule that stops Coder from hallucinating on a half-written ticket.</p></div>
+  <table class="sop-table">
+    <tr><th>Status</th><th>Set by</th><th>What it means</th><th>What agents may do</th></tr>
+    <tr><td><strong>Draft</strong></td><td>PM / Engineer</td><td>Acceptance criteria still being written — not yet executable.</td><td><strong>Nothing.</strong> Agents never read, pick up, or touch Draft tickets.</td></tr>
+    <tr><td><strong>Ready</strong> <span style="font-size:10px;font-weight:800;color:var(--teal);text-transform:uppercase;letter-spacing:.5px">· the gate</span></td><td>PM / Engineer</td><td>Acceptance criteria complete and unambiguous; the context chain links resolve; no open questions.</td><td>Coder may pick up. This is the <em>only</em> status Coder pulls from.</td></tr>
+    <tr><td><strong>In Progress</strong></td><td>Coder (agent)</td><td>Agent has cut a branch and is actively implementing.</td><td>Agent owns it — do not reassign or change scope mid-run.</td></tr>
+    <tr><td><strong>Review</strong></td><td>Coder (agent)</td><td>PR is open and linked to the ticket; awaiting review.</td><td>Critic reviews; humans approve. Agents never merge.</td></tr>
+    <tr><td><strong>Done</strong></td><td>Human</td><td>Merged and shipped.</td><td><strong>Never re-opened by an agent.</strong> Closed is closed.</td></tr>
+    <tr><td><strong>Blocked</strong></td><td>Anyone</td><td>Open question, dependency, or failing precondition.</td><td>Agents stop, post the blocker to Jira / Teams, and wait — never guess past it.</td></tr>
+  </table>
+  <div class="sop-callout info"><div class="sop-callout-icon">🚦</div><div><strong>The Ready gate:</strong> a ticket is <strong>Ready</strong> only when acceptance criteria are complete and unambiguous (ideally Given / When / Then), the context chain (Story → Epic → PRD → Architecture → Market) resolves, and there are no open questions. Implement it as a dedicated Jira status (<code>Ready for Dev</code>) or a <code>ready-for-dev</code> label — and make sure Coder's scheduled pickup <em>and</em> the <code>devin</code> label trigger both filter on Ready only.</div></div>
+  <div class="sop-callout warning"><div class="sop-callout-icon">⚠️</div><div><strong>Hard guardrails:</strong> never touch <strong>Draft</strong>, never re-open <strong>Done</strong>, never push past <strong>Blocked</strong>. Agents act only within the <code>Ready → In Progress → Review</code> band; humans own Draft, Done, and unblocking. Encode these as explicit "STOP" rules in every agent playbook.</div></div>
   <div class="sop-h3">General Rules — All Agents</div>
   <div class="sop-callout warning"><div class="sop-callout-icon">⚠️</div><div><strong>Agents make mistakes.</strong> Always read PRs and review agent findings before merging. You remain accountable for everything that ships to production. An agent producing a bad PR is a signal to improve the playbook or acceptance criteria — not a reason to stop using agents.</div></div>
   <div class="sop-callout tip"><div class="sop-callout-icon">✅</div><div><strong>Improving agents over time:</strong> When an agent does something wrong, update its Playbook or add a Knowledge item. When it does something right that surprised you, add it to the Playbook too. The agents improve as the team invests in their prompts and context.</div></div>
