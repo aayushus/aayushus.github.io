@@ -399,6 +399,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
   height: 100%;
   display: block;
 }
+/* Shrink the icon glyph inside the circle for more padding (scales every
+   non-background element around the badge center, preserving layout). */
+.agent-badge svg :not(.badge-bg) {
+  transform: scale(0.68);
+  transform-origin: 12px 12px;
+  transform-box: view-box;
+}
 .agent-badge-wrap {
   width: 48px;
   height: 48px;
