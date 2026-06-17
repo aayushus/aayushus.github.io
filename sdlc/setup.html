@@ -188,11 +188,29 @@
             <button class="copy-btn" onclick="copyCode(this)">copy</button>
             <div class="code-block">You are implementing a Jira ticket. Follow these steps exactly.
 
-<span class="cm">1. READ THE TICKET</span>
-Read the Jira ticket description, acceptance criteria, and all linked design
-documents carefully. If acceptance criteria is missing or unclear, post a
-comment on the Jira ticket asking for clarification and STOP — do not proceed
-until clarified.
+<span class="cm">1. GATHER CONTEXT — traverse the full chain before writing any code</span>
+Read the ticket's context chain in this order, following the link from each
+artifact to the next. Do NOT start implementing until you have all of it:
+
+  a. STORY (Jira) — the ticket itself: description, acceptance criteria,
+     comments, attachments. This is your spec.
+  b. EPIC (Jira) — the Story's parent epic: the broader goal, scope, and the
+     definition of done the Story rolls up into.
+  c. PRD (Confluence) — the product requirements doc linked from the Epic:
+     user-facing behaviour, flows, edge cases, and explicit non-goals.
+  d. ARCHITECTURE (Confluence) — the design doc / ADRs linked from the PRD or
+     repo: system boundaries, data models, constraints, decisions to respect.
+  e. MARKET (Confluence) — the strategy / market context the PRD references:
+     who this is for and why it matters, so trade-offs match intent.
+
+Where to read from (via MCP, follow links — do not search blind):
+- Jira MCP for STORY and EPIC — follow the "parent" / "epic link" fields.
+- Confluence MCP for PRD, ARCHITECTURE, and MARKET — follow the document links
+  from the Epic and PRD.
+
+If any link in the chain is missing, or the acceptance criteria is unclear, post
+a comment on the Jira ticket naming exactly what is missing and STOP — do not
+proceed until clarified.
 
 <span class="cm">2. UNDERSTAND THE CODEBASE</span>
 Check AGENTS.md in the repository root for architecture conventions, naming
