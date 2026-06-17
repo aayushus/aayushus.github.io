@@ -4,6 +4,22 @@
           then call mountBook() as the last step.
 ══════════════════════════════════════════════════════════ */
 
+const AGENT_BADGES = {
+  coder: `<span class="agent-badge coder-badge" title="Coder"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M8 7 L3 12 L8 17 M16 7 L21 12 L16 17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/></svg></span>`,
+  critic: `<span class="agent-badge critic-badge" title="Critic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><circle cx="6" cy="6" r="2.5" class="badge-icon" fill="none" stroke-width="1.8"/><circle cx="6" cy="18" r="2.5" class="badge-icon" fill="none" stroke-width="1.8"/><circle cx="18" cy="18" r="2.5" class="badge-icon" fill="none" stroke-width="1.8"/><path d="M6 8.5 L6 15.5 M18 15.5 L18 12 A2.5 2.5 0 0 0 15.5 9.5 L8.5 9.5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/></svg></span>`,
+  checker: `<span class="agent-badge checker-badge" title="Checker"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><rect x="8" y="7" width="8" height="10" rx="4" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M9 7 A3 3 0 0 1 15 7" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M5 9 L8 10 M5 12 L8 12 M5 15 L8 14 M19 9 L16 10 M19 12 L16 12 M19 15 L16 14" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/><path d="M10 5 C9 3, 8 3, 8 3 M14 5 C15 3, 16 3, 16 3" stroke-width="1.5" stroke-linecap="round" class="badge-icon"/></svg></span>`,
+  shipper: `<span class="agent-badge shipper-badge" title="Shipper"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M12 3 C15 6, 17 10, 17 14 C17 17, 15 19, 12 19 C9 19, 7 17, 7 14 C7 10, 9 6, 12 3 Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><path d="M7 14 L4 17 L4 19 L7 18 M17 14 L20 17 L20 19 L17 18" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><circle cx="12" cy="11" r="1.5" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M10 19 L12 22 L14 19" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/></svg></span>`,
+  janitor: `<span class="agent-badge janitor-badge" title="Janitor"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M18.4 5.6 a4.3 4.3 0 0 0 -6.1 0 c-1.1 1.1 -1.4 2.7 -0.9 4 L4 17.1 a1.5 1.5 0 0 0 2.1 2.1 l7.5 -7.5 c1.3 0.5 2.9 0.2 4 -0.9 a4.3 4.3 0 0 0 0 -6.1 Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><path d="M15 8 L18 5" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/></svg></span>`,
+  sentinel: `<span class="agent-badge sentinel-badge" title="Sentinel"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M12 21.5 C12 21.5, 19 18, 19 12 L19 5.5 L12 2.5 L5 5.5 L5 12 C5 18, 12 21.5, 12 21.5 Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><rect x="10" y="11" width="4" height="3" rx="1" stroke-width="1.5" fill="none" class="badge-icon"/><path d="M11 11 L11 9 A1 1 0 0 1 13 9 L13 11" stroke-width="1.5" fill="none" class="badge-icon"/></svg></span>`
+};
+
+function getAgentBadge(id, size = 56) {
+  const badgeHtml = AGENT_BADGES[id];
+  if (!badgeHtml) return '';
+  if (size === 56) return badgeHtml;
+  return badgeHtml.replace('class="agent-badge', `class="agent-badge" style="width:${size}px;height:${size}px;"`);
+}
+
 const CHAPTERS = [
   { id:'overview', href:'index.html',    num:'01', name:'Overview' },
   { id:'workflow', href:'workflow.html', num:'02', name:'The Workflow' },
@@ -167,7 +183,7 @@ function buildAgentPanel(ag){
   return `<section class="book-section" id="${ag.id}" data-spy>
     <div class="agent-panel">
       <div class="agent-head">
-        <div class="agent-emoji-wrap">${ag.emoji}</div>
+        <div class="agent-badge-wrap">${getAgentBadge(ag.id, 56)}</div>
         <div class="agent-head-info">
           <div class="agent-eyebrow">Named Agent · ${ag.trigger}</div>
           <div class="agent-name">${ag.name}</div>
@@ -175,7 +191,7 @@ function buildAgentPanel(ag){
           <div class="agent-meta">
             <div class="agent-meta-item"><span class="meta-label">Schedule</span><span class="meta-val">${ag.schedule}</span></div>
             <div class="agent-meta-item"><span class="meta-label">Playbook</span><span class="meta-val">${ag.playbook}</span></div>
-            <div class="agent-meta-item"><span class="meta-label">Reports to</span><span class="meta-val slack">${ag.slack}</span></div>
+            <div class="agent-meta-item"><span class="meta-label">Reports to</span><span class="meta-val teams">${ag.channel}</span></div>
             <div class="agent-meta-item"><span class="meta-label">Phase</span><span class="meta-val phase">${ag.phase}</span></div>
           </div>
         </div>

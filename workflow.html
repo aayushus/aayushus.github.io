@@ -25,7 +25,16 @@
 <script src="assets/data.js"></script>
 <script src="assets/nav.js"></script>
 <script>
-  document.getElementById('stats').innerHTML = buildStats('ai');
+  document.getElementById('stats').innerHTML = `
+    <div style="margin-bottom: 20px;">
+      <div class="lp-section-label" style="margin-bottom: 8px;">Today's Manual SDLC</div>
+      ${buildStats('current')}
+    </div>
+    <div style="margin-bottom: 30px;">
+      <div class="lp-section-label" style="margin-bottom: 8px;">AI-First Target SDLC</div>
+      ${buildStats('ai')}
+    </div>
+  `;
   document.getElementById('content').innerHTML = phases.map(buildWorkflowSection).join('');
   window.BOOK_SUBNAV = phases.map(p=>({ id:p.id, label:`${p.num} · ${p.name}` }));
   mountBook();
