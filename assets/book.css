@@ -440,7 +440,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
   flex-shrink: 0;
 }
 
-/* Light Mode Colors — six distinct hues: cyan, magenta, green, orange, slate, red */
+/* Light Mode Colors — seven distinct hues: cyan, magenta, green, orange, slate, red, indigo */
 .coder-badge .badge-bg { fill: #ECFEFF; }
 .coder-badge .badge-icon { stroke: #0E7490; }
 
@@ -458,6 +458,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 
 .sentinel-badge .badge-bg { fill: #FEF2F2; }
 .sentinel-badge .badge-icon { stroke: #B91C1C; }
+
+.mender-badge .badge-bg { fill: #EEF2FF; }
+.mender-badge .badge-icon { stroke: #4338CA; }
 
 /* Dark Mode Colors */
 @media (prefers-color-scheme: dark) {
@@ -478,4 +481,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 
   .sentinel-badge .badge-bg { fill: #7F1D1D; }
   .sentinel-badge .badge-icon { stroke: #FCA5A5; }
+
+  .mender-badge .badge-bg { fill: #312E81; }
+  .mender-badge .badge-icon { stroke: #A5B4FC; }
 }

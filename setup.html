@@ -19,7 +19,7 @@
   <header class="chapter-header">
     <div class="chapter-eyebrow">Chapter 06 · Setup Guide</div>
     <div class="chapter-title">Set up the <em>AI-first SDLC</em></div>
-    <div class="chapter-sub">Follow this guide in order, top to bottom. Every step is required unless marked optional. By the end, all six agents are running.</div>
+    <div class="chapter-sub">Follow this guide in order, top to bottom. Every step is required unless marked optional. By the end, all seven agents are running.</div>
     <div style="display:flex;gap:18px;margin-top:18px;flex-wrap:wrap;font-size:12px;color:var(--text-2)">
       <div>👤 <strong style="color:var(--ink)">Who:</strong> Engineering Lead (admin) + each engineer (per-engineer section)</div>
       <div>📋 <strong style="color:var(--ink)">Need:</strong> Devin Teams/Enterprise, GitHub / Jira / Teams admin</div>
@@ -73,7 +73,7 @@
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Create a Devin service account in Jira</div><div class="step-desc">In Jira admin: <strong>User Management → Create user</strong>. Suggested email: <code>devin@yourcompany.com</code>. This account is what Devin uses to post comments and update tickets — so they appear as "Devin" not as you.</div></div></div>
     <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">In Jira admin: create an <strong>OAuth 2.0 app</strong> for the service account</div><div class="step-desc">Atlassian admin → Security → OAuth 2.0 integration → Create. Scopes needed: <code>read:me</code>, <code>read:jira-user</code>, <code>read:jira-work</code>, <code>write:jira-work</code></div></div></div>
     <div class="step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Back in Devin: click <strong>Connect service account</strong> and enter the client ID + secret</div></div></div>
-    <div class="step"><div class="step-num">6</div><div class="step-body"><div class="step-title">Create these labels in your Jira project</div><div class="step-desc">Go to your Jira project → Project settings → Labels → Create: <code>devin</code>, <code>!write-tests</code>, <code>!design-review</code>, <code>!security-review</code></div></div></div>
+    <div class="step"><div class="step-num">6</div><div class="step-body"><div class="step-title">Create these labels in your Jira project</div><div class="step-desc">Go to your Jira project → Project settings → Labels → Create: <code>devin</code>, <code>AgentOS</code>, <code>!write-tests</code>, <code>!design-review</code>, <code>!security-review</code></div></div></div>
 
     <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:24px 0 14px;padding-top:4px">2C — Microsoft Teams</h3>
     <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/integrations/microsoft-teams" target="_blank">app.devin.ai → Settings → Integrations → Microsoft Teams</a></div></div></div>
@@ -158,7 +158,7 @@
       <div class="section-num-wrap"><div class="section-num">05</div></div>
       <div class="section-header-text">
         <div class="section-title">Create Playbooks</div>
-        <div class="section-desc">Playbooks are each agent's brain — the instructions they follow on every run. Create all six. Copy the prompts exactly.</div>
+        <div class="section-desc">Playbooks are each agent's brain — the instructions they follow on every run. Create all seven. Copy the prompts exactly.</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -317,7 +317,7 @@ Post a summary to the <span class="hl">code-review</span> channel:
         <div class="playbook-badge-wrap"><span class="agent-badge checker-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><rect x="8" y="7" width="8" height="10" rx="4" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M9 7 A3 3 0 0 1 15 7" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M5 9 L8 10 M5 12 L8 12 M5 15 L8 14 M19 9 L16 10 M19 12 L16 12 M19 15 L16 14" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/><path d="M10 5 C9 3, 8 3, 8 3 M14 5 C15 3, 16 3, 16 3" stroke-width="1.5" stroke-linecap="round" class="badge-icon"/></svg></span></div>
         <div class="playbook-head-info">
           <div class="playbook-agent-name">Checker — QA & Testing Agent</div>
-          <div class="playbook-agent-role">Runs nightly regression and files Jira bugs</div>
+          <div class="playbook-agent-role">Nightly regression, files bugs, validates fixes after merge</div>
         </div>
         <div class="playbook-macro">!test</div>
       </div>
@@ -347,13 +347,17 @@ For each FAILED test, determine:
 - <span class="nt">Real regression</span>: test was passing before a recent commit that broke it
 - <span class="nt">Flaky test</span>: passes sometimes, fails sometimes, not caused by a code change
 
-<span class="cm">4. FILE JIRA TICKETS FOR REAL REGRESSIONS</span>
-For each real regression, create a Jira bug ticket:
+<span class="cm">4. FILE COMPLETE BUG TICKETS FOR REAL REGRESSIONS</span>
+For each real regression, create a Jira bug ticket with the FULL quality bar so
+Mender can fix it autonomously. Every field is required:
 - Title: <span class="st">[Regression] [test name] failing since [commit hash]</span>
-- Description: what the test verifies, why it is failing, the full stack trace
 - Steps to reproduce the failure
-- Priority: P1 if it affects a critical user-facing path, P2 otherwise
-- Label: <span class="hl">regression</span>
+- Expected vs actual behaviour
+- The failing test + the full stack trace
+- The commit that introduced the regression (git bisect / blame)
+- Acceptance criteria from the original story (link the story)
+- Priority: P1 if it affects a critical user-facing path, P2/P3 otherwise
+- Labels: <span class="hl">regression</span> and <span class="hl">AgentOS</span> (so Mender picks it up), then set status <span class="hl">Ready</span>
 
 For flaky tests: post a note to the <span class="hl">qa-alerts</span> channel only — do NOT file a Jira ticket.
 
@@ -368,7 +372,74 @@ If any module is below 60%, file a P2 Jira ticket:
 ❌ Y failed (Z real regressions, W flaky)
 📊 Overall coverage: X%
 🔴 Modules below 80%: [list or "none"]
-📎 New Jira tickets: [links or "none"]</span></div>
+📎 New Jira tickets: [links or "none"]</span>
+
+<span class="cm">7. VALIDATOR MODE (runs after a fix PR merges to main — see Automation 7F)</span>
+When a fix PR merges to main and closes a Jira bug:
+- For P1 bugs: only run AFTER a human has approved and merged the fix PR
+- Re-run the tests covering that bug + the failing test recorded on the ticket
+- If GREEN: confirm the regression is gone, close the Jira ticket, post to <span class="hl">qa-alerts</span>
+- If STILL FAILING: reopen the ticket, comment with the failure, re-assign to Mender</div>
+          </div>
+        </div>
+    </div>
+
+    <!-- Mender -->
+    <div class="playbook-card">
+      <div class="playbook-card-head">
+        <div class="playbook-badge-wrap"><span class="agent-badge mender-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><rect x="3" y="7" width="18" height="13" rx="2.5" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M9 7 V5.5 A1.5 1.5 0 0 1 10.5 4 L13.5 4 A1.5 1.5 0 0 1 15 5.5 V7" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" class="badge-icon"/><path d="M12 10.5 V16.5 M9 13.5 H15" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/></svg></span></div>
+        <div class="playbook-head-info">
+          <div class="playbook-agent-name">Mender — Bug Fixer Agent</div>
+          <div class="playbook-agent-role">Fixes Ready AgentOS bugs and opens PRs</div>
+        </div>
+        <div class="playbook-macro">!fix</div>
+      </div>
+      <div class="playbook-strip">
+        <div class="ps-item"><span class="ps-label">Name</span><span class="ps-val">Fix</span></div>
+        <div class="ps-sep"></div>
+        <div class="ps-item"><span class="ps-label">Macro</span><span class="ps-val mono">!fix</span></div>
+        <div class="ps-sep"></div>
+        <div class="ps-item"><span class="ps-label">Where</span><span class="ps-val">Settings → Library → Playbooks → Create</span></div>
+      </div>
+      <div class="playbook-instr">
+        <div class="instr-label">Instructions — copy and paste into Devin</div>
+        <div class="code-wrap">
+            <button class="copy-btn" onclick="copyCode(this)">copy</button>
+            <div class="code-block">You are fixing a bug to close the autonomous bug loop. Follow these steps exactly.
+
+<span class="cm">1. PULL THE QUEUE</span>
+Find Jira bugs labelled <span class="hl">AgentOS</span> in status <span class="hl">Ready</span>.
+- P1 bugs: you were triggered in real time — fix this one now
+- P2/P3 bugs: process the 7am batch in priority order
+
+<span class="cm">2. VALIDATE THE TICKET — do not guess</span>
+The ticket MUST contain all of: steps to reproduce, expected vs actual behaviour,
+a failing test + stack trace, the commit that introduced the regression, and the
+original story's acceptance criteria.
+If ANY field is missing: post a comment listing what's missing, move the ticket to
+<span class="nt">Blocked</span>, and skip it. Never fix from an incomplete ticket.
+
+<span class="cm">3. REPRODUCE</span>
+Reproduce the failure locally from the steps and the failing test. Confirm you see
+the actual (broken) behaviour before changing anything.
+
+<span class="cm">4. FIX THE ROOT CAUSE</span>
+Fix the underlying cause, not just the symptom. Use the regression commit to
+understand what changed. Keep the failing test — make it pass. Do not weaken or
+delete tests. Respect the original story's acceptance criteria.
+
+<span class="cm">5. VERIFY BEFORE PR</span>
+Run <span class="st">@skills:test-before-pr</span> (install, lint, test, build). Do NOT open a PR if any step fails.
+
+<span class="cm">6. OPEN THE PR</span>
+- Title: <span class="st">[BUG-ID] [short description] — fix</span>
+- Body: root cause, the fix, and how it was verified; link to the Jira bug
+- Link the PR to the ticket and move the ticket to <span class="nt">In Review</span>
+- Post the PR link to the <span class="hl">qa-alerts</span> channel
+
+<span class="cm">7. HANDOFF</span>
+Critic auto-reviews. P2/P3 merge autonomously; P1 waits for human approval. After
+merge, Checker (Validator mode) confirms the regression is gone and closes the ticket.</div>
           </div>
         </div>
     </div>
@@ -620,6 +691,14 @@ sensitive paths AND as a weekly codebase sweep.
         <td><code>qa-alerts</code></td>
       </tr>
       <tr>
+        <td><div style="display:flex;align-items:center"><span class="agent-badge mender-badge" style="width:24px;height:24px;margin-right:6px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><rect x="3" y="7" width="18" height="13" rx="2.5" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M9 7 V5.5 A1.5 1.5 0 0 1 10.5 4 L13.5 4 A1.5 1.5 0 0 1 15 5.5 V7" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" class="badge-icon"/><path d="M12 10.5 V16.5 M9 13.5 H15" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/></svg></span><strong>Mender</strong></div></td>
+        <td>Mender — Daily Bug Fixes</td>
+        <td><code>0 7 * * *</code></td>
+        <td><code>!fix</code></td>
+        <td>"Pull Jira bugs labelled AgentOS in Ready status. Reproduce, fix the root cause, open a PR with root cause + fix details, and move each ticket to In Review. Follow the !fix playbook."</td>
+        <td><code>qa-alerts</code></td>
+      </tr>
+      <tr>
         <td><div style="display:flex;align-items:center"><span class="agent-badge shipper-badge" style="width:24px;height:24px;margin-right:6px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M12 3 C15 6, 17 10, 17 14 C17 17, 15 19, 12 19 C9 19, 7 17, 7 14 C7 10, 9 6, 12 3 Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><path d="M7 14 L4 17 L4 19 L7 18 M17 14 L20 17 L20 19 L17 18" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><circle cx="12" cy="11" r="1.5" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M10 19 L12 22 L14 19" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/></svg></span><strong>Shipper</strong></div></td>
         <td>Shipper — Friday Release</td>
         <td><code>0 9 * * 5</code></td>
@@ -688,6 +767,32 @@ File Jira security tickets for MEDIUM and above.</div></div>
 4. Post a summary of what was updated to the releases channel</div></div>
     </div></div>
     <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Wire your CI/CD pipeline to POST to the webhook URL on every production deploy</div><div class="step-desc">In GitHub Actions, add a step after your deploy step that runs:<br><code>curl -X POST [WEBHOOK_URL] -H "Content-Type: application/json" -d "{\"service\":\"$SERVICE_NAME\",\"commit\":\"$GITHUB_SHA\"}"</code></div></div></div>
+
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7E — P1 Bug Real-Time Fix (Mender reflex)</h3>
+    <div class="callout info"><div class="callout-icon">ℹ️</div><div>Mender's 7am schedule handles P2/P3 bugs. This automation makes Mender jump on <strong>P1</strong> bugs the moment they're ready — no waiting for the morning run.</div></div>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Automations → <strong>New automation</strong> → Trigger: <strong>Jira → Issue updated</strong></div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Add conditions: label is <code>AgentOS</code> · status is <code>Ready</code> · priority is <code>P1</code></div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Action: <strong>Start session</strong> with this prompt:</div>
+      <div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">copy</button><div class="code-block">A P1 bug labelled AgentOS has been set to Ready. Fix it now — do not wait for the 7am run.
+Follow the !fix playbook: validate the ticket has steps to reproduce, expected vs actual,
+a failing test + stack trace, the regression commit, and the original story's acceptance criteria.
+If any field is missing, comment and move the ticket to Blocked. Otherwise reproduce, fix the
+root cause, open a PR with fix details, and move the ticket to In Review.</div></div>
+    </div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Save and enable the automation</div></div></div>
+
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7F — Validator: close bugs after a fix merges (Checker reflex)</h3>
+    <div class="callout info"><div class="callout-icon">ℹ️</div><div>This is Checker's <strong>Validator mode</strong> — the back half of the autonomous bug loop. It runs after a fix PR merges and closes the ticket only if the regression is truly gone.</div></div>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Automations → <strong>New automation</strong> → Trigger: <strong>GitHub → Pull request → merged to <code>main</code></strong></div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Add condition: PR closes a Jira bug (linked ticket)</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Action: <strong>Start session</strong> with this prompt:</div>
+      <div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">copy</button><div class="code-block">A fix PR just merged to main and closes a Jira bug. Run Checker in Validator mode:
+1. If the bug is P1, only proceed if a human approved the merged PR.
+2. Re-run the tests covering this bug plus the failing test recorded on the ticket.
+3. If green and the regression is gone: close the Jira ticket and post to the qa-alerts channel.
+4. If still failing: reopen the ticket, comment with the failure, and re-assign to Mender.</div></div>
+    </div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Save and enable the automation</div></div></div>
   </section>
 
   <!-- ══════════════════ 8. PER-REPO FILES ══════════════════ -->
@@ -1061,13 +1166,14 @@ Fast PR review: replace github.com → devinreview.com in any PR URL</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Coder:</strong> In Teams, send <code>@Devin !implement [any small ticket key]</code>. Within 2 minutes, Devin should respond with a session link and start working. Within ~20 min (for a small ticket), a PR should appear in GitHub.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Critic:</strong> Open a test PR in any repo. Within 5 minutes, a Devin Review comment should appear on the PR. If not, check Settings → Review → verify the repo is listed and auto-review is ON.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Checker:</strong> Send <code>@Devin !test</code> in the <code>qa-alerts</code> channel. Checker should respond with a session link and post a pass/fail summary within 10–30 minutes.</div></div>
-    <div class="verify-item"><div class="verify-pip"></div><div><strong>Check schedules:</strong> Go to <a href="https://app.devin.ai/settings/schedules" target="_blank">Settings → Schedules</a>. All 6 schedules should show status <strong>Active</strong>. If any show <strong>Error</strong>, click to see the error and fix the prompt or cron expression.</div></div>
-    <div class="verify-item"><div class="verify-pip"></div><div><strong>Check automations:</strong> Go to <a href="https://app.devin.ai/automations" target="_blank">Automations</a>. All 4 automations should be enabled. Break a CI check on a test branch — within 2 minutes Devin should post a fix attempt to the PR.</div></div>
+    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Mender:</strong> Take a complete bug ticket (repro, expected vs actual, failing test + stack trace, regression commit, original story AC), label it <code>AgentOS</code>, set it <strong>Ready</strong>, then send <code>@Devin !fix [BUG-KEY]</code>. Mender should open a fix PR and move the ticket to <strong>In Review</strong>.</div></div>
+    <div class="verify-item"><div class="verify-pip"></div><div><strong>Check schedules:</strong> Go to <a href="https://app.devin.ai/settings/schedules" target="_blank">Settings → Schedules</a>. All 7 schedules should show status <strong>Active</strong>. If any show <strong>Error</strong>, click to see the error and fix the prompt or cron expression.</div></div>
+    <div class="verify-item"><div class="verify-pip"></div><div><strong>Check automations:</strong> Go to <a href="https://app.devin.ai/automations" target="_blank">Automations</a>. All 6 automations should be enabled. Break a CI check on a test branch — within 2 minutes Devin should post a fix attempt to the PR.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Test AGENTS.md:</strong> Start a session in Devin and ask: <em>"What are the architecture conventions for this repo?"</em>. Devin should accurately describe what's in your AGENTS.md.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Test REVIEW.md:</strong> Open the Devin Review for any PR. In the chat sidebar, ask: <em>"What are the critical review areas for this repo?"</em>. Devin should cite your REVIEW.md.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Confirm Jira ↔ GitHub link:</strong> Add the <code>devin</code> label to a real Jira ticket. Within 2 minutes, Devin should post a comment on the ticket with a session link and start implementing.</div></div>
 
-    <div class="callout tip" style="margin-top:20px"><div class="callout-icon">🎉</div><div><strong>You're set up.</strong> All six agents are live. Share <a href="https://aayushus.github.io/sdlc/" target="_blank">aayushus.github.io/sdlc/</a> with the team and pin it in the <code>engineering</code> channel. The SOP tab in that page is your day-to-day operating reference.</div></div>
+    <div class="callout tip" style="margin-top:20px"><div class="callout-icon">🎉</div><div><strong>You're set up.</strong> All seven agents are live. Share <a href="https://aayushus.github.io/sdlc/" target="_blank">aayushus.github.io/sdlc/</a> with the team and pin it in the <code>engineering</code> channel. The SOP tab in that page is your day-to-day operating reference.</div></div>
   </section>
 
 </main>
