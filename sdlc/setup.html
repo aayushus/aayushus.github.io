@@ -73,7 +73,7 @@
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Create a Devin service account in Jira</div><div class="step-desc">In Jira admin: <strong>User Management → Create user</strong>. Suggested email: <code>devin@yourcompany.com</code>. This account is what Devin uses to post comments and update tickets — so they appear as "Devin" not as you.</div></div></div>
     <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">In Jira admin: create an <strong>OAuth 2.0 app</strong> for the service account</div><div class="step-desc">Atlassian admin → Security → OAuth 2.0 integration → Create. Scopes needed: <code>read:me</code>, <code>read:jira-user</code>, <code>read:jira-work</code>, <code>write:jira-work</code></div></div></div>
     <div class="step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Back in Devin: click <strong>Connect service account</strong> and enter the client ID + secret</div></div></div>
-    <div class="step"><div class="step-num">6</div><div class="step-body"><div class="step-title">Create these labels in your Jira project</div><div class="step-desc">Go to your Jira project → Project settings → Labels → Create: <code>devin</code>, <code>AgentOS</code>, <code>!write-tests</code>, <code>!design-review</code>, <code>!security-review</code></div></div></div>
+    <div class="step"><div class="step-num">6</div><div class="step-body"><div class="step-title">Create these labels in your Jira project</div><div class="step-desc">Go to your Jira project → Project settings → Labels → Create: <code>devin</code>, <code>JAI_Agent</code>, <code>!write-tests</code>, <code>!design-review</code>, <code>!security-review</code></div></div></div>
 
     <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:24px 0 14px;padding-top:4px">2C — Microsoft Teams</h3>
     <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/integrations/microsoft-teams" target="_blank">app.devin.ai → Settings → Integrations → Microsoft Teams</a></div></div></div>
@@ -196,17 +196,19 @@ artifact to the next. Do NOT start implementing until you have all of it:
      comments, attachments. This is your spec.
   b. EPIC (Jira) — the Story's parent epic: the broader goal, scope, and the
      definition of done the Story rolls up into.
-  c. PRD (Confluence) — the product requirements doc linked from the Epic:
-     user-facing behaviour, flows, edge cases, and explicit non-goals.
-  d. ARCHITECTURE (Confluence) — the design doc / ADRs linked from the PRD or
-     repo: system boundaries, data models, constraints, decisions to respect.
-  e. MARKET (Confluence) — the strategy / market context the PRD references:
-     who this is for and why it matters, so trade-offs match intent.
+  c. PRD (Confluence — Product Management space, PSF) — the product requirements
+     doc linked from the Epic: user-facing behaviour, flows, edge cases, non-goals.
+  d. ARCHITECTURE (Confluence — Infrastructure and Architecture space, IAA) — the
+     design doc / ADRs linked from the PRD or repo: system boundaries, data models,
+     constraints, decisions to respect. Engineering patterns live in Development
+     Knowledgebase (DEVKB).
+  e. MARKET (Confluence — Product Management / PMO) — the strategy / market context
+     the PRD references: who this is for and why it matters, so trade-offs match intent.
 
 Where to read from (via MCP, follow links — do not search blind):
 - Jira MCP for STORY and EPIC — follow the "parent" / "epic link" fields.
 - Confluence MCP for PRD, ARCHITECTURE, and MARKET — follow the document links
-  from the Epic and PRD.
+  from the Epic and PRD (spaces: PSF, IAA, DEVKB).
 
 If any link in the chain is missing, or the acceptance criteria is unclear, post
 a comment on the Jira ticket naming exactly what is missing and STOP — do not
@@ -317,7 +319,7 @@ Post a summary to the <span class="hl">code-review</span> channel:
         <div class="playbook-badge-wrap"><span class="agent-badge checker-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><rect x="8" y="7" width="8" height="10" rx="4" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M9 7 A3 3 0 0 1 15 7" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M5 9 L8 10 M5 12 L8 12 M5 15 L8 14 M19 9 L16 10 M19 12 L16 12 M19 15 L16 14" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/><path d="M10 5 C9 3, 8 3, 8 3 M14 5 C15 3, 16 3, 16 3" stroke-width="1.5" stroke-linecap="round" class="badge-icon"/></svg></span></div>
         <div class="playbook-head-info">
           <div class="playbook-agent-name">Checker — QA & Testing Agent</div>
-          <div class="playbook-agent-role">Nightly regression, files bugs, validates fixes after merge</div>
+          <div class="playbook-agent-role">Nightly regression, files Defects, validates fixes after merge</div>
         </div>
         <div class="playbook-macro">!test</div>
       </div>
@@ -347,8 +349,8 @@ For each FAILED test, determine:
 - <span class="nt">Real regression</span>: test was passing before a recent commit that broke it
 - <span class="nt">Flaky test</span>: passes sometimes, fails sometimes, not caused by a code change
 
-<span class="cm">4. FILE COMPLETE BUG TICKETS FOR REAL REGRESSIONS</span>
-For each real regression, create a Jira bug ticket with the FULL quality bar so
+<span class="cm">4. FILE COMPLETE DEFECTS FOR REAL REGRESSIONS</span>
+For each real regression, create a Jira Defect with the FULL quality bar so
 Mender can fix it autonomously. Every field is required:
 - Title: <span class="st">[Regression] [test name] failing since [commit hash]</span>
 - Steps to reproduce the failure
@@ -356,16 +358,16 @@ Mender can fix it autonomously. Every field is required:
 - The failing test + the full stack trace
 - The commit that introduced the regression (git bisect / blame)
 - Acceptance criteria from the original story (link the story)
-- Priority: P1 if it affects a critical user-facing path, P2/P3 otherwise
-- Labels: <span class="hl">regression</span> and <span class="hl">AgentOS</span> (so Mender picks it up), then set status <span class="hl">Ready</span>
+- Priority: 1 - URGENT if it affects a critical user-facing path, 2 - HIGH or 3 - MEDIUM otherwise
+- Labels: <span class="hl">regression</span> and <span class="hl">JAI_Agent</span> (so Mender picks it up), then move it to <span class="hl">Ready for Work</span>
 
 For flaky tests: post a note to the <span class="hl">qa-alerts</span> channel only — do NOT file a Jira ticket.
 
 <span class="cm">5. CHECK COVERAGE</span>
 If any module's coverage drops below 80% (90% for auth/payments), flag it in the report.
-If any module is below 60%, file a P2 Jira ticket:
+If any module is below 60%, file a 2 - HIGH Jira ticket:
 - Title: <span class="st">[Coverage] [module name] below threshold</span>
-- Priority: P2
+- Priority: 2 - HIGH
 
 <span class="cm">6. POST SUMMARY TO QA-ALERTS CHANNEL</span>
 <span class="st">✅ X tests passed
@@ -375,9 +377,9 @@ If any module is below 60%, file a P2 Jira ticket:
 📎 New Jira tickets: [links or "none"]</span>
 
 <span class="cm">7. VALIDATOR MODE (runs after a fix PR merges to main — see Automation 7F)</span>
-When a fix PR merges to main and closes a Jira bug:
-- For P1 bugs: only run AFTER a human has approved and merged the fix PR
-- Re-run the tests covering that bug + the failing test recorded on the ticket
+When a fix PR merges to main and closes a Jira Defect:
+- For 1 - URGENT Defects: only run AFTER a human has approved and merged the fix PR
+- Re-run the tests covering that Defect + the failing test recorded on the ticket
 - If GREEN: confirm the regression is gone, close the Jira ticket, post to <span class="hl">qa-alerts</span>
 - If STILL FAILING: reopen the ticket, comment with the failure, re-assign to Mender</div>
           </div>
@@ -390,7 +392,7 @@ When a fix PR merges to main and closes a Jira bug:
         <div class="playbook-badge-wrap"><span class="agent-badge mender-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><rect x="3" y="7" width="18" height="13" rx="2.5" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M9 7 V5.5 A1.5 1.5 0 0 1 10.5 4 L13.5 4 A1.5 1.5 0 0 1 15 5.5 V7" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" class="badge-icon"/><path d="M12 10.5 V16.5 M9 13.5 H15" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/></svg></span></div>
         <div class="playbook-head-info">
           <div class="playbook-agent-name">Mender — Bug Fixer Agent</div>
-          <div class="playbook-agent-role">Fixes Ready AgentOS bugs and opens PRs</div>
+          <div class="playbook-agent-role">Fixes Ready for Work JAI_Agent Defects and opens PRs</div>
         </div>
         <div class="playbook-macro">!fix</div>
       </div>
@@ -405,19 +407,19 @@ When a fix PR merges to main and closes a Jira bug:
         <div class="instr-label">Instructions — copy and paste into Devin</div>
         <div class="code-wrap">
             <button class="copy-btn" onclick="copyCode(this)">copy</button>
-            <div class="code-block">You are fixing a bug to close the autonomous bug loop. Follow these steps exactly.
+            <div class="code-block">You are fixing a Defect to close the autonomous defect loop. Follow these steps exactly.
 
 <span class="cm">1. PULL THE QUEUE</span>
-Find Jira bugs labelled <span class="hl">AgentOS</span> in status <span class="hl">Ready</span>.
-- P1 bugs: you were triggered in real time — fix this one now
-- P2/P3 bugs: process the 7am batch in priority order
+Find Defects labelled <span class="hl">JAI_Agent</span> in status <span class="hl">Ready for Work</span>.
+- 1 - URGENT Defects: you were triggered in real time — fix this one now
+- 2 - HIGH and 3 - MEDIUM Defects: process the 7am batch in priority order
 
 <span class="cm">2. VALIDATE THE TICKET — do not guess</span>
 The ticket MUST contain all of: steps to reproduce, expected vs actual behaviour,
 a failing test + stack trace, the commit that introduced the regression, and the
 original story's acceptance criteria.
 If ANY field is missing: post a comment listing what's missing, move the ticket to
-<span class="nt">Blocked</span>, and skip it. Never fix from an incomplete ticket.
+<span class="nt">On Hold</span>, and skip it. Never fix from an incomplete ticket.
 
 <span class="cm">3. REPRODUCE</span>
 Reproduce the failure locally from the steps and the failing test. Confirm you see
@@ -433,12 +435,12 @@ Run <span class="st">@skills:test-before-pr</span> (install, lint, test, build).
 
 <span class="cm">6. OPEN THE PR</span>
 - Title: <span class="st">[BUG-ID] [short description] — fix</span>
-- Body: root cause, the fix, and how it was verified; link to the Jira bug
+- Body: root cause, the fix, and how it was verified; link to the Jira Defect
 - Link the PR to the ticket and move the ticket to <span class="nt">In Review</span>
 - Post the PR link to the <span class="hl">qa-alerts</span> channel
 
 <span class="cm">7. HANDOFF</span>
-Critic auto-reviews. P2/P3 merge autonomously; P1 waits for human approval. After
+Critic auto-reviews. 2 - HIGH and 3 - MEDIUM merge autonomously; 1 - URGENT waits for human approval. After
 merge, Checker (Validator mode) confirms the regression is gone and closes the ticket.</div>
           </div>
         </div>
@@ -469,7 +471,7 @@ merge, Checker (Validator mode) confirms the regression is gone and closes the t
 Do NOT skip any step. Do NOT proceed if a step fails — post to the releases channel and stop.
 
 <span class="cm">STEP 1 — CHECK BLOCKERS</span>
-Search Jira for open tickets with priority P1 or P2 that are unresolved.
+Search Jira for open tickets with priority 1 - URGENT or 2 - HIGH that are unresolved.
 If any exist: post to the <span class="hl">releases</span> channel: "⚠️ Release blocked: [ticket list]" and STOP.
 
 <span class="cm">STEP 2 — VERIFY CI</span>
@@ -551,7 +553,7 @@ database connections — always flag these for human review.
 Run: <span class="st">npm audit</span> (or equivalent)
 For each HIGH or CRITICAL vulnerability, file a Jira ticket:
 - Title: <span class="st">[Security] CVE-XXXX in [package] — [severity]</span>
-- Priority: P1 for CRITICAL, P2 for HIGH
+- Priority: 1 - URGENT for CRITICAL, 2 - HIGH for HIGH
 - Include: CVE ID, affected version, fix version, one-line impact assessment
 
 <span class="cm">3. DEAD CODE</span>
@@ -625,7 +627,7 @@ sensitive paths AND as a weekly codebase sweep.
 
 4. File a Jira security ticket for MEDIUM and above:
    Title: <span class="st">[Security] [vulnerability type] in [file/component]</span>
-   Priority: P1 for CRITICAL/HIGH, P2 for MEDIUM
+   Priority: 1 - URGENT for CRITICAL/HIGH, 2 - HIGH for MEDIUM
 
 <span class="cm">FOR WEEKLY SWEEP (no PR):</span>
 1. Scan all repos for hardcoded secrets (API key patterns, token strings)
@@ -671,7 +673,7 @@ sensitive paths AND as a weekly codebase sweep.
         <td>Coder — Daily Dev Pickup</td>
         <td><code>0 9 * * 1-5</code></td>
         <td><code>!implement</code></td>
-        <td>"Check Jira for all tickets with status 'Ready for Dev' in project [YOUR-PROJECT-KEY]. Pick the top 3 in pickup order — MoSCoW (Must → Should → Could), then ticket number, then epic number. Implement each one, opening a separate PR per ticket. Follow the !implement playbook."</td>
+        <td>"Check Jira for all tickets with status 'Ready for Work' in project J1. Pick the top 3 in pickup order — Priority (1 - URGENT → 2 - HIGH → 3 - MEDIUM → 4 - LOW), then ticket number, then epic number. Implement each one, opening a separate PR per ticket. Follow the !implement playbook."</td>
         <td><code>dev-runs</code></td>
       </tr>
       <tr>
@@ -692,10 +694,10 @@ sensitive paths AND as a weekly codebase sweep.
       </tr>
       <tr>
         <td><div style="display:flex;align-items:center"><span class="agent-badge mender-badge" style="width:24px;height:24px;margin-right:6px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><rect x="3" y="7" width="18" height="13" rx="2.5" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M9 7 V5.5 A1.5 1.5 0 0 1 10.5 4 L13.5 4 A1.5 1.5 0 0 1 15 5.5 V7" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" class="badge-icon"/><path d="M12 10.5 V16.5 M9 13.5 H15" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/></svg></span><strong>Mender</strong></div></td>
-        <td>Mender — Daily Bug Fixes</td>
+        <td>Mender — Daily Defect Fixes</td>
         <td><code>0 7 * * *</code></td>
         <td><code>!fix</code></td>
-        <td>"Pull Jira bugs labelled AgentOS in Ready status. Reproduce, fix the root cause, open a PR with root cause + fix details, and move each ticket to In Review. Follow the !fix playbook."</td>
+        <td>"Pull Defects labelled JAI_Agent in Ready for Work status. Reproduce, fix the root cause, open a PR with root cause + fix details, and move each ticket to In Review. Follow the !fix playbook."</td>
         <td><code>qa-alerts</code></td>
       </tr>
       <tr>
@@ -709,7 +711,7 @@ sensitive paths AND as a weekly codebase sweep.
     </table>
 
     <div class="callout tip"><div class="callout-icon">✅</div><div>After creating each schedule, verify it appears under <a href="https://app.devin.ai/settings/schedules" target="_blank">Settings → Schedules</a> with status <strong>Active</strong>. If status is Error, re-check the cron expression and playbook name.</div></div>
-    <div class="callout warn"><div class="callout-icon">⚠️</div><div>Replace <strong>[YOUR-PROJECT-KEY]</strong> in Coder's prompt with your actual Jira project key (e.g. <code>CORE</code>, <code>ENG</code>). If you have multiple projects, list them: "in projects CORE, INFRA, or PLATFORM".</div></div>
+    <div class="callout warn"><div class="callout-icon">⚠️</div><div><strong>J1</strong> is the JAGGAER One project key — swap it if your work lives in a different project (e.g. <code>JADEV</code>, <code>AD</code>). If you span multiple projects, list them: "in projects J1, JADEV, or AD".</div></div>
   </section>
 
   <!-- ══════════════════ 7. AUTOMATIONS ══════════════════ -->
@@ -768,27 +770,27 @@ File Jira security tickets for MEDIUM and above.</div></div>
     </div></div>
     <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Wire your CI/CD pipeline to POST to the webhook URL on every production deploy</div><div class="step-desc">In GitHub Actions, add a step after your deploy step that runs:<br><code>curl -X POST [WEBHOOK_URL] -H "Content-Type: application/json" -d "{\"service\":\"$SERVICE_NAME\",\"commit\":\"$GITHUB_SHA\"}"</code></div></div></div>
 
-    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7E — P1 Bug Real-Time Fix (Mender reflex)</h3>
-    <div class="callout info"><div class="callout-icon">ℹ️</div><div>Mender's 7am schedule handles P2/P3 bugs. This automation makes Mender jump on <strong>P1</strong> bugs the moment they're ready — no waiting for the morning run.</div></div>
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7E — URGENT Defect Real-Time Fix (Mender reflex)</h3>
+    <div class="callout info"><div class="callout-icon">ℹ️</div><div>Mender's 7am schedule handles 2 - HIGH and 3 - MEDIUM Defects. This automation makes Mender jump on <strong>1 - URGENT</strong> Defects the moment they reach Ready for Work — no waiting for the morning run.</div></div>
     <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Automations → <strong>New automation</strong> → Trigger: <strong>Jira → Issue updated</strong></div></div></div>
-    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Add conditions: label is <code>AgentOS</code> · status is <code>Ready</code> · priority is <code>P1</code></div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Add conditions: label is <code>JAI_Agent</code> · status is <code>Ready</code> · priority is <code>1 - URGENT</code></div></div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Action: <strong>Start session</strong> with this prompt:</div>
-      <div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">copy</button><div class="code-block">A P1 bug labelled AgentOS has been set to Ready. Fix it now — do not wait for the 7am run.
+      <div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">copy</button><div class="code-block">A 1 - URGENT Defect labelled JAI_Agent has reached Ready for Work. Fix it now — do not wait for the 7am run.
 Follow the !fix playbook: validate the ticket has steps to reproduce, expected vs actual,
 a failing test + stack trace, the regression commit, and the original story's acceptance criteria.
-If any field is missing, comment and move the ticket to Blocked. Otherwise reproduce, fix the
+If any field is missing, comment and move the ticket to On Hold. Otherwise reproduce, fix the
 root cause, open a PR with fix details, and move the ticket to In Review.</div></div>
     </div></div>
     <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Save and enable the automation</div></div></div>
 
-    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7F — Validator: close bugs after a fix merges (Checker reflex)</h3>
-    <div class="callout info"><div class="callout-icon">ℹ️</div><div>This is Checker's <strong>Validator mode</strong> — the back half of the autonomous bug loop. It runs after a fix PR merges and closes the ticket only if the regression is truly gone.</div></div>
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7F — Validator: resolve Defects after a fix merges (Checker reflex)</h3>
+    <div class="callout info"><div class="callout-icon">ℹ️</div><div>This is Checker's <strong>Validator mode</strong> — the back half of the autonomous defect loop. It runs after a fix PR merges and resolves the ticket only if the regression is truly gone.</div></div>
     <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Automations → <strong>New automation</strong> → Trigger: <strong>GitHub → Pull request → merged to <code>main</code></strong></div></div></div>
-    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Add condition: PR closes a Jira bug (linked ticket)</div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Add condition: PR closes a Jira Defect (linked ticket)</div></div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Action: <strong>Start session</strong> with this prompt:</div>
-      <div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">copy</button><div class="code-block">A fix PR just merged to main and closes a Jira bug. Run Checker in Validator mode:
-1. If the bug is P1, only proceed if a human approved the merged PR.
-2. Re-run the tests covering this bug plus the failing test recorded on the ticket.
+      <div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">copy</button><div class="code-block">A fix PR just merged to main and closes a Jira Defect. Run Checker in Validator mode:
+1. If the Defect is 1 - URGENT, only proceed if a human approved the merged PR.
+2. Re-run the tests covering this Defect plus the failing test recorded on the ticket.
 3. If green and the regression is gone: close the Jira ticket and post to the qa-alerts channel.
 4. If still failing: reopen the ticket, comment with the failure, and re-assign to Mender.</div></div>
     </div></div>
@@ -975,7 +977,7 @@ description: How to implement a feature in this repo. Follow this whenever imple
 ```
 git checkout -b feature/[TICKET-ID]-short-description
 ```
-Example: `feature/CORE-123-add-user-export`
+Example: `feature/J1-123-add-user-export`
 
 <span class="kw">### 3. Implement</span>
 - Follow existing code patterns — do not invent new conventions
@@ -1049,7 +1051,7 @@ Description template:
     <div class="step"><div class="step-num">3</div><div class="step-body">
       <div class="step-title">Trigger: <code>when writing tests or checking test coverage</code></div>
       <div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">copy</button><div class="code-block">Testing conventions:
-- Coverage policy (the standard the agents enforce): 80% on changed files, 90% for auth and payments modules. Below 80% is flagged on the PR; below 60% in any module is a P2 Jira ticket.
+- Coverage policy (the standard the agents enforce): 80% on changed files, 90% for auth and payments modules. Below 80% is flagged on the PR; below 60% in any module is a 2 - HIGH Jira ticket.
 - Unit tests go in __tests__/ directories alongside the source file.
 - Integration tests go in tests/integration/.
 - E2E tests go in tests/e2e/ and use Playwright.
@@ -1166,7 +1168,7 @@ Fast PR review: replace github.com → devinreview.com in any PR URL</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Coder:</strong> In Teams, send <code>@Devin !implement [any small ticket key]</code>. Within 2 minutes, Devin should respond with a session link and start working. Within ~20 min (for a small ticket), a PR should appear in GitHub.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Critic:</strong> Open a test PR in any repo. Within 5 minutes, a Devin Review comment should appear on the PR. If not, check Settings → Review → verify the repo is listed and auto-review is ON.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Checker:</strong> Send <code>@Devin !test</code> in the <code>qa-alerts</code> channel. Checker should respond with a session link and post a pass/fail summary within 10–30 minutes.</div></div>
-    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Mender:</strong> Take a complete bug ticket (repro, expected vs actual, failing test + stack trace, regression commit, original story AC), label it <code>AgentOS</code>, set it <strong>Ready</strong>, then send <code>@Devin !fix [BUG-KEY]</code>. Mender should open a fix PR and move the ticket to <strong>In Review</strong>.</div></div>
+    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Mender:</strong> Take a complete Defect (repro, expected vs actual, failing test + stack trace, regression commit, original story AC), label it <code>JAI_Agent</code>, move it to <strong>Ready for Work</strong>, then send <code>@Devin !fix [J1-KEY]</code>. Mender should open a fix PR and move the ticket to <strong>In Review</strong>.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Check schedules:</strong> Go to <a href="https://app.devin.ai/settings/schedules" target="_blank">Settings → Schedules</a>. All 7 schedules should show status <strong>Active</strong>. If any show <strong>Error</strong>, click to see the error and fix the prompt or cron expression.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Check automations:</strong> Go to <a href="https://app.devin.ai/automations" target="_blank">Automations</a>. All 6 automations should be enabled. Break a CI check on a test branch — within 2 minutes Devin should post a fix attempt to the PR.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Test AGENTS.md:</strong> Start a session in Devin and ask: <em>"What are the architecture conventions for this repo?"</em>. Devin should accurately describe what's in your AGENTS.md.</div></div>
