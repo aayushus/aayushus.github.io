@@ -94,7 +94,7 @@
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
-    <div class="callout info"><div class="callout-icon">ℹ️</div><div>Every Devin session boots from a <strong>snapshot</strong> — a pre-built machine image. Configure it once and every Coder / Checker run starts with your repos cloned, tools installed, and dependencies ready.</div></div>
+    <div class="callout info"><div class="callout-icon">ℹ️</div><div>Every Devin session boots from a <strong>snapshot</strong> — a pre-built machine image. Configure it once and every Builder / Tester run starts with your repos cloned, tools installed, and dependencies ready.</div></div>
 
     <h3 class="subhead">A — Environment (Blueprints)</h3>
     <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/repositories" target="_blank">Settings → Repositories</a> → pick a repo → <strong>Configure environment</strong></div></div></div>
@@ -123,7 +123,7 @@
       <div class="section-num-wrap"><div class="section-num">03</div></div>
       <div class="section-header-text">
         <div class="section-title">Enable Devin Review</div>
-        <div class="section-desc">Turns on automated PR review across all repos. This is what powers Critic.</div>
+        <div class="section-desc">Turns on automated PR review across all repos. This is what powers Reviewer.</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -165,12 +165,12 @@
 
     <div class="callout info"><div class="callout-icon">ℹ️</div><div>For each playbook: go to <a href="https://app.devin.ai/settings/playbooks" target="_blank">app.devin.ai → Settings → Library → Playbooks → Create</a>. Enter the Name, Macro, and paste the Instructions exactly.</div></div>
 
-    <!-- Coder -->
+    <!-- Builder -->
     <div class="playbook-card" style="margin-top:20px">
       <div class="playbook-card-head">
-        <div class="playbook-badge-wrap"><span class="agent-badge coder-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M8 7 L3 12 L8 17 M16 7 L21 12 L16 17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/></svg></span></div>
+        <div class="playbook-badge-wrap"><span class="agent-badge builder-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M8 7 L3 12 L8 17 M16 7 L21 12 L16 17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/></svg></span></div>
         <div class="playbook-head-info">
-          <div class="playbook-agent-name">Coder — Development Agent</div>
+          <div class="playbook-agent-name">Builder — Development Agent</div>
           <div class="playbook-agent-role">Implements Jira tickets autonomously</div>
         </div>
         <div class="playbook-macro">!implement</div>
@@ -254,12 +254,12 @@ summarising what was implemented.</div>
         </div>
     </div>
 
-    <!-- Critic -->
+    <!-- Reviewer -->
     <div class="playbook-card">
       <div class="playbook-card-head">
-        <div class="playbook-badge-wrap"><span class="agent-badge critic-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><circle cx="6" cy="6" r="2.5" class="badge-icon" fill="none" stroke-width="1.8"/><circle cx="6" cy="18" r="2.5" class="badge-icon" fill="none" stroke-width="1.8"/><circle cx="18" cy="18" r="2.5" class="badge-icon" fill="none" stroke-width="1.8"/><path d="M6 8.5 L6 15.5 M18 15.5 L18 12 A2.5 2.5 0 0 0 15.5 9.5 L8.5 9.5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/></svg></span></div>
+        <div class="playbook-badge-wrap"><span class="agent-badge reviewer-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><circle cx="6" cy="6" r="2.5" class="badge-icon" fill="none" stroke-width="1.8"/><circle cx="6" cy="18" r="2.5" class="badge-icon" fill="none" stroke-width="1.8"/><circle cx="18" cy="18" r="2.5" class="badge-icon" fill="none" stroke-width="1.8"/><path d="M6 8.5 L6 15.5 M18 15.5 L18 12 A2.5 2.5 0 0 0 15.5 9.5 L8.5 9.5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/></svg></span></div>
         <div class="playbook-head-info">
-          <div class="playbook-agent-name">Critic — Code Review Agent</div>
+          <div class="playbook-agent-name">Reviewer — Code Review Agent</div>
           <div class="playbook-agent-role">Reviews all open PRs and triages CI failures</div>
         </div>
         <div class="playbook-macro">!review</div>
@@ -313,12 +313,12 @@ Post a summary to the <span class="hl">code-review</span> channel:
         </div>
     </div>
 
-    <!-- Checker -->
+    <!-- Tester -->
     <div class="playbook-card">
       <div class="playbook-card-head">
-        <div class="playbook-badge-wrap"><span class="agent-badge checker-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><rect x="8" y="7" width="8" height="10" rx="4" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M9 7 A3 3 0 0 1 15 7" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M5 9 L8 10 M5 12 L8 12 M5 15 L8 14 M19 9 L16 10 M19 12 L16 12 M19 15 L16 14" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/><path d="M10 5 C9 3, 8 3, 8 3 M14 5 C15 3, 16 3, 16 3" stroke-width="1.5" stroke-linecap="round" class="badge-icon"/></svg></span></div>
+        <div class="playbook-badge-wrap"><span class="agent-badge tester-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><rect x="8" y="7" width="8" height="10" rx="4" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M9 7 A3 3 0 0 1 15 7" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M5 9 L8 10 M5 12 L8 12 M5 15 L8 14 M19 9 L16 10 M19 12 L16 12 M19 15 L16 14" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/><path d="M10 5 C9 3, 8 3, 8 3 M14 5 C15 3, 16 3, 16 3" stroke-width="1.5" stroke-linecap="round" class="badge-icon"/></svg></span></div>
         <div class="playbook-head-info">
-          <div class="playbook-agent-name">Checker — QA & Testing Agent</div>
+          <div class="playbook-agent-name">Tester — QA & Testing Agent</div>
           <div class="playbook-agent-role">Nightly regression, files Defects, validates fixes after merge</div>
         </div>
         <div class="playbook-macro">!test</div>
@@ -440,8 +440,8 @@ Run <span class="st">@skills:test-before-pr</span> (install, lint, test, build).
 - Post the PR link to the <span class="hl">qa-alerts</span> channel
 
 <span class="cm">7. HANDOFF</span>
-Critic auto-reviews. 2 - HIGH and 3 - MEDIUM merge autonomously; 1 - URGENT waits for human approval. After
-merge, Checker (Validator mode) confirms the regression is gone and closes the ticket.</div>
+Reviewer auto-reviews. 2 - HIGH and 3 - MEDIUM merge autonomously; 1 - URGENT waits for human approval. After
+merge, Tester (Validator mode) confirms the regression is gone and closes the ticket.</div>
           </div>
         </div>
     </div>
@@ -507,12 +507,12 @@ and a one-sentence summary of the most significant change this release.</div>
         </div>
     </div>
 
-    <!-- Janitor -->
+    <!-- Maintainer -->
     <div class="playbook-card">
       <div class="playbook-card-head">
-        <div class="playbook-badge-wrap"><span class="agent-badge janitor-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M18.4 5.6 a4.3 4.3 0 0 0 -6.1 0 c-1.1 1.1 -1.4 2.7 -0.9 4 L4 17.1 a1.5 1.5 0 0 0 2.1 2.1 l7.5 -7.5 c1.3 0.5 2.9 0.2 4 -0.9 a4.3 4.3 0 0 0 0 -6.1 Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><path d="M15 8 L18 5" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/></svg></span></div>
+        <div class="playbook-badge-wrap"><span class="agent-badge maintainer-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M18.4 5.6 a4.3 4.3 0 0 0 -6.1 0 c-1.1 1.1 -1.4 2.7 -0.9 4 L4 17.1 a1.5 1.5 0 0 0 2.1 2.1 l7.5 -7.5 c1.3 0.5 2.9 0.2 4 -0.9 a4.3 4.3 0 0 0 0 -6.1 Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><path d="M15 8 L18 5" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/></svg></span></div>
         <div class="playbook-head-info">
-          <div class="playbook-agent-name">Janitor — Maintenance Agent</div>
+          <div class="playbook-agent-name">Maintainer — Maintenance Agent</div>
           <div class="playbook-agent-role">Dependencies, dead code, security audit, lint</div>
         </div>
         <div class="playbook-macro">!maintenance</div>
@@ -574,12 +574,12 @@ Commit auto-fixed issues: <span class="st">chore: auto-fix lint issues</span>
         </div>
     </div>
 
-    <!-- Sentinel -->
+    <!-- Guardian -->
     <div class="playbook-card">
       <div class="playbook-card-head">
-        <div class="playbook-badge-wrap"><span class="agent-badge sentinel-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M12 21.5 C12 21.5, 19 18, 19 12 L19 5.5 L12 2.5 L5 5.5 L5 12 C5 18, 12 21.5, 12 21.5 Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><rect x="10" y="11" width="4" height="3" rx="1" stroke-width="1.5" fill="none" class="badge-icon"/><path d="M11 11 L11 9 A1 1 0 0 1 13 9 L13 11" stroke-width="1.5" fill="none" class="badge-icon"/></svg></span></div>
+        <div class="playbook-badge-wrap"><span class="agent-badge guardian-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M12 21.5 C12 21.5, 19 18, 19 12 L19 5.5 L12 2.5 L5 5.5 L5 12 C5 18, 12 21.5, 12 21.5 Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><rect x="10" y="11" width="4" height="3" rx="1" stroke-width="1.5" fill="none" class="badge-icon"/><path d="M11 11 L11 9 A1 1 0 0 1 13 9 L13 11" stroke-width="1.5" fill="none" class="badge-icon"/></svg></span></div>
         <div class="playbook-head-info">
-          <div class="playbook-agent-name">Sentinel — Security & Compliance Agent</div>
+          <div class="playbook-agent-name">Guardian — Security & Compliance Agent</div>
           <div class="playbook-agent-role">Security reviews on sensitive PRs + weekly sweep</div>
         </div>
         <div class="playbook-macro">!security-review</div>
@@ -653,40 +653,40 @@ sensitive paths AND as a weekly codebase sweep.
     <table class="cron-table">
       <tr><th>Agent</th><th>Schedule name</th><th>Cron</th><th>Playbook</th><th>Prompt to enter</th><th>Notify</th></tr>
       <tr>
-        <td><div style="display:flex;align-items:center"><span class="agent-badge janitor-badge" style="width:24px;height:24px;margin-right:6px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M18.4 5.6 a4.3 4.3 0 0 0 -6.1 0 c-1.1 1.1 -1.4 2.7 -0.9 4 L4 17.1 a1.5 1.5 0 0 0 2.1 2.1 l7.5 -7.5 c1.3 0.5 2.9 0.2 4 -0.9 a4.3 4.3 0 0 0 0 -6.1 Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><path d="M15 8 L18 5" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/></svg></span><strong>Janitor</strong></div></td>
-        <td>Janitor — Monday Maintenance</td>
+        <td><div style="display:flex;align-items:center"><span class="agent-badge maintainer-badge" style="width:24px;height:24px;margin-right:6px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M18.4 5.6 a4.3 4.3 0 0 0 -6.1 0 c-1.1 1.1 -1.4 2.7 -0.9 4 L4 17.1 a1.5 1.5 0 0 0 2.1 2.1 l7.5 -7.5 c1.3 0.5 2.9 0.2 4 -0.9 a4.3 4.3 0 0 0 0 -6.1 Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><path d="M15 8 L18 5" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/></svg></span><strong>Maintainer</strong></div></td>
+        <td>Maintainer — Monday Maintenance</td>
         <td><code>0 7 * * 1</code></td>
         <td><code>!maintenance</code></td>
         <td>"Run the weekly maintenance sweep across all repos. Follow the !maintenance playbook."</td>
         <td><code>engineering</code></td>
       </tr>
       <tr>
-        <td><div style="display:flex;align-items:center"><span class="agent-badge critic-badge" style="width:24px;height:24px;margin-right:6px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><circle cx="6" cy="6" r="2.5" class="badge-icon" fill="none" stroke-width="1.8"/><circle cx="6" cy="18" r="2.5" class="badge-icon" fill="none" stroke-width="1.8"/><circle cx="18" cy="18" r="2.5" class="badge-icon" fill="none" stroke-width="1.8"/><path d="M6 8.5 L6 15.5 M18 15.5 L18 12 A2.5 2.5 0 0 0 15.5 9.5 L8.5 9.5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/></svg></span><strong>Critic</strong></div></td>
-        <td>Critic — Morning PR Review</td>
+        <td><div style="display:flex;align-items:center"><span class="agent-badge reviewer-badge" style="width:24px;height:24px;margin-right:6px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><circle cx="6" cy="6" r="2.5" class="badge-icon" fill="none" stroke-width="1.8"/><circle cx="6" cy="18" r="2.5" class="badge-icon" fill="none" stroke-width="1.8"/><circle cx="18" cy="18" r="2.5" class="badge-icon" fill="none" stroke-width="1.8"/><path d="M6 8.5 L6 15.5 M18 15.5 L18 12 A2.5 2.5 0 0 0 15.5 9.5 L8.5 9.5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/></svg></span><strong>Reviewer</strong></div></td>
+        <td>Reviewer — Morning PR Review</td>
         <td><code>0 8 * * 1-5</code></td>
         <td><code>!review</code></td>
         <td>"Review all open PRs in the organisation that have been open for more than 4 hours. Follow the !review playbook."</td>
         <td><code>code-review</code></td>
       </tr>
       <tr>
-        <td><div style="display:flex;align-items:center"><span class="agent-badge coder-badge" style="width:24px;height:24px;margin-right:6px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M8 7 L3 12 L8 17 M16 7 L21 12 L16 17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/></svg></span><strong>Coder</strong></div></td>
-        <td>Coder — Daily Dev Pickup</td>
+        <td><div style="display:flex;align-items:center"><span class="agent-badge builder-badge" style="width:24px;height:24px;margin-right:6px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M8 7 L3 12 L8 17 M16 7 L21 12 L16 17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/></svg></span><strong>Builder</strong></div></td>
+        <td>Builder — Daily Dev Pickup</td>
         <td><code>0 9 * * 1-5</code></td>
         <td><code>!implement</code></td>
         <td>"Check Jira for all tickets with status 'Ready for Work' in project J1. Pick the top 3 in pickup order — Priority (1 - URGENT → 2 - HIGH → 3 - MEDIUM → 4 - LOW), then ticket number, then epic number. Implement each one, opening a separate PR per ticket. Follow the !implement playbook."</td>
         <td><code>dev-runs</code></td>
       </tr>
       <tr>
-        <td><div style="display:flex;align-items:center"><span class="agent-badge sentinel-badge" style="width:24px;height:24px;margin-right:6px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M12 21.5 C12 21.5, 19 18, 19 12 L19 5.5 L12 2.5 L5 5.5 L5 12 C5 18, 12 21.5, 12 21.5 Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><rect x="10" y="11" width="4" height="3" rx="1" stroke-width="1.5" fill="none" class="badge-icon"/><path d="M11 11 L11 9 A1 1 0 0 1 13 9 L13 11" stroke-width="1.5" fill="none" class="badge-icon"/></svg></span><strong>Sentinel</strong></div></td>
-        <td>Sentinel — Wednesday Security Sweep</td>
+        <td><div style="display:flex;align-items:center"><span class="agent-badge guardian-badge" style="width:24px;height:24px;margin-right:6px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M12 21.5 C12 21.5, 19 18, 19 12 L19 5.5 L12 2.5 L5 5.5 L5 12 C5 18, 12 21.5, 12 21.5 Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><rect x="10" y="11" width="4" height="3" rx="1" stroke-width="1.5" fill="none" class="badge-icon"/><path d="M11 11 L11 9 A1 1 0 0 1 13 9 L13 11" stroke-width="1.5" fill="none" class="badge-icon"/></svg></span><strong>Guardian</strong></div></td>
+        <td>Guardian — Wednesday Security Sweep</td>
         <td><code>0 10 * * 3</code></td>
         <td><code>!security-review</code></td>
         <td>"Run the weekly security sweep across all repos. Scan for hardcoded secrets, CVEs, and recent auth-related commits. Follow the !security-review playbook."</td>
         <td><code>security</code></td>
       </tr>
       <tr>
-        <td><div style="display:flex;align-items:center"><span class="agent-badge checker-badge" style="width:24px;height:24px;margin-right:6px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><rect x="8" y="7" width="8" height="10" rx="4" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M9 7 A3 3 0 0 1 15 7" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M5 9 L8 10 M5 12 L8 12 M5 15 L8 14 M19 9 L16 10 M19 12 L16 12 M19 15 L16 14" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/><path d="M10 5 C9 3, 8 3, 8 3 M14 5 C15 3, 16 3, 16 3" stroke-width="1.5" stroke-linecap="round" class="badge-icon"/></svg></span><strong>Checker</strong></div></td>
-        <td>Checker — Nightly QA</td>
+        <td><div style="display:flex;align-items:center"><span class="agent-badge tester-badge" style="width:24px;height:24px;margin-right:6px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><rect x="8" y="7" width="8" height="10" rx="4" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M9 7 A3 3 0 0 1 15 7" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M5 9 L8 10 M5 12 L8 12 M5 15 L8 14 M19 9 L16 10 M19 12 L16 12 M19 15 L16 14" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/><path d="M10 5 C9 3, 8 3, 8 3 M14 5 C15 3, 16 3, 16 3" stroke-width="1.5" stroke-linecap="round" class="badge-icon"/></svg></span><strong>Tester</strong></div></td>
+        <td>Tester — Nightly QA</td>
         <td><code>0 2 * * *</code></td>
         <td><code>!test</code></td>
         <td>"Run the full regression suite across all repos. File Jira tickets for real failures. Post the pass/fail summary. Follow the !test playbook."</td>
@@ -725,7 +725,7 @@ sensitive paths AND as a weekly codebase sweep.
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
-    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin-bottom:14px">7A — CI Failure Auto-Fix (Critic reflex)</h3>
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin-bottom:14px">7A — CI Failure Auto-Fix (Reviewer reflex)</h3>
     <div class="callout info"><div class="callout-icon">ℹ️</div><div>Use the pre-built template: <strong>Automations → Templates → "CI failure fixer"</strong></div></div>
     <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Click <strong>Templates</strong> → select <strong>CI failure fixer</strong></div></div></div>
     <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Set trigger: <strong>GitHub → Check run</strong> — Conclusion: <code>failure</code></div><div class="step-desc">Select all repos (or start with your most critical repo).</div></div></div>
@@ -745,7 +745,7 @@ sensitive paths AND as a weekly codebase sweep.
     <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Set channel: <code>incidents</code></div></div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Action type: <strong>Triage Devin</strong> (persistent monitor)</div><div class="step-desc">This creates a persistent Devin session that watches the channel and spawns sub-agents for each incident report.</div></div></div>
 
-    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7C — Sentinel PR Security Trigger</h3>
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7C — Guardian PR Security Trigger</h3>
     <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Automations → <strong>New automation</strong></div></div></div>
     <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Trigger: <strong>GitHub → Pull request → opened or synchronized</strong></div></div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Add condition: <strong>PR files changed contains</strong> <code>auth/</code> OR <code>payments/</code> OR <code>database/</code></div></div></div>
@@ -783,12 +783,12 @@ root cause, open a PR with fix details, and move the ticket to In Review.</div><
     </div></div>
     <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Save and enable the automation</div></div></div>
 
-    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7F — Validator: resolve Defects after a fix merges (Checker reflex)</h3>
-    <div class="callout info"><div class="callout-icon">ℹ️</div><div>This is Checker's <strong>Validator mode</strong> — the back half of the autonomous defect loop. It runs after a fix PR merges and resolves the ticket only if the regression is truly gone.</div></div>
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7F — Validator: resolve Defects after a fix merges (Tester reflex)</h3>
+    <div class="callout info"><div class="callout-icon">ℹ️</div><div>This is Tester's <strong>Validator mode</strong> — the back half of the autonomous defect loop. It runs after a fix PR merges and resolves the ticket only if the regression is truly gone.</div></div>
     <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Automations → <strong>New automation</strong> → Trigger: <strong>GitHub → Pull request → merged to <code>main</code></strong></div></div></div>
     <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Add condition: PR closes a Jira Defect (linked ticket)</div></div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Action: <strong>Start session</strong> with this prompt:</div>
-      <div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">copy</button><div class="code-block">A fix PR just merged to main and closes a Jira Defect. Run Checker in Validator mode:
+      <div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">copy</button><div class="code-block">A fix PR just merged to main and closes a Jira Defect. Run Tester in Validator mode:
 1. If the Defect is 1 - URGENT, only proceed if a human approved the merged PR.
 2. Re-run the tests covering this Defect plus the failing test recorded on the ticket.
 3. If green and the regression is gone: close the Jira ticket and post to the qa-alerts channel.
@@ -810,7 +810,7 @@ root cause, open a PR with fix details, and move the ticket to In Review.</div><
 
     <div class="callout warn"><div class="callout-icon">⚠️</div><div>The content below is a <strong>template</strong>. Customise it to match your actual tech stack, architecture, and conventions before committing. Devin takes these files literally — generic instructions produce generic output.</div></div>
 
-    <div class="callout tip"><div class="callout-icon">📝</div><div><strong>PR templates:</strong> if a repo has <code>.github/pull_request_template.md</code>, Coder fills it out automatically. To give Devin its own, add <code>.github/PULL_REQUEST_TEMPLATE/devin.md</code> — keep it short (what changed, why, how to test). <a href="https://docs.devin.ai/integrations/pr-templates" target="_blank">PR templates docs</a></div></div>
+    <div class="callout tip"><div class="callout-icon">📝</div><div><strong>PR templates:</strong> if a repo has <code>.github/pull_request_template.md</code>, Builder fills it out automatically. To give Devin its own, add <code>.github/PULL_REQUEST_TEMPLATE/devin.md</code> — keep it short (what changed, why, how to test). <a href="https://docs.devin.ai/integrations/pr-templates" target="_blank">PR templates docs</a></div></div>
 
     <!-- AGENTS.md -->
     <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:20px 0 10px">AGENTS.md</h3>
@@ -860,7 +860,7 @@ Full SDLC operating procedure: https://aayushus.github.io/sdlc/</div>
 
     <!-- REVIEW.md -->
     <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:24px 0 10px">REVIEW.md</h3>
-    <p style="font-size:13px;color:var(--text-2);margin-bottom:10px;line-height:1.6">Place in repo root. Critic reads this on every PR review. Define what to always look for, what to always flag, and what to ignore.</p>
+    <p style="font-size:13px;color:var(--text-2);margin-bottom:10px;line-height:1.6">Place in repo root. Reviewer reads this on every PR review. Define what to always look for, what to always flag, and what to ignore.</p>
     <div class="file-block-wrap">
       <div class="file-label"><div class="file-label-dot"></div>REVIEW.md</div>
       <div class="code-wrap" style="margin-top:0">
@@ -956,7 +956,7 @@ All steps passed. You may open the PR.</div>
 
     <!-- implement SKILL.md -->
     <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:24px 0 10px">.agents/skills/implement/SKILL.md</h3>
-    <p style="font-size:13px;color:var(--text-2);margin-bottom:10px;line-height:1.6">Coder auto-discovers this and follows it when implementing tickets in this repo.</p>
+    <p style="font-size:13px;color:var(--text-2);margin-bottom:10px;line-height:1.6">Builder auto-discovers this and follows it when implementing tickets in this repo.</p>
     <div class="file-block-wrap">
       <div class="file-label"><div class="file-label-dot"></div>.agents/skills/implement/SKILL.md</div>
       <div class="code-wrap" style="margin-top:0">
@@ -1045,7 +1045,7 @@ Description template:
 - Use parameterised queries everywhere. Never concatenate user input into a query string.
 - Passwords are hashed with bcrypt, cost factor 12.
 - Failed login attempts are rate-limited at 5 per 5 minutes per IP.
-- Auth changes require Sentinel security review before merge.</div></div>
+- Auth changes require Guardian security review before merge.</div></div>
     </div></div>
 
     <div class="step"><div class="step-num">3</div><div class="step-body">
@@ -1103,7 +1103,7 @@ Description template:
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
-    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Scope the Devin <strong>service account</strong> to least privilege</div><div class="step-desc">The Jira / GitHub service user Coder acts as should have only the access it needs. Use <a href="https://docs.devin.ai/enterprise/security-access/custom-roles" target="_blank">custom roles &amp; RBAC</a> to limit who can change playbooks, schedules, and org settings.</div></div></div>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Scope the Devin <strong>service account</strong> to least privilege</div><div class="step-desc">The Jira / GitHub service user Builder acts as should have only the access it needs. Use <a href="https://docs.devin.ai/enterprise/security-access/custom-roles" target="_blank">custom roles &amp; RBAC</a> to limit who can change playbooks, schedules, and org settings.</div></div></div>
     <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Enforce <strong>SSO</strong> for the team</div><div class="step-desc">SAML / OIDC / Okta / Azure AD. <a href="https://docs.devin.ai/enterprise/security-access/sso/guide" target="_blank">SSO onboarding guide</a></div></div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Restrict access with an <strong>IP access list</strong></div><div class="step-desc">Limit web app + API access to your office / VPN ranges. <a href="https://docs.devin.ai/enterprise/security-access/ip-access-lists" target="_blank">IP access lists</a></div></div></div>
     <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Know where the <strong>audit log</strong> and <strong>kill switch</strong> are</div><div class="step-desc">Audit logs record every agent and admin action — review them when something looks off. Any running session can be stopped from Teams (<code>EXIT</code>) or terminated in the web app / via API. <a href="https://docs.devin.ai/admin/security" target="_blank">Security at Cognition</a></div></div></div>
@@ -1136,7 +1136,7 @@ Description template:
     </div></div>
     <div class="step"><div class="step-num">4</div><div class="step-body">
       <div class="step-title">Self-enroll for auto PR review</div>
-      <div class="step-desc"><a href="https://app.devin.ai/settings/review" target="_blank">Settings → Review</a> → Click <strong>"Add myself (@yourusername)"</strong>. Critic will now automatically review any PR you open or are assigned to.</div>
+      <div class="step-desc"><a href="https://app.devin.ai/settings/review" target="_blank">Settings → Review</a> → Click <strong>"Add myself (@yourusername)"</strong>. Reviewer will now automatically review any PR you open or are assigned to.</div>
     </div></div>
     <div class="step"><div class="step-num">5</div><div class="step-body">
       <div class="step-title">Install Devin Desktop</div>
@@ -1165,9 +1165,9 @@ Fast PR review: replace github.com → devinreview.com in any PR URL</div></div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
-    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Coder:</strong> In Teams, send <code>@Devin !implement [any small ticket key]</code>. Within 2 minutes, Devin should respond with a session link and start working. Within ~20 min (for a small ticket), a PR should appear in GitHub.</div></div>
-    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Critic:</strong> Open a test PR in any repo. Within 5 minutes, a Devin Review comment should appear on the PR. If not, check Settings → Review → verify the repo is listed and auto-review is ON.</div></div>
-    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Checker:</strong> Send <code>@Devin !test</code> in the <code>qa-alerts</code> channel. Checker should respond with a session link and post a pass/fail summary within 10–30 minutes.</div></div>
+    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Builder:</strong> In Teams, send <code>@Devin !implement [any small ticket key]</code>. Within 2 minutes, Devin should respond with a session link and start working. Within ~20 min (for a small ticket), a PR should appear in GitHub.</div></div>
+    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Reviewer:</strong> Open a test PR in any repo. Within 5 minutes, a Devin Review comment should appear on the PR. If not, check Settings → Review → verify the repo is listed and auto-review is ON.</div></div>
+    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Tester:</strong> Send <code>@Devin !test</code> in the <code>qa-alerts</code> channel. Tester should respond with a session link and post a pass/fail summary within 10–30 minutes.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Mender:</strong> Take a complete Defect (repro, expected vs actual, failing test + stack trace, regression commit, original story AC), label it <code>JAI_Agent</code>, move it to <strong>Ready for Work</strong>, then send <code>@Devin !fix [J1-KEY]</code>. Mender should open a fix PR and move the ticket to <strong>In Review</strong>.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Check schedules:</strong> Go to <a href="https://app.devin.ai/settings/schedules" target="_blank">Settings → Schedules</a>. All 7 schedules should show status <strong>Active</strong>. If any show <strong>Error</strong>, click to see the error and fix the prompt or cron expression.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Check automations:</strong> Go to <a href="https://app.devin.ai/automations" target="_blank">Automations</a>. All 6 automations should be enabled. Break a CI check on a test branch — within 2 minutes Devin should post a fix attempt to the PR.</div></div>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Pipeline — AI-First SDLC</title>
-<meta name="description" content="The whole AI-first SDLC as one diagram: from a Jira Story through Coder, Critic, Checker, Shipper and the autonomous defect loop — plus the Jira ticket lifecycle.">
+<meta name="description" content="The whole AI-first SDLC as one diagram: from a Jira Story through Builder, Reviewer, Tester, Shipper and the autonomous defect loop — plus the Jira ticket lifecycle.">
 <link rel="stylesheet" href="assets/book.css">
 <style>
   .pipe-intro{font-size:14px;color:var(--text-2);line-height:1.65;max-width:680px;margin-bottom:8px}
@@ -20,7 +20,7 @@
   .legend-sw{width:14px;height:14px;border-radius:4px;border:1.5px solid}
   .diagram-note{font-size:12px;color:var(--text-3);margin-top:10px;display:flex;align-items:flex-start;gap:8px;line-height:1.55}
   .diagram-note code{font-family:var(--mono);font-size:11px;background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:1px 5px}
-  .diagram-stage{position:relative;height:560px;border:1px solid var(--border);border-radius:12px;background:var(--bg);overflow:hidden;margin-bottom:4px}
+  .diagram-stage{position:relative;height:680px;border:1px solid var(--border);border-radius:12px;background:var(--bg);overflow:hidden;margin-bottom:4px}
   .diagram-stage .mermaid{display:block;height:100%;width:100%;min-width:0;margin:0;padding:0}
   .diagram-stage .mermaid svg{width:100%;height:100%;max-width:none;cursor:grab}
   .diagram-stage .mermaid svg:active{cursor:grabbing}
@@ -48,13 +48,13 @@
     <div class="legend-item"><span class="legend-sw" style="background:#F8FAFC;border-color:#475569"></span>Human</div>
     <div class="legend-item"><span class="legend-sw" style="background:#EFF6FF;border-color:#1D4ED8"></span>Jira</div>
     <div class="legend-item"><span class="legend-sw" style="background:#F0FDFA;border-color:#0D7490"></span>Confluence</div>
-    <div class="legend-item"><span class="legend-sw" style="background:#ECFEFF;border-color:#0E7490"></span>Coder</div>
-    <div class="legend-item"><span class="legend-sw" style="background:#FDF2F8;border-color:#BE185D"></span>Critic</div>
-    <div class="legend-item"><span class="legend-sw" style="background:#F0FDF4;border-color:#15803D"></span>Checker</div>
+    <div class="legend-item"><span class="legend-sw" style="background:#ECFEFF;border-color:#0E7490"></span>Builder</div>
+    <div class="legend-item"><span class="legend-sw" style="background:#FDF2F8;border-color:#BE185D"></span>Reviewer</div>
+    <div class="legend-item"><span class="legend-sw" style="background:#F0FDF4;border-color:#15803D"></span>Tester</div>
     <div class="legend-item"><span class="legend-sw" style="background:#EEF2FF;border-color:#4338CA"></span>Mender</div>
     <div class="legend-item"><span class="legend-sw" style="background:#FFF7ED;border-color:#C2410C"></span>Shipper</div>
-    <div class="legend-item"><span class="legend-sw" style="background:#F1F5F9;border-color:#475569"></span>Janitor</div>
-    <div class="legend-item"><span class="legend-sw" style="background:#FEF2F2;border-color:#B91C1C"></span>Sentinel</div>
+    <div class="legend-item"><span class="legend-sw" style="background:#F1F5F9;border-color:#475569"></span>Maintainer</div>
+    <div class="legend-item"><span class="legend-sw" style="background:#FEF2F2;border-color:#B91C1C"></span>Guardian</div>
     <div class="legend-item"><span class="legend-sw" style="background:#FFFBEB;border-color:#B45309"></span>Gate / decision</div>
   </div>
 
@@ -72,16 +72,16 @@ flowchart TB
   classDef hgate fill:#F1F5F9,stroke:#1E293B,color:#0F172A,stroke-width:2.5px;
   classDef jira fill:#EFF6FF,stroke:#1D4ED8,color:#1E3A8A,stroke-width:1.5px;
   classDef conf fill:#F0FDFA,stroke:#0D7490,color:#134E4A,stroke-width:1.5px;
-  classDef coder fill:#ECFEFF,stroke:#0E7490,color:#155E75,stroke-width:1.5px;
-  classDef critic fill:#FDF2F8,stroke:#BE185D,color:#9D174D,stroke-width:1.5px;
-  classDef checker fill:#F0FDF4,stroke:#15803D,color:#166534,stroke-width:1.5px;
+  classDef builder fill:#ECFEFF,stroke:#0E7490,color:#155E75,stroke-width:1.5px;
+  classDef reviewer fill:#FDF2F8,stroke:#BE185D,color:#9D174D,stroke-width:1.5px;
+  classDef tester fill:#F0FDF4,stroke:#15803D,color:#166534,stroke-width:1.5px;
   classDef shipper fill:#FFF7ED,stroke:#C2410C,color:#9A3412,stroke-width:1.5px;
-  classDef janitor fill:#F1F5F9,stroke:#475569,color:#334155,stroke-width:1.5px;
-  classDef sentinel fill:#FEF2F2,stroke:#B91C1C,color:#991B1B,stroke-width:1.5px;
+  classDef maintainer fill:#F1F5F9,stroke:#475569,color:#334155,stroke-width:1.5px;
+  classDef guardian fill:#FEF2F2,stroke:#B91C1C,color:#991B1B,stroke-width:1.5px;
   classDef mender fill:#EEF2FF,stroke:#4338CA,color:#3730A3,stroke-width:1.5px;
   classDef gate fill:#FFFBEB,stroke:#B45309,color:#92400E,stroke-width:2px;
 
-  subgraph INTAKE["01 · Intake — Jira + Confluence"]
+  subgraph INTAKE["<b>01</b> · Intake — Jira + Confluence"]
     direction TB
     PM([👤 Product Manager<br/>writes the Story]):::human
     EPIC[Epic · scope + Definition of Done]:::jira
@@ -97,19 +97,19 @@ flowchart TB
   GATE{{"Ready for Work?<br/>AC complete · Priority set · chain resolves"}}:::gate
   STORY ==> GATE
 
-  subgraph DEV["02 · Development — Coder"]
+  subgraph DEV["<b>02</b> · Development — Builder"]
     direction TB
-    CODER[Coder picks up the queue<br/>Priority → ticket# → epic#]:::coder
-    IMPL[Implements end-to-end<br/>branch · code · tests]:::coder
-    PR[Opens PR]:::coder
+    CODER[Builder picks up the queue<br/>Priority → ticket# → epic#]:::builder
+    IMPL[Implements end-to-end<br/>branch · code · tests]:::builder
+    PR[Opens PR]:::builder
     CODER ==> IMPL ==> PR
   end
   GATE ==>|"→ In Progress"| CODER
 
-  subgraph REVIEW["03 · Code Review — Critic + Sentinel"]
+  subgraph REVIEW["<b>03</b> · Code Review — Reviewer + Guardian"]
     direction TB
-    CRITIC[Critic auto-reviews every PR<br/>bugs · style · coverage]:::critic
-    SENT[Sentinel deep review<br/>auth · payments · data paths]:::sentinel
+    CRITIC[Reviewer auto-reviews every PR<br/>bugs · style · coverage]:::reviewer
+    SENT[Guardian deep review<br/>auth · payments · data paths]:::guardian
   end
   PR ==>|"→ In Review"| CRITIC
   PR -.->|"sensitive paths"| SENT
@@ -120,26 +120,26 @@ flowchart TB
   MERGE[/👤 Merge to main/]:::hgate
   HUMAN ==>|"approved"| MERGE
 
-  subgraph QA["04 · Test &amp; QA — Checker"]
+  subgraph QA["<b>04</b> · Test &amp; QA — Tester"]
     direction TB
-    VAL[Checker · Validator mode<br/>re-run tests · confirm regression gone]:::checker
-    NIGHT[Checker · nightly regression<br/>files Defects on failure]:::checker
+    VAL[Tester · Validator mode<br/>re-run tests · confirm regression gone]:::tester
+    NIGHT[Tester · nightly regression<br/>files Defects on failure]:::tester
   end
   MERGE ==> VAL
   VAL ==>|"→ Resolved"| DONE[Ticket <b>Resolved / Closed</b>]:::jira
 
-  subgraph REL["05 · Release — Shipper"]
+  subgraph REL["<b>05</b> · Release — Shipper"]
     direction TB
     SHIP[Shipper · Friday<br/>changelog · tag · Confluence · close Jira version]:::shipper
   end
   DONE ==> SHIP
   SHIP ==> RELEASED([👤 Released]):::hgate
 
-  JAN[Janitor · weekly scan<br/>deps · dead code · CVEs]:::janitor
+  JAN[Maintainer · weekly scan<br/>deps · dead code · CVEs]:::maintainer
 
   subgraph DEFECT["Cross-cutting · Autonomous Defect Loop — Mender"]
     direction TB
-    FILE[Defect filed · status <b>Open</b><br/>repro · failing test · regression commit · AC]:::checker
+    FILE[Defect filed · status <b>Open</b><br/>repro · failing test · regression commit · AC]:::tester
     DGATE{{"Defect Ready for Work<br/>+ label JAI_Agent"}}:::gate
     MEND[Mender fixes root cause<br/>opens PR · ticket → In Review]:::mender
     FILE --> DGATE -.->|"URGENT real-time · others 7am"| MEND
@@ -149,7 +149,7 @@ flowchart TB
   MEND -.->|"back to review"| CRITIC
 </div>
       </div>
-      <div class="diagram-note">🔒 <div><strong>Human gate on URGENT.</strong> 2&nbsp;-&nbsp;HIGH / 3&nbsp;-&nbsp;MEDIUM defects flow through Critic auto-review fully autonomously; <strong>1&nbsp;-&nbsp;URGENT</strong> fix PRs always require human approval before merge, and Checker only resolves them after that approval.</div></div>
+      <div class="diagram-note">🔒 <div><strong>Human gate on URGENT.</strong> 2&nbsp;-&nbsp;HIGH / 3&nbsp;-&nbsp;MEDIUM defects flow through Reviewer auto-review fully autonomously; <strong>1&nbsp;-&nbsp;URGENT</strong> fix PRs always require human approval before merge, and Tester only resolves them after that approval.</div></div>
       <div class="diagram-note">📘 <div><strong>Confluence spaces.</strong> The context chain reads from Confluence as well as Jira: <code>PSF</code> is the <strong>Product Management</strong> space (PRDs), <code>IAA</code> is the <strong>Infrastructure &amp; Architecture</strong> space (ADRs), and <code>DEVKB</code> is the <strong>Development Knowledgebase</strong> (engineering patterns) — all in the JAGGAER Confluence at <code>jira-jaggaer.atlassian.net/wiki</code>.</div></div>
     </div>
   </section>
@@ -158,8 +158,8 @@ flowchart TB
     <div class="bs-label"><div class="bs-label-line"></div><div class="bs-label-text">The states agents key off</div><div class="bs-label-line"></div></div>
     <div class="diagram-panel">
       <div class="diagram-head"><span class="diagram-kicker">State machine</span><span class="diagram-title">Jira ticket lifecycle</span></div>
-      <div class="diagram-cap">Agents read and write Jira status. The <strong>Ready for Work</strong> gate is the single rule that stops Coder or Mender from acting on a half-written ticket. Humans own <code>Open</code>, <code>Resolved / Closed</code>, and unblocking <code>On Hold</code>.</div>
-      <div class="diagram-stage" style="height:480px">
+      <div class="diagram-cap">Agents read and write Jira status through the <strong>Jira MCP</strong>, and resolve the full context chain — Story &amp; Epic from Jira, PRD &amp; Architecture from <strong>Confluence MCP</strong> — at the gate. The <strong>Ready for Work</strong> gate is the single rule that stops Builder or Mender from acting on a half-written ticket. Each transition is labelled with the agent that drives it. Humans own <code>Open</code>, <code>Resolved / Closed</code>, and unblocking <code>On Hold</code>.</div>
+      <div class="diagram-stage" style="height:560px">
         <div class="diagram-toolbar"><button class="dz-btn" data-act="out" title="Zoom out">−</button><button class="dz-btn dz-reset" data-act="reset" title="Reset view">Reset</button><button class="dz-btn" data-act="in" title="Zoom in">+</button></div>
         <div class="diagram-hint">scroll to zoom · drag to pan</div>
         <div class="mermaid">
@@ -170,17 +170,22 @@ stateDiagram-v2
 
   [*] --> Open
   Open: Open · drafting AC (humans only)
-  Open --> RFW: AC complete + Priority set
+  Open --> RFW: PM / Eng · AC + Priority set
   RFW: Ready for Work · the gate
-  RFW --> InProgress: Coder / Mender picks up
+  note right of RFW
+    Gate check resolves the context chain via MCP:
+    Story + Epic — Jira MCP
+    PRD (PSF) + Architecture (IAA) — Confluence MCP
+  end note
+  RFW --> InProgress: Builder / Mender picks up
   InProgress: In Progress · agent owns it
-  InProgress --> InReview: PR opened + linked
-  InReview: In Review · Critic + human
-  InReview --> Resolved: approved + merged + validated
+  InProgress --> InReview: Builder / Mender opens PR
+  InReview: In Review · Reviewer + human
+  InReview --> Resolved: Reviewer + human approve · Tester validates
   Resolved: Resolved / Closed (Done)
   Resolved --> [*]
 
-  RFW --> OnHold: missing info
+  RFW --> OnHold: agent flags missing info
   InProgress --> OnHold: blocked / open question
   OnHold: On Hold · agents stop &amp; wait
   OnHold --> RFW: unblocked by a human

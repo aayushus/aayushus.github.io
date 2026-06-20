@@ -441,46 +441,46 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 }
 
 /* Light Mode Colors — seven distinct hues: cyan, magenta, green, orange, slate, red, indigo */
-.coder-badge .badge-bg { fill: #ECFEFF; }
-.coder-badge .badge-icon { stroke: #0E7490; }
+.builder-badge .badge-bg { fill: #ECFEFF; }
+.builder-badge .badge-icon { stroke: #0E7490; }
 
-.critic-badge .badge-bg { fill: #FDF2F8; }
-.critic-badge .badge-icon { stroke: #BE185D; }
+.reviewer-badge .badge-bg { fill: #FDF2F8; }
+.reviewer-badge .badge-icon { stroke: #BE185D; }
 
-.checker-badge .badge-bg { fill: #F0FDF4; }
-.checker-badge .badge-icon { stroke: #15803D; }
+.tester-badge .badge-bg { fill: #F0FDF4; }
+.tester-badge .badge-icon { stroke: #15803D; }
 
 .shipper-badge .badge-bg { fill: #FFF7ED; }
 .shipper-badge .badge-icon { stroke: #C2410C; }
 
-.janitor-badge .badge-bg { fill: #F1F5F9; }
-.janitor-badge .badge-icon { stroke: #475569; }
+.maintainer-badge .badge-bg { fill: #F1F5F9; }
+.maintainer-badge .badge-icon { stroke: #475569; }
 
-.sentinel-badge .badge-bg { fill: #FEF2F2; }
-.sentinel-badge .badge-icon { stroke: #B91C1C; }
+.guardian-badge .badge-bg { fill: #FEF2F2; }
+.guardian-badge .badge-icon { stroke: #B91C1C; }
 
 .mender-badge .badge-bg { fill: #EEF2FF; }
 .mender-badge .badge-icon { stroke: #4338CA; }
 
 /* Dark Mode Colors */
 @media (prefers-color-scheme: dark) {
-  .coder-badge .badge-bg { fill: #164E63; }
-  .coder-badge .badge-icon { stroke: #67E8F9; }
+  .builder-badge .badge-bg { fill: #164E63; }
+  .builder-badge .badge-icon { stroke: #67E8F9; }
 
-  .critic-badge .badge-bg { fill: #831843; }
-  .critic-badge .badge-icon { stroke: #F9A8D4; }
+  .reviewer-badge .badge-bg { fill: #831843; }
+  .reviewer-badge .badge-icon { stroke: #F9A8D4; }
 
-  .checker-badge .badge-bg { fill: #14532D; }
-  .checker-badge .badge-icon { stroke: #86EFAC; }
+  .tester-badge .badge-bg { fill: #14532D; }
+  .tester-badge .badge-icon { stroke: #86EFAC; }
 
   .shipper-badge .badge-bg { fill: #7C2D12; }
   .shipper-badge .badge-icon { stroke: #FDBA74; }
 
-  .janitor-badge .badge-bg { fill: #334155; }
-  .janitor-badge .badge-icon { stroke: #CBD5E1; }
+  .maintainer-badge .badge-bg { fill: #334155; }
+  .maintainer-badge .badge-icon { stroke: #CBD5E1; }
 
-  .sentinel-badge .badge-bg { fill: #7F1D1D; }
-  .sentinel-badge .badge-icon { stroke: #FCA5A5; }
+  .guardian-badge .badge-bg { fill: #7F1D1D; }
+  .guardian-badge .badge-icon { stroke: #FCA5A5; }
 
   .mender-badge .badge-bg { fill: #312E81; }
   .mender-badge .badge-icon { stroke: #A5B4FC; }
