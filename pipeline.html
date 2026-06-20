@@ -53,10 +53,11 @@
     <div class="bs-label"><div class="bs-label-line"></div><div class="bs-label-text">End-to-end · Story → Ship</div><div class="bs-label-line"></div></div>
     <div class="diagram-panel">
       <div class="diagram-head"><span class="diagram-kicker">Flow</span><span class="diagram-title">From a Jira Story to a shipped release</span></div>
-      <div class="diagram-cap">Humans write requirements and approve the critical decisions; agents do the work in between. The only hard human gates are the <strong>Ready for Work</strong> gate, the <strong>merge approval</strong>, and the release sign-off.</div>
+      <div class="diagram-cap">Humans write requirements and approve the critical decisions; agents do the work in between. <strong>Thick arrows</strong> trace the main path; <strong>dashed arrows</strong> are feedback loops and conditional branches. The only hard human gates (👤) are the <strong>Ready for Work</strong> gate, the <strong>merge approval</strong>, and the release sign-off.</div>
       <div class="mermaid">
 flowchart TB
   classDef human fill:#F8FAFC,stroke:#475569,color:#0F172A,stroke-width:1.5px;
+  classDef hgate fill:#F1F5F9,stroke:#1E293B,color:#0F172A,stroke-width:2.5px;
   classDef jira fill:#EFF6FF,stroke:#1D4ED8,color:#1E3A8A,stroke-width:1.5px;
   classDef conf fill:#F0FDFA,stroke:#0D7490,color:#134E4A,stroke-width:1.5px;
   classDef coder fill:#ECFEFF,stroke:#0E7490,color:#155E75,stroke-width:1.5px;
@@ -66,76 +67,74 @@ flowchart TB
   classDef janitor fill:#F1F5F9,stroke:#475569,color:#334155,stroke-width:1.5px;
   classDef sentinel fill:#FEF2F2,stroke:#B91C1C,color:#991B1B,stroke-width:1.5px;
   classDef mender fill:#EEF2FF,stroke:#4338CA,color:#3730A3,stroke-width:1.5px;
-  classDef gate fill:#FFFBEB,stroke:#B45309,color:#92400E,stroke-width:1.5px;
+  classDef gate fill:#FFFBEB,stroke:#B45309,color:#92400E,stroke-width:2px;
 
-  subgraph INTAKE["🧭 Intake — Jira + Confluence"]
+  subgraph INTAKE["01 · Intake — Jira + Confluence"]
     direction TB
-    PM([Product Manager<br/>writes the Story]):::human
+    PM([👤 Product Manager<br/>writes the Story]):::human
     EPIC[Epic · scope + Definition of Done]:::jira
     PRD[PRD · Confluence<br/>Product Management · <b>PSF</b>]:::conf
-    ARCH[Architecture / ADRs · Confluence<br/>Infrastructure &amp; Architecture · <b>IAA</b>]:::conf
+    ARCH[Architecture / ADRs · Confluence<br/>Infra &amp; Architecture · <b>IAA</b>]:::conf
     STORY[Story · status <b>Open</b><br/>acceptance criteria]:::jira
-    PM --> STORY
     EPIC --> STORY
     PRD --> STORY
     ARCH --> STORY
+    PM --> STORY
   end
 
   GATE{{"Ready for Work?<br/>AC complete · Priority set · chain resolves"}}:::gate
-  STORY --> GATE
+  STORY ==> GATE
 
-  subgraph DEV["💻 Development — Coder"]
+  subgraph DEV["02 · Development — Coder"]
     direction TB
     CODER[Coder picks up the queue<br/>Priority → ticket# → epic#]:::coder
     IMPL[Implements end-to-end<br/>branch · code · tests]:::coder
-    PR[Opens PR · ticket → <b>In Review</b>]:::coder
-    CODER --> IMPL --> PR
+    PR[Opens PR]:::coder
+    CODER ==> IMPL ==> PR
   end
-  GATE -->|"Ready for Work"| CODER
+  GATE ==>|"→ In Progress"| CODER
 
-  subgraph REVIEW["🔍 Code Review — Critic + Sentinel"]
+  subgraph REVIEW["03 · Code Review — Critic + Sentinel"]
     direction TB
     CRITIC[Critic auto-reviews every PR<br/>bugs · style · coverage]:::critic
     SENT[Sentinel deep review<br/>auth · payments · data paths]:::sentinel
   end
-  PR --> CRITIC
-  PR -. "sensitive paths" .-> SENT
+  PR ==>|"→ In Review"| CRITIC
+  PR -.->|"sensitive paths"| SENT
 
-  HUMAN([Human reviews + approves]):::human
-  CRITIC --> HUMAN
-  SENT --> HUMAN
-  MERGE[/Merge to main/]:::human
-  HUMAN --> MERGE
+  HUMAN([👤 Human reviews + approves]):::hgate
+  CRITIC ==> HUMAN
+  SENT -.-> HUMAN
+  MERGE[/👤 Merge to main/]:::hgate
+  HUMAN ==>|"approved"| MERGE
 
-  subgraph QA["🐛 Test &amp; QA — Checker"]
+  subgraph QA["04 · Test &amp; QA — Checker"]
     direction TB
     VAL[Checker · Validator mode<br/>re-run tests · confirm regression gone]:::checker
     NIGHT[Checker · nightly regression<br/>files Defects on failure]:::checker
   end
-  MERGE --> VAL
-  VAL --> DONE[Ticket <b>Resolved / Closed</b>]:::jira
+  MERGE ==> VAL
+  VAL ==>|"→ Resolved"| DONE[Ticket <b>Resolved / Closed</b>]:::jira
 
-  subgraph REL["🚀 Release — Shipper"]
+  subgraph REL["05 · Release — Shipper"]
     direction TB
-    SHIP[Shipper · Friday<br/>changelog · tag · update Confluence · close Jira version]:::shipper
+    SHIP[Shipper · Friday<br/>changelog · tag · Confluence · close Jira version]:::shipper
   end
-  DONE --> SHIP
-  SHIP --> RELEASED([Released]):::human
+  DONE ==> SHIP
+  SHIP ==> RELEASED([👤 Released]):::hgate
 
-  %% Cross-cutting maintenance feeds the defect loop
   JAN[Janitor · weekly scan<br/>deps · dead code · CVEs]:::janitor
 
-  %% ── Autonomous defect loop ──
-  subgraph DEFECT["🩹 Autonomous Defect Loop — Mender"]
+  subgraph DEFECT["Cross-cutting · Autonomous Defect Loop — Mender"]
     direction TB
     FILE[Defect filed · status <b>Open</b><br/>repro · failing test · regression commit · AC]:::checker
     DGATE{{"Defect Ready for Work<br/>+ label JAI_Agent"}}:::gate
     MEND[Mender fixes root cause<br/>opens PR · ticket → In Review]:::mender
-    FILE --> DGATE -->|"URGENT real-time · others 7am"| MEND
+    FILE --> DGATE -.->|"URGENT real-time · others 7am"| MEND
   end
-  NIGHT --> FILE
-  JAN --> FILE
-  MEND --> CRITIC
+  NIGHT -.-> FILE
+  JAN -.-> FILE
+  MEND -.->|"back to review"| CRITIC
 </div>
       <div class="diagram-note">🔒 <div><strong>Human gate on URGENT.</strong> 2&nbsp;-&nbsp;HIGH / 3&nbsp;-&nbsp;MEDIUM defects flow through Critic auto-review fully autonomously; <strong>1&nbsp;-&nbsp;URGENT</strong> fix PRs always require human approval before merge, and Checker only resolves them after that approval.</div></div>
       <div class="diagram-note">📘 <div><strong>Confluence spaces.</strong> The context chain reads from Confluence as well as Jira: <code>PSF</code> is the <strong>Product Management</strong> space (PRDs), <code>IAA</code> is the <strong>Infrastructure &amp; Architecture</strong> space (ADRs), and <code>DEVKB</code> is the <strong>Development Knowledgebase</strong> (engineering patterns) — all in the JAGGAER Confluence at <code>jira-jaggaer.atlassian.net/wiki</code>.</div></div>
@@ -206,7 +205,7 @@ stateDiagram-v2
       clusterBkg: '#FAFAFA',
       clusterBorder: '#E2E8F0',
     },
-    flowchart: { curve: 'basis', htmlLabels: true, nodeSpacing: 42, rankSpacing: 52, padding: 10 },
+    flowchart: { curve: 'basis', htmlLabels: true, nodeSpacing: 46, rankSpacing: 62, padding: 12 },
   });
   mermaid.run({ querySelector: '.mermaid' });
 </script>
