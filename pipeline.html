@@ -20,6 +20,15 @@
   .legend-sw{width:14px;height:14px;border-radius:4px;border:1.5px solid}
   .diagram-note{font-size:12px;color:var(--text-3);margin-top:10px;display:flex;align-items:flex-start;gap:8px;line-height:1.55}
   .diagram-note code{font-family:var(--mono);font-size:11px;background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:1px 5px}
+  .diagram-stage{position:relative;height:560px;border:1px solid var(--border);border-radius:12px;background:var(--bg);overflow:hidden;margin-bottom:4px}
+  .diagram-stage .mermaid{display:block;height:100%;width:100%;min-width:0;margin:0;padding:0}
+  .diagram-stage .mermaid svg{width:100%;height:100%;max-width:none;cursor:grab}
+  .diagram-stage .mermaid svg:active{cursor:grabbing}
+  .diagram-toolbar{position:absolute;top:10px;right:10px;z-index:5;display:flex;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:4px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+  .dz-btn{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--text-2);background:var(--surface);border:1px solid var(--border);border-radius:6px;min-width:30px;height:28px;padding:0 9px;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;transition:all .12s}
+  .dz-btn:hover{background:var(--bg);color:var(--text);border-color:var(--border-mid)}
+  .dz-reset{font-size:11px;font-weight:800;letter-spacing:.3px}
+  .diagram-hint{position:absolute;left:12px;bottom:10px;z-index:5;font-size:11px;color:var(--text-3);background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:3px 8px;pointer-events:none;opacity:.9}
 </style>
 </head>
 <body data-chapter="pipeline">
@@ -54,7 +63,10 @@
     <div class="diagram-panel">
       <div class="diagram-head"><span class="diagram-kicker">Flow</span><span class="diagram-title">From a Jira Story to a shipped release</span></div>
       <div class="diagram-cap">Humans write requirements and approve the critical decisions; agents do the work in between. <strong>Thick arrows</strong> trace the main path; <strong>dashed arrows</strong> are feedback loops and conditional branches. The only hard human gates (👤) are the <strong>Ready for Work</strong> gate, the <strong>merge approval</strong>, and the release sign-off.</div>
-      <div class="mermaid">
+      <div class="diagram-stage">
+        <div class="diagram-toolbar"><button class="dz-btn" data-act="out" title="Zoom out">−</button><button class="dz-btn dz-reset" data-act="reset" title="Reset view">Reset</button><button class="dz-btn" data-act="in" title="Zoom in">+</button></div>
+        <div class="diagram-hint">scroll to zoom · drag to pan</div>
+        <div class="mermaid">
 flowchart TB
   classDef human fill:#F8FAFC,stroke:#475569,color:#0F172A,stroke-width:1.5px;
   classDef hgate fill:#F1F5F9,stroke:#1E293B,color:#0F172A,stroke-width:2.5px;
@@ -136,6 +148,7 @@ flowchart TB
   JAN -.-> FILE
   MEND -.->|"back to review"| CRITIC
 </div>
+      </div>
       <div class="diagram-note">🔒 <div><strong>Human gate on URGENT.</strong> 2&nbsp;-&nbsp;HIGH / 3&nbsp;-&nbsp;MEDIUM defects flow through Critic auto-review fully autonomously; <strong>1&nbsp;-&nbsp;URGENT</strong> fix PRs always require human approval before merge, and Checker only resolves them after that approval.</div></div>
       <div class="diagram-note">📘 <div><strong>Confluence spaces.</strong> The context chain reads from Confluence as well as Jira: <code>PSF</code> is the <strong>Product Management</strong> space (PRDs), <code>IAA</code> is the <strong>Infrastructure &amp; Architecture</strong> space (ADRs), and <code>DEVKB</code> is the <strong>Development Knowledgebase</strong> (engineering patterns) — all in the JAGGAER Confluence at <code>jira-jaggaer.atlassian.net/wiki</code>.</div></div>
     </div>
@@ -146,7 +159,10 @@ flowchart TB
     <div class="diagram-panel">
       <div class="diagram-head"><span class="diagram-kicker">State machine</span><span class="diagram-title">Jira ticket lifecycle</span></div>
       <div class="diagram-cap">Agents read and write Jira status. The <strong>Ready for Work</strong> gate is the single rule that stops Coder or Mender from acting on a half-written ticket. Humans own <code>Open</code>, <code>Resolved / Closed</code>, and unblocking <code>On Hold</code>.</div>
-      <div class="mermaid">
+      <div class="diagram-stage" style="height:480px">
+        <div class="diagram-toolbar"><button class="dz-btn" data-act="out" title="Zoom out">−</button><button class="dz-btn dz-reset" data-act="reset" title="Reset view">Reset</button><button class="dz-btn" data-act="in" title="Zoom in">+</button></div>
+        <div class="diagram-hint">scroll to zoom · drag to pan</div>
+        <div class="mermaid">
 stateDiagram-v2
   classDef gate fill:#FFFBEB,stroke:#B45309,color:#92400E,stroke-width:1.5px;
   classDef done fill:#F0FDF4,stroke:#15803D,color:#166534,stroke-width:1.5px;
@@ -173,6 +189,7 @@ stateDiagram-v2
   class Resolved done
   class OnHold hold
 </div>
+      </div>
       <div class="diagram-note">↪ <div>Guardrails: agents act only inside the <code>Ready for Work → In Progress → In Review</code> band. They never touch <code>Open</code>, never re-open <code>Resolved / Closed</code>, and never push past <code>On Hold</code>.</div></div>
     </div>
   </section>
@@ -181,6 +198,7 @@ stateDiagram-v2
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
 <script src="assets/data.js"></script>
 <script src="assets/nav.js"></script>
 <script>
@@ -207,7 +225,43 @@ stateDiagram-v2
     },
     flowchart: { curve: 'basis', htmlLabels: true, nodeSpacing: 46, rankSpacing: 62, padding: 12 },
   });
-  mermaid.run({ querySelector: '.mermaid' });
+
+  mermaid.run({ querySelector: '.diagram-stage .mermaid' }).then(setupPanZoom);
+
+  function setupPanZoom(){
+    if (typeof svgPanZoom !== 'function') return;
+    document.querySelectorAll('.diagram-stage').forEach(function(stage){
+      var svg = stage.querySelector('.mermaid svg');
+      if (!svg) return;
+      svg.setAttribute('width', '100%');
+      svg.setAttribute('height', '100%');
+      svg.style.maxWidth = 'none';
+      var pz = svgPanZoom(svg, {
+        zoomEnabled: true,
+        panEnabled: true,
+        controlIconsEnabled: false,
+        fit: true,
+        center: true,
+        minZoom: 0.3,
+        maxZoom: 10,
+        zoomScaleSensitivity: 0.35,
+        dblClickZoomEnabled: false,
+      });
+      stage.querySelectorAll('.dz-btn').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var act = btn.dataset.act;
+          if (act === 'in') pz.zoomIn();
+          else if (act === 'out') pz.zoomOut();
+          else { pz.reset(); }
+        });
+      });
+      var rt;
+      window.addEventListener('resize', function(){
+        clearTimeout(rt);
+        rt = setTimeout(function(){ pz.resize(); pz.fit(); pz.center(); }, 150);
+      });
+    });
+  }
 </script>
 </body>
 </html>
