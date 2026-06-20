@@ -456,11 +456,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 .maintainer-badge .badge-bg { fill: #F1F5F9; }
 .maintainer-badge .badge-icon { stroke: #475569; }
 
-.guardian-badge .badge-bg { fill: #FEF2F2; }
-.guardian-badge .badge-icon { stroke: #B91C1C; }
+.infosec-badge .badge-bg { fill: #FEF2F2; }
+.infosec-badge .badge-icon { stroke: #B91C1C; }
 
-.mender-badge .badge-bg { fill: #EEF2FF; }
-.mender-badge .badge-icon { stroke: #4338CA; }
+.fixer-badge .badge-bg { fill: #EEF2FF; }
+.fixer-badge .badge-icon { stroke: #4338CA; }
 
 /* Dark Mode Colors */
 @media (prefers-color-scheme: dark) {
@@ -479,9 +479,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
   .maintainer-badge .badge-bg { fill: #334155; }
   .maintainer-badge .badge-icon { stroke: #CBD5E1; }
 
-  .guardian-badge .badge-bg { fill: #7F1D1D; }
-  .guardian-badge .badge-icon { stroke: #FCA5A5; }
+  .infosec-badge .badge-bg { fill: #7F1D1D; }
+  .infosec-badge .badge-icon { stroke: #FCA5A5; }
 
-  .mender-badge .badge-bg { fill: #312E81; }
-  .mender-badge .badge-icon { stroke: #A5B4FC; }
+  .fixer-badge .badge-bg { fill: #312E81; }
+  .fixer-badge .badge-icon { stroke: #A5B4FC; }
 }

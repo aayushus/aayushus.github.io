@@ -351,7 +351,7 @@ For each FAILED test, determine:
 
 <span class="cm">4. FILE COMPLETE DEFECTS FOR REAL REGRESSIONS</span>
 For each real regression, create a Jira Defect with the FULL quality bar so
-Mender can fix it autonomously. Every field is required:
+Fixer can fix it autonomously. Every field is required:
 - Title: <span class="st">[Regression] [test name] failing since [commit hash]</span>
 - Steps to reproduce the failure
 - Expected vs actual behaviour
@@ -359,7 +359,7 @@ Mender can fix it autonomously. Every field is required:
 - The commit that introduced the regression (git bisect / blame)
 - Acceptance criteria from the original story (link the story)
 - Priority: 1 - URGENT if it affects a critical user-facing path, 2 - HIGH or 3 - MEDIUM otherwise
-- Labels: <span class="hl">regression</span> and <span class="hl">JAI_Agent</span> (so Mender picks it up), then move it to <span class="hl">Ready for Work</span>
+- Labels: <span class="hl">regression</span> and <span class="hl">JAI_Agent</span> (so Fixer picks it up), then move it to <span class="hl">Ready for Work</span>
 
 For flaky tests: post a note to the <span class="hl">qa-alerts</span> channel only — do NOT file a Jira ticket.
 
@@ -381,17 +381,17 @@ When a fix PR merges to main and closes a Jira Defect:
 - For 1 - URGENT Defects: only run AFTER a human has approved and merged the fix PR
 - Re-run the tests covering that Defect + the failing test recorded on the ticket
 - If GREEN: confirm the regression is gone, close the Jira ticket, post to <span class="hl">qa-alerts</span>
-- If STILL FAILING: reopen the ticket, comment with the failure, re-assign to Mender</div>
+- If STILL FAILING: reopen the ticket, comment with the failure, re-assign to Fixer</div>
           </div>
         </div>
     </div>
 
-    <!-- Mender -->
+    <!-- Fixer -->
     <div class="playbook-card">
       <div class="playbook-card-head">
-        <div class="playbook-badge-wrap"><span class="agent-badge mender-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><rect x="3" y="7" width="18" height="13" rx="2.5" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M9 7 V5.5 A1.5 1.5 0 0 1 10.5 4 L13.5 4 A1.5 1.5 0 0 1 15 5.5 V7" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" class="badge-icon"/><path d="M12 10.5 V16.5 M9 13.5 H15" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/></svg></span></div>
+        <div class="playbook-badge-wrap"><span class="agent-badge fixer-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><rect x="3" y="7" width="18" height="13" rx="2.5" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M9 7 V5.5 A1.5 1.5 0 0 1 10.5 4 L13.5 4 A1.5 1.5 0 0 1 15 5.5 V7" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" class="badge-icon"/><path d="M12 10.5 V16.5 M9 13.5 H15" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/></svg></span></div>
         <div class="playbook-head-info">
-          <div class="playbook-agent-name">Mender — Bug Fixer Agent</div>
+          <div class="playbook-agent-name">Fixer — Bug Fixer Agent</div>
           <div class="playbook-agent-role">Fixes Ready for Work JAI_Agent Defects and opens PRs</div>
         </div>
         <div class="playbook-macro">!fix</div>
@@ -574,12 +574,12 @@ Commit auto-fixed issues: <span class="st">chore: auto-fix lint issues</span>
         </div>
     </div>
 
-    <!-- Guardian -->
+    <!-- InfoSec -->
     <div class="playbook-card">
       <div class="playbook-card-head">
-        <div class="playbook-badge-wrap"><span class="agent-badge guardian-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M12 21.5 C12 21.5, 19 18, 19 12 L19 5.5 L12 2.5 L5 5.5 L5 12 C5 18, 12 21.5, 12 21.5 Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><rect x="10" y="11" width="4" height="3" rx="1" stroke-width="1.5" fill="none" class="badge-icon"/><path d="M11 11 L11 9 A1 1 0 0 1 13 9 L13 11" stroke-width="1.5" fill="none" class="badge-icon"/></svg></span></div>
+        <div class="playbook-badge-wrap"><span class="agent-badge infosec-badge" style="width: 40px; height: 40px;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M12 21.5 C12 21.5, 19 18, 19 12 L19 5.5 L12 2.5 L5 5.5 L5 12 C5 18, 12 21.5, 12 21.5 Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><rect x="10" y="11" width="4" height="3" rx="1" stroke-width="1.5" fill="none" class="badge-icon"/><path d="M11 11 L11 9 A1 1 0 0 1 13 9 L13 11" stroke-width="1.5" fill="none" class="badge-icon"/></svg></span></div>
         <div class="playbook-head-info">
-          <div class="playbook-agent-name">Guardian — Security & Compliance Agent</div>
+          <div class="playbook-agent-name">InfoSec — Security & Compliance Agent</div>
           <div class="playbook-agent-role">Security reviews on sensitive PRs + weekly sweep</div>
         </div>
         <div class="playbook-macro">!security-review</div>
@@ -677,8 +677,8 @@ sensitive paths AND as a weekly codebase sweep.
         <td><code>dev-runs</code></td>
       </tr>
       <tr>
-        <td><div style="display:flex;align-items:center"><span class="agent-badge guardian-badge" style="width:24px;height:24px;margin-right:6px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M12 21.5 C12 21.5, 19 18, 19 12 L19 5.5 L12 2.5 L5 5.5 L5 12 C5 18, 12 21.5, 12 21.5 Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><rect x="10" y="11" width="4" height="3" rx="1" stroke-width="1.5" fill="none" class="badge-icon"/><path d="M11 11 L11 9 A1 1 0 0 1 13 9 L13 11" stroke-width="1.5" fill="none" class="badge-icon"/></svg></span><strong>Guardian</strong></div></td>
-        <td>Guardian — Wednesday Security Sweep</td>
+        <td><div style="display:flex;align-items:center"><span class="agent-badge infosec-badge" style="width:24px;height:24px;margin-right:6px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><path d="M12 21.5 C12 21.5, 19 18, 19 12 L19 5.5 L12 2.5 L5 5.5 L5 12 C5 18, 12 21.5, 12 21.5 Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="badge-icon"/><rect x="10" y="11" width="4" height="3" rx="1" stroke-width="1.5" fill="none" class="badge-icon"/><path d="M11 11 L11 9 A1 1 0 0 1 13 9 L13 11" stroke-width="1.5" fill="none" class="badge-icon"/></svg></span><strong>InfoSec</strong></div></td>
+        <td>InfoSec — Wednesday Security Sweep</td>
         <td><code>0 10 * * 3</code></td>
         <td><code>!security-review</code></td>
         <td>"Run the weekly security sweep across all repos. Scan for hardcoded secrets, CVEs, and recent auth-related commits. Follow the !security-review playbook."</td>
@@ -693,8 +693,8 @@ sensitive paths AND as a weekly codebase sweep.
         <td><code>qa-alerts</code></td>
       </tr>
       <tr>
-        <td><div style="display:flex;align-items:center"><span class="agent-badge mender-badge" style="width:24px;height:24px;margin-right:6px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><rect x="3" y="7" width="18" height="13" rx="2.5" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M9 7 V5.5 A1.5 1.5 0 0 1 10.5 4 L13.5 4 A1.5 1.5 0 0 1 15 5.5 V7" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" class="badge-icon"/><path d="M12 10.5 V16.5 M9 13.5 H15" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/></svg></span><strong>Mender</strong></div></td>
-        <td>Mender — Daily Defect Fixes</td>
+        <td><div style="display:flex;align-items:center"><span class="agent-badge fixer-badge" style="width:24px;height:24px;margin-right:6px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" class="badge-bg"/><rect x="3" y="7" width="18" height="13" rx="2.5" stroke-width="1.8" fill="none" class="badge-icon"/><path d="M9 7 V5.5 A1.5 1.5 0 0 1 10.5 4 L13.5 4 A1.5 1.5 0 0 1 15 5.5 V7" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" class="badge-icon"/><path d="M12 10.5 V16.5 M9 13.5 H15" stroke-width="1.8" stroke-linecap="round" class="badge-icon"/></svg></span><strong>Fixer</strong></div></td>
+        <td>Fixer — Daily Defect Fixes</td>
         <td><code>0 7 * * *</code></td>
         <td><code>!fix</code></td>
         <td>"Pull Defects labelled JAI_Agent in Ready for Work status. Reproduce, fix the root cause, open a PR with root cause + fix details, and move each ticket to In Review. Follow the !fix playbook."</td>
@@ -745,7 +745,7 @@ sensitive paths AND as a weekly codebase sweep.
     <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Set channel: <code>incidents</code></div></div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Action type: <strong>Triage Devin</strong> (persistent monitor)</div><div class="step-desc">This creates a persistent Devin session that watches the channel and spawns sub-agents for each incident report.</div></div></div>
 
-    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7C — Guardian PR Security Trigger</h3>
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7C — InfoSec PR Security Trigger</h3>
     <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Automations → <strong>New automation</strong></div></div></div>
     <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Trigger: <strong>GitHub → Pull request → opened or synchronized</strong></div></div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Add condition: <strong>PR files changed contains</strong> <code>auth/</code> OR <code>payments/</code> OR <code>database/</code></div></div></div>
@@ -770,8 +770,8 @@ File Jira security tickets for MEDIUM and above.</div></div>
     </div></div>
     <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Wire your CI/CD pipeline to POST to the webhook URL on every production deploy</div><div class="step-desc">In GitHub Actions, add a step after your deploy step that runs:<br><code>curl -X POST [WEBHOOK_URL] -H "Content-Type: application/json" -d "{\"service\":\"$SERVICE_NAME\",\"commit\":\"$GITHUB_SHA\"}"</code></div></div></div>
 
-    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7E — URGENT Defect Real-Time Fix (Mender reflex)</h3>
-    <div class="callout info"><div class="callout-icon">ℹ️</div><div>Mender's 7am schedule handles 2 - HIGH and 3 - MEDIUM Defects. This automation makes Mender jump on <strong>1 - URGENT</strong> Defects the moment they reach Ready for Work — no waiting for the morning run.</div></div>
+    <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:28px 0 14px">7E — URGENT Defect Real-Time Fix (Fixer reflex)</h3>
+    <div class="callout info"><div class="callout-icon">ℹ️</div><div>Fixer's 7am schedule handles 2 - HIGH and 3 - MEDIUM Defects. This automation makes Fixer jump on <strong>1 - URGENT</strong> Defects the moment they reach Ready for Work — no waiting for the morning run.</div></div>
     <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Automations → <strong>New automation</strong> → Trigger: <strong>Jira → Issue updated</strong></div></div></div>
     <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Add conditions: label is <code>JAI_Agent</code> · status is <code>Ready</code> · priority is <code>1 - URGENT</code></div></div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Action: <strong>Start session</strong> with this prompt:</div>
@@ -792,7 +792,7 @@ root cause, open a PR with fix details, and move the ticket to In Review.</div><
 1. If the Defect is 1 - URGENT, only proceed if a human approved the merged PR.
 2. Re-run the tests covering this Defect plus the failing test recorded on the ticket.
 3. If green and the regression is gone: close the Jira ticket and post to the qa-alerts channel.
-4. If still failing: reopen the ticket, comment with the failure, and re-assign to Mender.</div></div>
+4. If still failing: reopen the ticket, comment with the failure, and re-assign to Fixer.</div></div>
     </div></div>
     <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Save and enable the automation</div></div></div>
   </section>
@@ -1045,7 +1045,7 @@ Description template:
 - Use parameterised queries everywhere. Never concatenate user input into a query string.
 - Passwords are hashed with bcrypt, cost factor 12.
 - Failed login attempts are rate-limited at 5 per 5 minutes per IP.
-- Auth changes require Guardian security review before merge.</div></div>
+- Auth changes require InfoSec security review before merge.</div></div>
     </div></div>
 
     <div class="step"><div class="step-num">3</div><div class="step-body">
@@ -1168,7 +1168,7 @@ Fast PR review: replace github.com → devinreview.com in any PR URL</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Builder:</strong> In Teams, send <code>@Devin !implement [any small ticket key]</code>. Within 2 minutes, Devin should respond with a session link and start working. Within ~20 min (for a small ticket), a PR should appear in GitHub.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Reviewer:</strong> Open a test PR in any repo. Within 5 minutes, a Devin Review comment should appear on the PR. If not, check Settings → Review → verify the repo is listed and auto-review is ON.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Tester:</strong> Send <code>@Devin !test</code> in the <code>qa-alerts</code> channel. Tester should respond with a session link and post a pass/fail summary within 10–30 minutes.</div></div>
-    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Mender:</strong> Take a complete Defect (repro, expected vs actual, failing test + stack trace, regression commit, original story AC), label it <code>JAI_Agent</code>, move it to <strong>Ready for Work</strong>, then send <code>@Devin !fix [J1-KEY]</code>. Mender should open a fix PR and move the ticket to <strong>In Review</strong>.</div></div>
+    <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Fixer:</strong> Take a complete Defect (repro, expected vs actual, failing test + stack trace, regression commit, original story AC), label it <code>JAI_Agent</code>, move it to <strong>Ready for Work</strong>, then send <code>@Devin !fix [J1-KEY]</code>. Fixer should open a fix PR and move the ticket to <strong>In Review</strong>.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Check schedules:</strong> Go to <a href="https://app.devin.ai/settings/schedules" target="_blank">Settings → Schedules</a>. All 7 schedules should show status <strong>Active</strong>. If any show <strong>Error</strong>, click to see the error and fix the prompt or cron expression.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Check automations:</strong> Go to <a href="https://app.devin.ai/automations" target="_blank">Automations</a>. All 6 automations should be enabled. Break a CI check on a test branch — within 2 minutes Devin should post a fix attempt to the PR.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Test AGENTS.md:</strong> Start a session in Devin and ask: <em>"What are the architecture conventions for this repo?"</em>. Devin should accurately describe what's in your AGENTS.md.</div></div>

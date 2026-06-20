@@ -51,10 +51,10 @@
     <div class="legend-item"><span class="legend-sw" style="background:#ECFEFF;border-color:#0E7490"></span>Builder</div>
     <div class="legend-item"><span class="legend-sw" style="background:#FDF2F8;border-color:#BE185D"></span>Reviewer</div>
     <div class="legend-item"><span class="legend-sw" style="background:#F0FDF4;border-color:#15803D"></span>Tester</div>
-    <div class="legend-item"><span class="legend-sw" style="background:#EEF2FF;border-color:#4338CA"></span>Mender</div>
+    <div class="legend-item"><span class="legend-sw" style="background:#EEF2FF;border-color:#4338CA"></span>Fixer</div>
     <div class="legend-item"><span class="legend-sw" style="background:#FFF7ED;border-color:#C2410C"></span>Shipper</div>
     <div class="legend-item"><span class="legend-sw" style="background:#F1F5F9;border-color:#475569"></span>Maintainer</div>
-    <div class="legend-item"><span class="legend-sw" style="background:#FEF2F2;border-color:#B91C1C"></span>Guardian</div>
+    <div class="legend-item"><span class="legend-sw" style="background:#FEF2F2;border-color:#B91C1C"></span>InfoSec</div>
     <div class="legend-item"><span class="legend-sw" style="background:#FFFBEB;border-color:#B45309"></span>Gate / decision</div>
   </div>
 
@@ -77,8 +77,8 @@ flowchart TB
   classDef tester fill:#F0FDF4,stroke:#15803D,color:#166534,stroke-width:1.5px;
   classDef shipper fill:#FFF7ED,stroke:#C2410C,color:#9A3412,stroke-width:1.5px;
   classDef maintainer fill:#F1F5F9,stroke:#475569,color:#334155,stroke-width:1.5px;
-  classDef guardian fill:#FEF2F2,stroke:#B91C1C,color:#991B1B,stroke-width:1.5px;
-  classDef mender fill:#EEF2FF,stroke:#4338CA,color:#3730A3,stroke-width:1.5px;
+  classDef infosec fill:#FEF2F2,stroke:#B91C1C,color:#991B1B,stroke-width:1.5px;
+  classDef fixer fill:#EEF2FF,stroke:#4338CA,color:#3730A3,stroke-width:1.5px;
   classDef gate fill:#FFFBEB,stroke:#B45309,color:#92400E,stroke-width:2px;
 
   subgraph INTAKE["<b>01</b> · Intake — Jira + Confluence"]
@@ -97,19 +97,19 @@ flowchart TB
   GATE{{"Ready for Work?<br/>AC complete · Priority set · chain resolves"}}:::gate
   STORY ==> GATE
 
-  subgraph DEV["<b>02</b> · Development — Builder"]
+  subgraph DEV["<b>02</b> · Development — BUILDER"]
     direction TB
-    CODER[Builder picks up the queue<br/>Priority → ticket# → epic#]:::builder
+    CODER[BUILDER picks up the queue<br/>Priority → ticket# → epic#]:::builder
     IMPL[Implements end-to-end<br/>branch · code · tests]:::builder
     PR[Opens PR]:::builder
     CODER ==> IMPL ==> PR
   end
   GATE ==>|"→ In Progress"| CODER
 
-  subgraph REVIEW["<b>03</b> · Code Review — Reviewer + Guardian"]
+  subgraph REVIEW["<b>03</b> · Code Review — REVIEWER + INFOSEC"]
     direction TB
-    CRITIC[Reviewer auto-reviews every PR<br/>bugs · style · coverage]:::reviewer
-    SENT[Guardian deep review<br/>auth · payments · data paths]:::guardian
+    CRITIC[REVIEWER auto-reviews every PR<br/>bugs · style · coverage]:::reviewer
+    SENT[INFOSEC deep review<br/>auth · payments · data paths]:::infosec
   end
   PR ==>|"→ In Review"| CRITIC
   PR -.->|"sensitive paths"| SENT
@@ -120,28 +120,28 @@ flowchart TB
   MERGE[/👤 Merge to main/]:::hgate
   HUMAN ==>|"approved"| MERGE
 
-  subgraph QA["<b>04</b> · Test &amp; QA — Tester"]
+  subgraph QA["<b>04</b> · Test &amp; QA — TESTER"]
     direction TB
-    VAL[Tester · Validator mode<br/>re-run tests · confirm regression gone]:::tester
-    NIGHT[Tester · nightly regression<br/>files Defects on failure]:::tester
+    VAL[TESTER · Validator mode<br/>re-run tests · confirm regression gone]:::tester
+    NIGHT[TESTER · nightly regression<br/>files Defects on failure]:::tester
   end
   MERGE ==> VAL
   VAL ==>|"→ Resolved"| DONE[Ticket <b>Resolved / Closed</b>]:::jira
 
-  subgraph REL["<b>05</b> · Release — Shipper"]
+  subgraph REL["<b>05</b> · Release — SHIPPER"]
     direction TB
-    SHIP[Shipper · Friday<br/>changelog · tag · Confluence · close Jira version]:::shipper
+    SHIP[SHIPPER · Friday<br/>changelog · tag · Confluence · close Jira version]:::shipper
   end
   DONE ==> SHIP
   SHIP ==> RELEASED([👤 Released]):::hgate
 
-  JAN[Maintainer · weekly scan<br/>deps · dead code · CVEs]:::maintainer
+  JAN[MAINTAINER · weekly scan<br/>deps · dead code · CVEs]:::maintainer
 
-  subgraph DEFECT["Cross-cutting · Autonomous Defect Loop — Mender"]
+  subgraph DEFECT["Cross-cutting · Autonomous Defect Loop — FIXER"]
     direction TB
     FILE[Defect filed · status <b>Open</b><br/>repro · failing test · regression commit · AC]:::tester
     DGATE{{"Defect Ready for Work<br/>+ label JAI_Agent"}}:::gate
-    MEND[Mender fixes root cause<br/>opens PR · ticket → In Review]:::mender
+    MEND[FIXER fixes root cause<br/>opens PR · ticket → In Review]:::fixer
     FILE --> DGATE -.->|"URGENT real-time · others 7am"| MEND
   end
   NIGHT -.-> FILE
@@ -158,7 +158,7 @@ flowchart TB
     <div class="bs-label"><div class="bs-label-line"></div><div class="bs-label-text">The states agents key off</div><div class="bs-label-line"></div></div>
     <div class="diagram-panel">
       <div class="diagram-head"><span class="diagram-kicker">State machine</span><span class="diagram-title">Jira ticket lifecycle</span></div>
-      <div class="diagram-cap">Agents read and write Jira status through the <strong>Jira MCP</strong>, and resolve the full context chain — Story &amp; Epic from Jira, PRD &amp; Architecture from <strong>Confluence MCP</strong> — at the gate. The <strong>Ready for Work</strong> gate is the single rule that stops Builder or Mender from acting on a half-written ticket. Each transition is labelled with the agent that drives it. Humans own <code>Open</code>, <code>Resolved / Closed</code>, and unblocking <code>On Hold</code>.</div>
+      <div class="diagram-cap">Agents read and write Jira status through the <strong>Jira MCP</strong>, and resolve the full context chain — Story &amp; Epic from Jira, PRD &amp; Architecture from <strong>Confluence MCP</strong> — at the gate. The <strong>Ready for Work</strong> gate is the single rule that stops Builder or Fixer from acting on a half-written ticket. Each transition is labelled with the agent that drives it. Humans own <code>Open</code>, <code>Resolved / Closed</code>, and unblocking <code>On Hold</code>.</div>
       <div class="diagram-stage" style="height:560px">
         <div class="diagram-toolbar"><button class="dz-btn" data-act="out" title="Zoom out">−</button><button class="dz-btn dz-reset" data-act="reset" title="Reset view">Reset</button><button class="dz-btn" data-act="in" title="Zoom in">+</button></div>
         <div class="diagram-hint">scroll to zoom · drag to pan</div>
@@ -177,11 +177,11 @@ stateDiagram-v2
     Story + Epic — Jira MCP
     PRD (PSF) + Architecture (IAA) — Confluence MCP
   end note
-  RFW --> InProgress: Builder / Mender picks up
+  RFW --> InProgress: BUILDER / FIXER picks up
   InProgress: In Progress · agent owns it
-  InProgress --> InReview: Builder / Mender opens PR
-  InReview: In Review · Reviewer + human
-  InReview --> Resolved: Reviewer + human approve · Tester validates
+  InProgress --> InReview: BUILDER / FIXER opens PR
+  InReview: In Review · REVIEWER + human
+  InReview --> Resolved: REVIEWER + human approve · TESTER validates
   Resolved: Resolved / Closed (Done)
   Resolved --> [*]
 
