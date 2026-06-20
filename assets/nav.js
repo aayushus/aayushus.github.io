@@ -20,6 +20,35 @@ function getAgentBadge(id, size = 48) {
   return badgeHtml.replace('<span ', `<span style="width:${size}px;height:${size}px;" `);
 }
 
+/* ── Visitor counter (GoatCounter) ──
+   Sign up at https://www.goatcounter.com (free), pick a code, then:
+   1. set GOATCOUNTER_CODE below to that code (the subdomain), and
+   2. in GoatCounter → Settings → "Allow using the visitor counter",
+      tick it so the public count endpoint works.
+   Until a real code is set, nothing is loaded or shown. */
+const GOATCOUNTER_CODE = 'aayushus';
+
+function initVisitorCounter(){
+  if(!GOATCOUNTER_CODE || GOATCOUNTER_CODE === 'YOURCODE') return;
+  const base = `https://${GOATCOUNTER_CODE}.goatcounter.com`;
+  if(!document.querySelector('script[data-goatcounter]')){
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = '//gc.zgo.at/count.js';
+    s.setAttribute('data-goatcounter', `${base}/count`);
+    document.body.appendChild(s);
+  }
+  fetch(`${base}/counter/TOTAL.json`)
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(d => {
+      const n = d.count_unique || d.count;
+      const el = document.getElementById('bnv-count');
+      const wrap = document.getElementById('bn-visitors');
+      if(el && n){ el.textContent = n; if(wrap) wrap.hidden = false; }
+    })
+    .catch(()=>{});
+}
+
 const CHAPTERS = [
   { id:'overview', href:'index.html',    num:'01', name:'Overview' },
   { id:'pipeline', href:'pipeline.html', num:'02', name:'The Pipeline' },
@@ -45,6 +74,7 @@ function renderBookNav(){
       ).join('') + '</div>';
     }
   });
+  html += '<div class="bn-visitors" id="bn-visitors" hidden><span class="bnv-dot"></span><span class="bnv-count" id="bnv-count">—</span><span class="bnv-label">visitors</span></div>';
   const el = document.getElementById('booknav');
   if(el) el.innerHTML = html;
 }
@@ -228,4 +258,5 @@ function mountBook(){
   renderPrevNext();
   initScrollSpy();
   restoreSopChecks();
+  initVisitorCounter();
 }
