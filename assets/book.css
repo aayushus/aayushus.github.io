@@ -32,7 +32,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 .topnav-cta:hover{background:#2D2D2D}
 
 /* ── Left sidebar TOC ── */
-.booknav{position:fixed;top:48px;left:0;bottom:0;width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:18px 0 48px;z-index:90}
+.booknav{position:fixed;top:48px;left:0;bottom:0;width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:18px 0 0;z-index:90;display:flex;flex-direction:column}
 .bn-head{padding:0 18px 16px;border-bottom:1px solid var(--border);margin-bottom:10px}
 .bn-eyebrow{font-size:10px;font-family:var(--mono);color:var(--text-3);letter-spacing:1px;text-transform:uppercase}
 .bn-title{font-size:15px;font-weight:800;color:var(--text);margin-top:3px;letter-spacing:-0.3px}
@@ -49,10 +49,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 .bn-subitem.active{color:var(--ai-accent);font-weight:700;border-left-color:var(--ai-accent-border)}
 .bn-sub-dot{width:5px;height:5px;border-radius:50%;background:var(--border-mid);flex-shrink:0}
 .bn-subitem.active .bn-sub-dot{background:var(--ai-accent)}
-.bn-visitors{display:flex;align-items:center;gap:7px;margin:20px 14px 0;padding:7px 12px;background:var(--bg);border:1px solid var(--border);border-radius:999px;font-size:12px;color:var(--text-2);width:max-content;max-width:calc(100% - 28px)}
-.bnv-dot{width:7px;height:7px;border-radius:50%;background:#22C55E;box-shadow:0 0 0 3px rgba(34,197,94,.18);flex-shrink:0}
-.bnv-count{font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:-0.2px}
-.bnv-label{color:var(--text-3)}
+.bn-visitors{margin-top:auto;padding:13px 18px 16px;border-top:1px solid var(--border);font-size:12.5px;color:var(--text-3);letter-spacing:.1px}
+.bnv-count{font-weight:800;color:var(--text);font-variant-numeric:tabular-nums;letter-spacing:-0.2px}
 
 /* ── Main content ── */
 .book-main{margin-left:var(--sidebar-w);padding:74px 48px 80px;max-width:calc(var(--sidebar-w) + 940px)}

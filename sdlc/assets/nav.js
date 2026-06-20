@@ -74,7 +74,7 @@ function renderBookNav(){
       ).join('') + '</div>';
     }
   });
-  html += '<div class="bn-visitors" id="bn-visitors" hidden><span class="bnv-dot"></span><span class="bnv-count" id="bnv-count">—</span><span class="bnv-label">visitors</span></div>';
+  html += '<div class="bn-visitors" id="bn-visitors" hidden><span class="bnv-count" id="bnv-count">0</span> visitors</div>';
   const el = document.getElementById('booknav');
   if(el) el.innerHTML = html;
 }
