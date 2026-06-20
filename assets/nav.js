@@ -22,11 +22,12 @@ function getAgentBadge(id, size = 48) {
 
 const CHAPTERS = [
   { id:'overview', href:'index.html',    num:'01', name:'Overview' },
-  { id:'workflow', href:'workflow.html', num:'02', name:'The Workflow' },
-  { id:'devin',    href:'devin.html',    num:'03', name:'Devin Playbook' },
-  { id:'agents',   href:'agents.html',   num:'04', name:'Agent Roster' },
-  { id:'sop',      href:'sop.html',      num:'05', name:'Operating Procedure' },
-  { id:'setup',    href:'setup.html',    num:'06', name:'Setup Guide' },
+  { id:'pipeline', href:'pipeline.html', num:'02', name:'The Pipeline' },
+  { id:'workflow', href:'workflow.html', num:'03', name:'The Workflow' },
+  { id:'devin',    href:'devin.html',    num:'04', name:'Devin Playbook' },
+  { id:'agents',   href:'agents.html',   num:'05', name:'Agent Roster' },
+  { id:'sop',      href:'sop.html',      num:'06', name:'Operating Procedure' },
+  { id:'setup',    href:'setup.html',    num:'07', name:'Setup Guide' },
 ];
 
 /* ── Sidebar ── */

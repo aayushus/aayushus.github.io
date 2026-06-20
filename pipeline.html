@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Pipeline — AI-First SDLC</title>
+<meta name="description" content="The whole AI-first SDLC as one diagram: from a Jira Story through Coder, Critic, Checker, Shipper and the autonomous defect loop — plus the Jira ticket lifecycle.">
+<link rel="stylesheet" href="assets/book.css">
+<style>
+  .pipe-intro{font-size:14px;color:var(--text-2);line-height:1.65;max-width:680px;margin-bottom:8px}
+  .diagram-panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px 20px 18px;margin-bottom:18px;overflow-x:auto}
+  .diagram-head{display:flex;align-items:baseline;gap:10px;margin-bottom:4px}
+  .diagram-title{font-size:15px;font-weight:800;color:var(--ink);letter-spacing:-0.2px}
+  .diagram-kicker{font-size:11px;font-family:var(--mono);color:var(--text-3);text-transform:uppercase;letter-spacing:1px}
+  .diagram-cap{font-size:12.5px;color:var(--text-2);line-height:1.55;margin-bottom:16px;max-width:660px}
+  .mermaid{display:flex;justify-content:center;min-width:max-content;margin:0 auto}
+  .mermaid svg{max-width:none;height:auto}
+  .legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin:18px 0 4px;padding:14px 16px;background:var(--bg);border:1px solid var(--border);border-radius:12px}
+  .legend-item{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--text-2)}
+  .legend-sw{width:14px;height:14px;border-radius:4px;border:1.5px solid}
+  .diagram-note{font-size:12px;color:var(--text-3);margin-top:10px;display:flex;align-items:flex-start;gap:8px;line-height:1.55}
+  .diagram-note code{font-family:var(--mono);font-size:11px;background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:1px 5px}
+</style>
+</head>
+<body data-chapter="pipeline">
+<nav class="topnav"><div class="topnav-inner"><a class="topnav-brand" href="index.html">AI-First SDLC <span class="topnav-sep">/</span> <span class="topnav-tag">Developer Playbook</span></a></div></nav>
+<aside class="booknav" id="booknav"></aside>
+
+<main class="book-main">
+  <header class="chapter-header">
+    <div class="chapter-eyebrow">Chapter 02 · The Pipeline</div>
+    <div class="chapter-title">The whole pipeline, <em>in one diagram</em></div>
+    <div class="chapter-sub">Everything on one page: how a Jira Story flows through the agents to a shipped release, the Jira ticket lifecycle the agents key off, and the autonomous defect loop that closes bugs without a human in the path for 2&nbsp;-&nbsp;HIGH / 3&nbsp;-&nbsp;MEDIUM issues.</div>
+  </header>
+
+  <p class="pipe-intro">Nodes are colored by who owns them — the seven named agents, the humans, and the Atlassian artifacts they read from and write back to. Source of truth is Jira + Confluence in the JAGGAER instance; the same statuses, priorities, and labels used everywhere else in this playbook appear here verbatim.</p>
+
+  <div class="legend">
+    <div class="legend-item"><span class="legend-sw" style="background:#F8FAFC;border-color:#475569"></span>Human</div>
+    <div class="legend-item"><span class="legend-sw" style="background:#EFF6FF;border-color:#1D4ED8"></span>Jira</div>
+    <div class="legend-item"><span class="legend-sw" style="background:#F0FDFA;border-color:#0D7490"></span>Confluence</div>
+    <div class="legend-item"><span class="legend-sw" style="background:#ECFEFF;border-color:#0E7490"></span>Coder</div>
+    <div class="legend-item"><span class="legend-sw" style="background:#FDF2F8;border-color:#BE185D"></span>Critic</div>
+    <div class="legend-item"><span class="legend-sw" style="background:#F0FDF4;border-color:#15803D"></span>Checker</div>
+    <div class="legend-item"><span class="legend-sw" style="background:#EEF2FF;border-color:#4338CA"></span>Mender</div>
+    <div class="legend-item"><span class="legend-sw" style="background:#FFF7ED;border-color:#C2410C"></span>Shipper</div>
+    <div class="legend-item"><span class="legend-sw" style="background:#F1F5F9;border-color:#475569"></span>Janitor</div>
+    <div class="legend-item"><span class="legend-sw" style="background:#FEF2F2;border-color:#B91C1C"></span>Sentinel</div>
+    <div class="legend-item"><span class="legend-sw" style="background:#FFFBEB;border-color:#B45309"></span>Gate / decision</div>
+  </div>
+
+  <section class="book-section" id="pipeline" data-spy>
+    <div class="bs-label"><div class="bs-label-line"></div><div class="bs-label-text">End-to-end · Story → Ship</div><div class="bs-label-line"></div></div>
+    <div class="diagram-panel">
+      <div class="diagram-head"><span class="diagram-kicker">Flow</span><span class="diagram-title">From a Jira Story to a shipped release</span></div>
+      <div class="diagram-cap">Humans write requirements and approve the critical decisions; agents do the work in between. The only hard human gates are the <strong>Ready for Work</strong> gate, the <strong>merge approval</strong>, and the release sign-off.</div>
+      <div class="mermaid">
+flowchart TB
+  classDef human fill:#F8FAFC,stroke:#475569,color:#0F172A,stroke-width:1.5px;
+  classDef jira fill:#EFF6FF,stroke:#1D4ED8,color:#1E3A8A,stroke-width:1.5px;
+  classDef conf fill:#F0FDFA,stroke:#0D7490,color:#134E4A,stroke-width:1.5px;
+  classDef coder fill:#ECFEFF,stroke:#0E7490,color:#155E75,stroke-width:1.5px;
+  classDef critic fill:#FDF2F8,stroke:#BE185D,color:#9D174D,stroke-width:1.5px;
+  classDef checker fill:#F0FDF4,stroke:#15803D,color:#166534,stroke-width:1.5px;
+  classDef shipper fill:#FFF7ED,stroke:#C2410C,color:#9A3412,stroke-width:1.5px;
+  classDef janitor fill:#F1F5F9,stroke:#475569,color:#334155,stroke-width:1.5px;
+  classDef sentinel fill:#FEF2F2,stroke:#B91C1C,color:#991B1B,stroke-width:1.5px;
+  classDef mender fill:#EEF2FF,stroke:#4338CA,color:#3730A3,stroke-width:1.5px;
+  classDef gate fill:#FFFBEB,stroke:#B45309,color:#92400E,stroke-width:1.5px;
+
+  subgraph INTAKE["🧭 Intake — Jira + Confluence"]
+    direction TB
+    PM([Product Manager<br/>writes the Story]):::human
+    EPIC[Epic · scope + Definition of Done]:::jira
+    PRD[PRD · Product Management <b>PSF</b>]:::conf
+    ARCH[Architecture / ADRs · <b>IAA</b>]:::conf
+    STORY[Story · status <b>Open</b><br/>acceptance criteria]:::jira
+    PM --> STORY
+    EPIC --> STORY
+    PRD --> STORY
+    ARCH --> STORY
+  end
+
+  GATE{{"Ready for Work?<br/>AC complete · Priority set · chain resolves"}}:::gate
+  STORY --> GATE
+
+  subgraph DEV["💻 Development — Coder"]
+    direction TB
+    CODER[Coder picks up the queue<br/>Priority → ticket# → epic#]:::coder
+    IMPL[Implements end-to-end<br/>branch · code · tests]:::coder
+    PR[Opens PR · ticket → <b>In Review</b>]:::coder
+    CODER --> IMPL --> PR
+  end
+  GATE -->|"Ready for Work"| CODER
+
+  subgraph REVIEW["🔍 Code Review — Critic + Sentinel"]
+    direction TB
+    CRITIC[Critic auto-reviews every PR<br/>bugs · style · coverage]:::critic
+    SENT[Sentinel deep review<br/>auth · payments · data paths]:::sentinel
+  end
+  PR --> CRITIC
+  PR -. "sensitive paths" .-> SENT
+
+  HUMAN([Human reviews + approves]):::human
+  CRITIC --> HUMAN
+  SENT --> HUMAN
+  MERGE[/Merge to main/]:::human
+  HUMAN --> MERGE
+
+  subgraph QA["🐛 Test &amp; QA — Checker"]
+    direction TB
+    VAL[Checker · Validator mode<br/>re-run tests · confirm regression gone]:::checker
+    NIGHT[Checker · nightly regression<br/>files Defects on failure]:::checker
+  end
+  MERGE --> VAL
+  VAL --> DONE[Ticket <b>Resolved / Closed</b>]:::jira
+
+  subgraph REL["🚀 Release — Shipper"]
+    direction TB
+    SHIP[Shipper · Friday<br/>changelog · tag · update Confluence · close Jira version]:::shipper
+  end
+  DONE --> SHIP
+  SHIP --> RELEASED([Released]):::human
+
+  %% Cross-cutting maintenance feeds the defect loop
+  JAN[Janitor · weekly scan<br/>deps · dead code · CVEs]:::janitor
+
+  %% ── Autonomous defect loop ──
+  subgraph DEFECT["🩹 Autonomous Defect Loop — Mender"]
+    direction TB
+    FILE[Defect filed · status <b>Open</b><br/>repro · failing test · regression commit · AC]:::checker
+    DGATE{{"Defect Ready for Work<br/>+ label JAI_Agent"}}:::gate
+    MEND[Mender fixes root cause<br/>opens PR · ticket → In Review]:::mender
+    FILE --> DGATE -->|"URGENT real-time · others 7am"| MEND
+  end
+  NIGHT --> FILE
+  JAN --> FILE
+  MEND --> CRITIC
+</div>
+      <div class="diagram-note">🔒 <div><strong>Human gate on URGENT.</strong> 2&nbsp;-&nbsp;HIGH / 3&nbsp;-&nbsp;MEDIUM defects flow through Critic auto-review fully autonomously; <strong>1&nbsp;-&nbsp;URGENT</strong> fix PRs always require human approval before merge, and Checker only resolves them after that approval.</div></div>
+    </div>
+  </section>
+
+  <section class="book-section" id="lifecycle" data-spy>
+    <div class="bs-label"><div class="bs-label-line"></div><div class="bs-label-text">The states agents key off</div><div class="bs-label-line"></div></div>
+    <div class="diagram-panel">
+      <div class="diagram-head"><span class="diagram-kicker">State machine</span><span class="diagram-title">Jira ticket lifecycle</span></div>
+      <div class="diagram-cap">Agents read and write Jira status. The <strong>Ready for Work</strong> gate is the single rule that stops Coder or Mender from acting on a half-written ticket. Humans own <code>Open</code>, <code>Resolved / Closed</code>, and unblocking <code>On Hold</code>.</div>
+      <div class="mermaid">
+stateDiagram-v2
+  classDef gate fill:#FFFBEB,stroke:#B45309,color:#92400E,stroke-width:1.5px;
+  classDef done fill:#F0FDF4,stroke:#15803D,color:#166534,stroke-width:1.5px;
+  classDef hold fill:#FEF2F2,stroke:#B91C1C,color:#991B1B,stroke-width:1.5px;
+
+  [*] --> Open
+  Open: Open · drafting AC (humans only)
+  Open --> RFW: AC complete + Priority set
+  RFW: Ready for Work · the gate
+  RFW --> InProgress: Coder / Mender picks up
+  InProgress: In Progress · agent owns it
+  InProgress --> InReview: PR opened + linked
+  InReview: In Review · Critic + human
+  InReview --> Resolved: approved + merged + validated
+  Resolved: Resolved / Closed (Done)
+  Resolved --> [*]
+
+  RFW --> OnHold: missing info
+  InProgress --> OnHold: blocked / open question
+  OnHold: On Hold · agents stop &amp; wait
+  OnHold --> RFW: unblocked by a human
+
+  class RFW gate
+  class Resolved done
+  class OnHold hold
+</div>
+      <div class="diagram-note">↪ <div>Guardrails: agents act only inside the <code>Ready for Work → In Progress → In Review</code> band. They never touch <code>Open</code>, never re-open <code>Resolved / Closed</code>, and never push past <code>On Hold</code>.</div></div>
+    </div>
+  </section>
+
+  <footer class="prevnext" id="prevnext"></footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/nav.js"></script>
+<script>
+  window.BOOK_SUBNAV = [
+    { id:'pipeline',  label:'End-to-end pipeline' },
+    { id:'lifecycle', label:'Jira ticket lifecycle' },
+  ];
+  mountBook();
+
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'base',
+    securityLevel: 'loose',
+    fontFamily: "-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif",
+    themeVariables: {
+      primaryColor: '#FFFFFF',
+      primaryTextColor: '#0F172A',
+      primaryBorderColor: '#D0D0D0',
+      lineColor: '#94A3B8',
+      tertiaryColor: '#FAFAFA',
+      fontSize: '13px',
+      clusterBkg: '#FAFAFA',
+      clusterBorder: '#E2E8F0',
+    },
+    flowchart: { curve: 'basis', htmlLabels: true, nodeSpacing: 42, rankSpacing: 52, padding: 10 },
+  });
+  mermaid.run({ querySelector: '.mermaid' });
+</script>
+</body>
+</html>
