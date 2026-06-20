@@ -38,7 +38,7 @@ function initVisitorCounter(){
     s.setAttribute('data-goatcounter', `${base}/count`);
     document.body.appendChild(s);
   }
-  fetch(`${base}/counter/TOTAL.json`)
+  fetch(`${base}/counter/TOTAL.json?t=${Date.now()}`)
     .then(r => r.ok ? r.json() : Promise.reject(r.status))
     .then(d => {
       const n = d.count || d.count_unique;
