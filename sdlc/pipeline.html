@@ -72,8 +72,8 @@ flowchart TB
     direction TB
     PM([Product Manager<br/>writes the Story]):::human
     EPIC[Epic · scope + Definition of Done]:::jira
-    PRD[PRD · Product Management <b>PSF</b>]:::conf
-    ARCH[Architecture / ADRs · <b>IAA</b>]:::conf
+    PRD[PRD · Confluence<br/>Product Management · <b>PSF</b>]:::conf
+    ARCH[Architecture / ADRs · Confluence<br/>Infrastructure &amp; Architecture · <b>IAA</b>]:::conf
     STORY[Story · status <b>Open</b><br/>acceptance criteria]:::jira
     PM --> STORY
     EPIC --> STORY
@@ -138,6 +138,7 @@ flowchart TB
   MEND --> CRITIC
 </div>
       <div class="diagram-note">🔒 <div><strong>Human gate on URGENT.</strong> 2&nbsp;-&nbsp;HIGH / 3&nbsp;-&nbsp;MEDIUM defects flow through Critic auto-review fully autonomously; <strong>1&nbsp;-&nbsp;URGENT</strong> fix PRs always require human approval before merge, and Checker only resolves them after that approval.</div></div>
+      <div class="diagram-note">📘 <div><strong>Confluence spaces.</strong> The context chain reads from Confluence as well as Jira: <code>PSF</code> is the <strong>Product Management</strong> space (PRDs), <code>IAA</code> is the <strong>Infrastructure &amp; Architecture</strong> space (ADRs), and <code>DEVKB</code> is the <strong>Development Knowledgebase</strong> (engineering patterns) — all in the JAGGAER Confluence at <code>jira-jaggaer.atlassian.net/wiki</code>.</div></div>
     </div>
   </section>
 
