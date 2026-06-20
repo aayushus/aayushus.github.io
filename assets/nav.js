@@ -41,10 +41,9 @@ function initVisitorCounter(){
   fetch(`${base}/counter/TOTAL.json`)
     .then(r => r.ok ? r.json() : Promise.reject(r.status))
     .then(d => {
-      const n = d.count_unique || d.count;
+      const n = d.count || d.count_unique;
       const el = document.getElementById('bnv-count');
-      const wrap = document.getElementById('bn-visitors');
-      if(el && n){ el.textContent = n; if(wrap) wrap.hidden = false; }
+      if(el && n){ el.textContent = n; }
     })
     .catch(()=>{});
 }
@@ -74,7 +73,7 @@ function renderBookNav(){
       ).join('') + '</div>';
     }
   });
-  html += '<div class="bn-visitors" id="bn-visitors" hidden><span class="bnv-count" id="bnv-count">0</span> visitors</div>';
+  html += '<div class="bn-visitors" id="bn-visitors"><span class="bnv-count" id="bnv-count">0</span> visitors</div>';
   const el = document.getElementById('booknav');
   if(el) el.innerHTML = html;
 }
