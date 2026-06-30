@@ -132,10 +132,11 @@ function restoreSopChecks(){
     if(cb&&row&&s[id]){ cb.checked=true; row.classList.add('checked'); }
   });
 }
+/* Fired from the checkbox's native change event — reads, never flips,
+   so mouse, label, and keyboard (Space) all toggle exactly once. */
 function toggleCheck(id){
   const cb=document.getElementById('cb-'+id), row=document.getElementById('ci-'+id);
   if(!cb||!row) return;
-  cb.checked=!cb.checked;
   row.classList.toggle('checked', cb.checked);
   const s=loadSop(); s[id]=cb.checked; saveSop(s);
 }

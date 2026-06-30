@@ -286,8 +286,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 .checklist-group-title{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--text-3);padding:8px 0;border-bottom:1px solid var(--border);margin-bottom:4px}
 .checklist-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);cursor:pointer}
 .checklist-item:last-child{border-bottom:none}
-.checklist-item input[type=checkbox]{width:15px;height:15px;flex-shrink:0;margin-top:2px;accent-color:var(--sop);pointer-events:none}
-.checklist-item label{font-size:13px;line-height:1.5;cursor:pointer}
+.checklist-item input[type=checkbox]{width:15px;height:15px;flex-shrink:0;margin-top:2px;accent-color:var(--sop);cursor:pointer}
+.checklist-item label{font-size:13px;line-height:1.5;cursor:pointer;flex:1}
 .checklist-item label code{font-family:var(--mono);font-size:11px;background:var(--sop-bg);border:1px solid var(--sop-border);border-radius:3px;padding:1px 5px}
 .checklist-item.checked label{color:var(--text-3);text-decoration:line-through}
 .cmd-group{margin-bottom:20px}
@@ -344,7 +344,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 .prereq-item{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s}
 .prereq-item:last-child{border-bottom:none}
 .prereq-item:hover{background:var(--bg)}
-.prereq-item input[type=checkbox]{width:15px;height:15px;flex-shrink:0;margin-top:2px;accent-color:var(--ink);pointer-events:none}
+.prereq-item input[type=checkbox]{width:15px;height:15px;flex-shrink:0;margin-top:2px;accent-color:var(--ink);cursor:pointer}
 .prereq-item label{font-size:13px;line-height:1.5;cursor:pointer;flex:1}
 .prereq-item label strong{color:var(--ink)}
 .prereq-item label code{font-family:var(--mono);font-size:11px;background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:1px 5px}

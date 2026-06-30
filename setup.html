@@ -40,13 +40,13 @@
     <div class="callout info"><div class="callout-icon">ℹ️</div><div>Check each item off as you confirm it. Do not proceed until all are checked.</div></div>
 
     <div class="prereq-list">
-      <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Devin Teams or Enterprise account</strong> — Sign up at <a href="https://app.devin.ai" target="_blank" style="color:var(--blue)">app.devin.ai</a>. You need Teams or Enterprise for scheduled sessions and automations.</label></div>
-      <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Devin Desktop 2.0+ (formerly Windsurf)</strong> — Download at <a href="https://windsurf.com" target="_blank" style="color:var(--blue)">windsurf.com</a>. Required for the Devin Desktop → Devin cloud handoff feature.</label></div>
-      <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>GitHub organization admin access</strong> — You need to install the Devin GitHub App on your org. Personal repo access is not enough.</label></div>
-      <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Jira admin access</strong> — Required to install the Jira integration and create the Devin service account user.</label></div>
-      <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Microsoft Teams admin access</strong> — Required to install the Devin app for Microsoft Teams and add it to channels.</label></div>
-      <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Dedicated Teams Space Created</strong> — We highly recommend creating a dedicated Team in Microsoft Teams named <strong>"Devin Agents"</strong> (or "AI-First SDLC") to keep notifications organized and avoid cluttering general spaces. Inside this Team, create these channels: <code>dev-runs</code>, <code>code-review</code>, <code>qa-alerts</code>, <code>releases</code>, <code>engineering</code>, <code>security</code>, <code>incidents</code></label></div>
-      <div class="prereq-item" onclick="togglePrereq(this)"><input type="checkbox"><label><strong>Repos cloned locally</strong> — You'll need to commit files (<code>AGENTS.md</code>, <code>REVIEW.md</code>, <code>SKILL.md</code>) to each repo in Section 8.</label></div>
+      <div class="prereq-item"><input type="checkbox" id="prq-1" onchange="togglePrereq(this.closest('.prereq-item'))"><label for="prq-1"><strong>Devin Teams or Enterprise account</strong> — Sign up at <a href="https://app.devin.ai" target="_blank" rel="noopener" style="color:var(--blue)">app.devin.ai</a>. You need Teams or Enterprise for scheduled sessions and automations.</label></div>
+      <div class="prereq-item"><input type="checkbox" id="prq-2" onchange="togglePrereq(this.closest('.prereq-item'))"><label for="prq-2"><strong>Devin Desktop 2.0+ (formerly Windsurf)</strong> — Download at <a href="https://windsurf.com" target="_blank" rel="noopener" style="color:var(--blue)">windsurf.com</a>. Required for the Devin Desktop → Devin cloud handoff feature.</label></div>
+      <div class="prereq-item"><input type="checkbox" id="prq-3" onchange="togglePrereq(this.closest('.prereq-item'))"><label for="prq-3"><strong>GitHub organization admin access</strong> — You need to install the Devin GitHub App on your org. Personal repo access is not enough.</label></div>
+      <div class="prereq-item"><input type="checkbox" id="prq-4" onchange="togglePrereq(this.closest('.prereq-item'))"><label for="prq-4"><strong>Jira admin access</strong> — Required to install the Jira integration and create the Devin service account user.</label></div>
+      <div class="prereq-item"><input type="checkbox" id="prq-5" onchange="togglePrereq(this.closest('.prereq-item'))"><label for="prq-5"><strong>Microsoft Teams admin access</strong> — Required to install the Devin app for Microsoft Teams and add it to channels.</label></div>
+      <div class="prereq-item"><input type="checkbox" id="prq-6" onchange="togglePrereq(this.closest('.prereq-item'))"><label for="prq-6"><strong>Dedicated Teams Space Created</strong> — We highly recommend creating a dedicated Team in Microsoft Teams named <strong>"Devin Agents"</strong> (or "AI-First SDLC") to keep notifications organized and avoid cluttering general spaces. Inside this Team, create these channels: <code>dev-runs</code>, <code>code-review</code>, <code>qa-alerts</code>, <code>releases</code>, <code>engineering</code>, <code>security</code>, <code>incidents</code></label></div>
+      <div class="prereq-item"><input type="checkbox" id="prq-7" onchange="togglePrereq(this.closest('.prereq-item'))"><label for="prq-7"><strong>Repos cloned locally</strong> — You'll need to commit files (<code>AGENTS.md</code>, <code>REVIEW.md</code>, <code>SKILL.md</code>) to each repo in Section 8.</label></div>
     </div>
   </section>
 
@@ -62,13 +62,13 @@
     </div>
 
     <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin-bottom:14px;padding-top:4px">2A — GitHub</h3>
-    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/integrations/github" target="_blank">app.devin.ai → Settings → Integrations → GitHub</a></div></div></div>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/integrations/github" target="_blank" rel="noopener">app.devin.ai → Settings → Integrations → GitHub</a></div></div></div>
     <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Click <strong>Connect</strong></div><div class="step-desc">You'll be redirected to GitHub to install the Devin GitHub App.</div></div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Select <strong>your organization</strong> (not "Only select repositories")</div><div class="step-desc">Grant access to all repositories. Devin needs read/write access to open PRs, push branches, and read repo contents.</div></div></div>
     <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Confirm the green <strong>Connected</strong> status in Devin settings</div></div></div>
 
     <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:24px 0 14px;padding-top:4px">2B — Jira</h3>
-    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/integrations/jira" target="_blank">app.devin.ai → Settings → Integrations → Jira</a></div></div></div>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/integrations/jira" target="_blank" rel="noopener">app.devin.ai → Settings → Integrations → Jira</a></div></div></div>
     <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Click <strong>Connect</strong> and authorize with your Jira admin account</div></div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Create a Devin service account in Jira</div><div class="step-desc">In Jira admin: <strong>User Management → Create user</strong>. Suggested email: <code>devin@yourcompany.com</code>. This account is what Devin uses to post comments and update tickets — so they appear as "Devin" not as you.</div></div></div>
     <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">In Jira admin: create an <strong>OAuth 2.0 app</strong> for the service account</div><div class="step-desc">Atlassian admin → Security → OAuth 2.0 integration → Create. Scopes needed: <code>read:me</code>, <code>read:jira-user</code>, <code>read:jira-work</code>, <code>write:jira-work</code></div></div></div>
@@ -76,7 +76,7 @@
     <div class="step"><div class="step-num">6</div><div class="step-body"><div class="step-title">Create these labels in your Jira project</div><div class="step-desc">Go to your Jira project → Project settings → Labels → Create: <code>devin</code>, <code>JAI_Agent</code>, <code>!write-tests</code>, <code>!design-review</code>, <code>!security-review</code></div></div></div>
 
     <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:24px 0 14px;padding-top:4px">2C — Microsoft Teams</h3>
-    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/integrations/microsoft-teams" target="_blank">app.devin.ai → Settings → Integrations → Microsoft Teams</a></div></div></div>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/integrations/microsoft-teams" target="_blank" rel="noopener">app.devin.ai → Settings → Integrations → Microsoft Teams</a></div></div></div>
     <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Click <strong>Connect</strong> → <strong>Add to Teams</strong> and authorize for your Microsoft 365 tenant (admin consent)</div></div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Add the <code>@Devin</code> app to your dedicated Team space and channels</div><div class="step-desc">In your dedicated <strong>"Devin Agents"</strong> Team: click <strong>···</strong> → <strong>Manage team → Apps</strong> → <strong>More apps</strong>, find Devin, and add it. Then, ensure Devin is added to all seven channels: <code>dev-runs</code>, <code>code-review</code>, <code>qa-alerts</code>, <code>releases</code>, <code>engineering</code>, <code>security</code>, and <code>incidents</code>.</div></div></div>
     <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Test the integration</div><div class="step-desc">In the <code>engineering</code> channel, type: <code>@Devin hello</code> — you should get a response within 30 seconds.</div></div></div>
@@ -97,8 +97,8 @@
     <div class="callout info"><div class="callout-icon">ℹ️</div><div>Every Devin session boots from a <strong>snapshot</strong> — a pre-built machine image. Configure it once and every Builder / Tester run starts with your repos cloned, tools installed, and dependencies ready.</div></div>
 
     <h3 class="subhead">A — Environment (Blueprints)</h3>
-    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/repositories" target="_blank">Settings → Repositories</a> → pick a repo → <strong>Configure environment</strong></div></div></div>
-    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Choose <strong>Declarative configuration</strong> (a YAML <em>blueprint</em>) — recommended — or the classic interactive wizard</div><div class="step-desc">Blueprints version-control your environment and rebuild automatically. <a href="https://docs.devin.ai/onboard-devin/environment/blueprints" target="_blank">Blueprints docs</a> · <a href="https://docs.devin.ai/onboard-devin/repo-setup" target="_blank">classic wizard</a></div></div></div>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/repositories" target="_blank" rel="noopener">Settings → Repositories</a> → pick a repo → <strong>Configure environment</strong></div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Choose <strong>Declarative configuration</strong> (a YAML <em>blueprint</em>) — recommended — or the classic interactive wizard</div><div class="step-desc">Blueprints version-control your environment and rebuild automatically. <a href="https://docs.devin.ai/onboard-devin/environment/blueprints" target="_blank" rel="noopener">Blueprints docs</a> · <a href="https://docs.devin.ai/onboard-devin/repo-setup" target="_blank" rel="noopener">classic wizard</a></div></div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Define how the machine is built</div>
       <div class="file-block-wrap"><div class="file-label"><div class="file-label-dot"></div>blueprint.yaml (example)</div><div class="code-wrap" style="margin-top:0"><button class="copy-btn" onclick="copyCode(this)">copy</button><div class="code-block"><span class="kw">install:</span>
   <span class="cm"># runs once when the snapshot is built</span>
@@ -113,9 +113,9 @@
     <div class="callout tip"><div class="callout-icon">✅</div><div><strong>Verify:</strong> start a session and run your test command. If <code>npm test</code> passes with no manual setup, agents are good to go.</div></div>
 
     <h3 class="subhead">B — Secrets</h3>
-    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/secrets" target="_blank">Settings → Secrets</a> → add what agents need at runtime</div><div class="step-desc">Test database URL, sandbox API keys, package-registry tokens, internal service credentials. Pin each to the relevant repos. <a href="https://docs.devin.ai/product-guides/secrets" target="_blank">Secrets docs</a></div></div></div>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/secrets" target="_blank" rel="noopener">Settings → Secrets</a> → add what agents need at runtime</div><div class="step-desc">Test database URL, sandbox API keys, package-registry tokens, internal service credentials. Pin each to the relevant repos. <a href="https://docs.devin.ai/product-guides/secrets" target="_blank" rel="noopener">Secrets docs</a></div></div></div>
     <div class="callout danger"><div class="callout-icon">🔒</div><div><strong>Never</strong> put secrets in <code>AGENTS.md</code>, playbooks, or Knowledge — those are readable context. Real credentials belong only in Secrets, scoped to least privilege (read-only / sandbox where possible).</div></div>
-    <div class="callout info"><div class="callout-icon">🌐</div><div><strong>Internal network?</strong> If agents must reach services behind your VPN, configure it at <a href="https://docs.devin.ai/onboard-devin/vpn" target="_blank">VPN setup</a>.</div></div>
+    <div class="callout info"><div class="callout-icon">🌐</div><div><strong>Internal network?</strong> If agents must reach services behind your VPN, configure it at <a href="https://docs.devin.ai/onboard-devin/vpn" target="_blank" rel="noopener">VPN setup</a>.</div></div>
   </section>
 
   <section class="section" id="review">
@@ -128,7 +128,7 @@
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
-    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/review" target="_blank">app.devin.ai → Settings → Review</a></div></div></div>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/review" target="_blank" rel="noopener">app.devin.ai → Settings → Review</a></div></div></div>
     <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Under <strong>Repositories</strong>, click the dropdown and add all your repos</div><div class="step-desc">Add every repo the team works in. Devin will auto-review all PRs on these repos.</div></div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Toggle <strong>Auto-review all PRs</strong> to ON</div><div class="step-desc">This triggers a review every time a PR is opened, new commits are pushed, or a draft is marked ready. If you want to start conservative, use "Auto-review Devin-authored PRs only" first and expand later.</div></div></div>
     <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Enable <strong>Insert link in PR description</strong> (default is ON, leave it)</div><div class="step-desc">This adds a Devin Review link to every PR description so reviewers can jump straight to the diff view.</div></div></div>
@@ -146,9 +146,9 @@
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
-    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/repositories" target="_blank">app.devin.ai → Settings → Repositories</a></div></div></div>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open <a href="https://app.devin.ai/settings/repositories" target="_blank" rel="noopener">app.devin.ai → Settings → Repositories</a></div></div></div>
     <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Click <strong>Index</strong> next to each repo</div><div class="step-desc">Indexing runs in the background and takes 1–10 minutes per repo depending on size. You'll see a green status when complete.</div></div></div>
-    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Verify: open <a href="https://deepwiki.com" target="_blank">deepwiki.com</a> and search for your repo</div><div class="step-desc">If indexed, you'll see auto-generated architecture docs for your repo. If not yet visible, wait a few minutes and refresh.</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Verify: open <a href="https://deepwiki.com" target="_blank" rel="noopener">deepwiki.com</a> and search for your repo</div><div class="step-desc">If indexed, you'll see auto-generated architecture docs for your repo. If not yet visible, wait a few minutes and refresh.</div></div></div>
     <div class="callout info"><div class="callout-icon">ℹ️</div><div>You can also trigger indexing via API: <code>PUT /api/v3/organizations/{orgId}/repositories/bulk-index</code> if you have many repos to index at once.</div></div>
   </section>
 
@@ -163,7 +163,7 @@
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
-    <div class="callout info"><div class="callout-icon">ℹ️</div><div>For each playbook: go to <a href="https://app.devin.ai/settings/playbooks" target="_blank">app.devin.ai → Settings → Library → Playbooks → Create</a>. Enter the Name, Macro, and paste the Instructions exactly.</div></div>
+    <div class="callout info"><div class="callout-icon">ℹ️</div><div>For each playbook: go to <a href="https://app.devin.ai/settings/playbooks" target="_blank" rel="noopener">app.devin.ai → Settings → Library → Playbooks → Create</a>. Enter the Name, Macro, and paste the Instructions exactly.</div></div>
 
     <!-- Builder -->
     <div class="playbook-card" style="margin-top:20px">
@@ -645,7 +645,7 @@ sensitive paths AND as a weekly codebase sweep.
       <div class="section-num-wrap"><div class="section-num">06</div></div>
       <div class="section-header-text">
         <div class="section-title">Create Scheduled Sessions</div>
-        <div class="section-desc">One scheduled session per agent. Go to <a href="https://app.devin.ai/settings/schedules" target="_blank">Settings → Schedules → Create Schedule</a> for each row.</div>
+        <div class="section-desc">One scheduled session per agent. Go to <a href="https://app.devin.ai/settings/schedules" target="_blank" rel="noopener">Settings → Schedules → Create Schedule</a> for each row.</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -710,7 +710,7 @@ sensitive paths AND as a weekly codebase sweep.
       </tr>
     </table>
 
-    <div class="callout tip"><div class="callout-icon">✅</div><div>After creating each schedule, verify it appears under <a href="https://app.devin.ai/settings/schedules" target="_blank">Settings → Schedules</a> with status <strong>Active</strong>. If status is Error, re-check the cron expression and playbook name.</div></div>
+    <div class="callout tip"><div class="callout-icon">✅</div><div>After creating each schedule, verify it appears under <a href="https://app.devin.ai/settings/schedules" target="_blank" rel="noopener">Settings → Schedules</a> with status <strong>Active</strong>. If status is Error, re-check the cron expression and playbook name.</div></div>
     <div class="callout warn"><div class="callout-icon">⚠️</div><div><strong>J1</strong> is the JAGGAER One project key — swap it if your work lives in a different project (e.g. <code>JADEV</code>, <code>AD</code>). If you span multiple projects, list them: "in projects J1, JADEV, or AD".</div></div>
   </section>
 
@@ -720,7 +720,7 @@ sensitive paths AND as a weekly codebase sweep.
       <div class="section-num-wrap"><div class="section-num">07</div></div>
       <div class="section-header-text">
         <div class="section-title">Create Automations</div>
-        <div class="section-desc">Event-driven triggers that give agents real-time reflexes. Go to <a href="https://app.devin.ai/automations" target="_blank">app.devin.ai → Automations</a>.</div>
+        <div class="section-desc">Event-driven triggers that give agents real-time reflexes. Go to <a href="https://app.devin.ai/automations" target="_blank" rel="noopener">app.devin.ai → Automations</a>.</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -810,7 +810,7 @@ root cause, open a PR with fix details, and move the ticket to In Review.</div><
 
     <div class="callout warn"><div class="callout-icon">⚠️</div><div>The content below is a <strong>template</strong>. Customise it to match your actual tech stack, architecture, and conventions before committing. Devin takes these files literally — generic instructions produce generic output.</div></div>
 
-    <div class="callout tip"><div class="callout-icon">📝</div><div><strong>PR templates:</strong> if a repo has <code>.github/pull_request_template.md</code>, Builder fills it out automatically. To give Devin its own, add <code>.github/PULL_REQUEST_TEMPLATE/devin.md</code> — keep it short (what changed, why, how to test). <a href="https://docs.devin.ai/integrations/pr-templates" target="_blank">PR templates docs</a></div></div>
+    <div class="callout tip"><div class="callout-icon">📝</div><div><strong>PR templates:</strong> if a repo has <code>.github/pull_request_template.md</code>, Builder fills it out automatically. To give Devin its own, add <code>.github/PULL_REQUEST_TEMPLATE/devin.md</code> — keep it short (what changed, why, how to test). <a href="https://docs.devin.ai/integrations/pr-templates" target="_blank" rel="noopener">PR templates docs</a></div></div>
 
     <!-- AGENTS.md -->
     <h3 style="font-size:15px;font-weight:800;color:var(--ink);margin:20px 0 10px">AGENTS.md</h3>
@@ -1018,7 +1018,7 @@ Description template:
       <div class="section-num-wrap"><div class="section-num">09</div></div>
       <div class="section-header-text">
         <div class="section-title">Knowledge Base</div>
-        <div class="section-desc">Knowledge items are org-wide context that Devin recalls automatically. Go to <a href="https://app.devin.ai/settings/knowledge" target="_blank">Settings → Knowledge → Add Knowledge</a> for each entry.</div>
+        <div class="section-desc">Knowledge items are org-wide context that Devin recalls automatically. Go to <a href="https://app.devin.ai/settings/knowledge" target="_blank" rel="noopener">Settings → Knowledge → Add Knowledge</a> for each entry.</div>
       </div>
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
@@ -1087,9 +1087,9 @@ Description template:
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
-    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Turn on <strong>Session Insights</strong></div><div class="step-desc">Devin analyses each session and gives actionable feedback on what worked and where prompts / playbooks need work — your feedback loop for improving the agents. <a href="https://docs.devin.ai/product-guides/session-insights" target="_blank">Session Insights docs</a></div></div></div>
-    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Bookmark the <strong>Usage</strong> dashboard</div><div class="step-desc"><a href="https://app.devin.ai/settings/usage" target="_blank">Settings → Usage</a> shows session volume, searches, and PR metrics. Review weekly to spot trends and tune agent behavior. <a href="https://docs.devin.ai/admin/billing/usage" target="_blank">How usage is metered</a></div></div></div>
-    <div class="callout info"><div class="callout-icon">📊</div><div><strong>Programmatic:</strong> the v3 metrics API (sessions, searches, PRs, active users) can feed a custom dashboard for trends over time. <a href="https://docs.devin.ai/api-reference/overview" target="_blank">API overview</a></div></div>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Turn on <strong>Session Insights</strong></div><div class="step-desc">Devin analyses each session and gives actionable feedback on what worked and where prompts / playbooks need work — your feedback loop for improving the agents. <a href="https://docs.devin.ai/product-guides/session-insights" target="_blank" rel="noopener">Session Insights docs</a></div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Bookmark the <strong>Usage</strong> dashboard</div><div class="step-desc"><a href="https://app.devin.ai/settings/usage" target="_blank" rel="noopener">Settings → Usage</a> shows session volume, searches, and PR metrics. Review weekly to spot trends and tune agent behavior. <a href="https://docs.devin.ai/admin/billing/usage" target="_blank" rel="noopener">How usage is metered</a></div></div></div>
+    <div class="callout info"><div class="callout-icon">📊</div><div><strong>Programmatic:</strong> the v3 metrics API (sessions, searches, PRs, active users) can feed a custom dashboard for trends over time. <a href="https://docs.devin.ai/api-reference/overview" target="_blank" rel="noopener">API overview</a></div></div>
   </section>
 
   <!-- ══════════════════ ACCESS & SECURITY ══════════════════ -->
@@ -1103,11 +1103,36 @@ Description template:
       <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
     </div>
 
-    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Scope the Devin <strong>service account</strong> to least privilege</div><div class="step-desc">The Jira / GitHub service user Builder acts as should have only the access it needs. Use <a href="https://docs.devin.ai/enterprise/security-access/custom-roles" target="_blank">custom roles &amp; RBAC</a> to limit who can change playbooks, schedules, and org settings.</div></div></div>
-    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Enforce <strong>SSO</strong> for the team</div><div class="step-desc">SAML / OIDC / Okta / Azure AD. <a href="https://docs.devin.ai/enterprise/security-access/sso/guide" target="_blank">SSO onboarding guide</a></div></div></div>
-    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Restrict access with an <strong>IP access list</strong></div><div class="step-desc">Limit web app + API access to your office / VPN ranges. <a href="https://docs.devin.ai/enterprise/security-access/ip-access-lists" target="_blank">IP access lists</a></div></div></div>
-    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Know where the <strong>audit log</strong> and <strong>kill switch</strong> are</div><div class="step-desc">Audit logs record every agent and admin action — review them when something looks off. Any running session can be stopped from Teams (<code>EXIT</code>) or terminated in the web app / via API. <a href="https://docs.devin.ai/admin/security" target="_blank">Security at Cognition</a></div></div></div>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Scope the Devin <strong>service account</strong> to least privilege</div><div class="step-desc">The Jira / GitHub service user Builder acts as should have only the access it needs. Use <a href="https://docs.devin.ai/enterprise/security-access/custom-roles" target="_blank" rel="noopener">custom roles &amp; RBAC</a> to limit who can change playbooks, schedules, and org settings.</div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Enforce <strong>SSO</strong> for the team</div><div class="step-desc">SAML / OIDC / Okta / Azure AD. <a href="https://docs.devin.ai/enterprise/security-access/sso/guide" target="_blank" rel="noopener">SSO onboarding guide</a></div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Restrict access with an <strong>IP access list</strong></div><div class="step-desc">Limit web app + API access to your office / VPN ranges. <a href="https://docs.devin.ai/enterprise/security-access/ip-access-lists" target="_blank" rel="noopener">IP access lists</a></div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Know where the <strong>audit log</strong> and <strong>kill switch</strong> are</div><div class="step-desc">Audit logs record every agent and admin action — review them when something looks off. Any running session can be stopped from Teams (<code>EXIT</code>) or terminated in the web app / via API. <a href="https://docs.devin.ai/admin/security" target="_blank" rel="noopener">Security at Cognition</a></div></div></div>
     <div class="callout warn"><div class="callout-icon">⚠️</div><div>Org-wide write access to repos, Jira, and Teams is powerful. Pair it with branch protections (agents can't merge), scoped secrets, and a habit of reviewing the audit log. Revisit permissions quarterly.</div></div>
+  </section>
+
+  <!-- ══════════════════ TRACEABILITY & AUDIT ══════════════════ -->
+  <section class="section" id="traceability">
+    <div class="section-header">
+      <div class="section-num-wrap"><div class="section-num">00</div></div>
+      <div class="section-header-text">
+        <div class="section-title">Traceability &amp; Audit</div>
+        <div class="section-desc">Wire it once and every agent inherits it: a permanent record of what each agent did and <em>why</em>. The full model is in <a href="sop.html#trace" rel="noopener">SOP §8 · Traceability &amp; Audit</a>.</div>
+      </div>
+      <button class="section-done-btn" onclick="markDone(this)">Mark done</button>
+    </div>
+
+    <div class="callout info"><div class="callout-icon">🧵</div><div><strong>Durable by default.</strong> A Devin session is the richest record but the most perishable — so the decision evidence is written into the artifacts that live forever (the commit, the PR, the Jira ticket), and the session is the deep-dive layer, not the system of record.</div></div>
+
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Adopt the <strong>commit-trailer</strong> convention</div><div class="step-desc">Document it in each repo&#39;s <code>AGENTS.md</code> so every agent ends its commits with a greppable, permanent provenance block. From a broken line: <code>git blame</code> → commit → session. <a href="https://docs.devin.ai/onboard-devin/agents-md" target="_blank" rel="noopener">AGENTS.md docs</a><div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">copy</button><div class="code-block">Devin-Agent: Builder
+Devin-Session: https://app.devin.ai/sessions/abc123
+Devin-Playbook: !implement@v4
+Jira: J1-1234
+Co-Authored-By: Devin &lt;devin@yourorg.com&gt;</div></div></div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Add a <strong>PR Decision Record</strong> to each repo&#39;s PR template</div><div class="step-desc">Create / edit <code>.github/pull_request_template.md</code> so every agent PR records, where humans already review: context read (Story → Epic → PRD → Architecture), approach &amp; alternatives rejected, risk / security notes, test evidence (coverage delta + video link), and open questions for the reviewer. This is the durable home of the &quot;why&quot;.</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Add Jira custom fields <code>Devin Session</code> and <code>Agent</code></div><div class="step-desc">So the work timeline is queryable by agent, and each status transition links back to the session that made it. Pair with the GitHub commit trailer for end-to-end correlation.</div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Set <strong>retention &amp; redaction</strong> for logs and recordings</div><div class="step-desc">Session logs and video recordings can capture secrets or customer data — set an explicit retention window and redaction policy, especially for InfoSec. The audit log is the forensic backstop. <a href="https://docs.devin.ai/admin/security" target="_blank" rel="noopener">Security at Cognition</a></div></div></div>
+
+    <div class="callout warn"><div class="callout-icon">⚠️</div><div><strong>Mirror human gates to a permanent surface.</strong> GitHub records PR approvals, but Teams overrides and <code>EXIT</code> commands are ephemeral — any approval, pause, or override given in Teams must be written back to the PR or Jira ticket. &quot;Prove a human approved this 1 - URGENT fix&quot; has to be answerable without opening a session. Scale trace depth to risk: a lint PR needs only the trailer; an <code>auth</code> / <code>payments</code> / 1 - URGENT change needs the full Decision Record, InfoSec review, retained video, and the approval record.</div></div>
   </section>
 
   <section class="section" id="engineer">
@@ -1123,28 +1148,28 @@ Description template:
     <div class="callout info"><div class="callout-icon">ℹ️</div><div>Share this section URL with your team: <strong>each engineer completes these steps themselves.</strong> The admin setup (earlier sections) does not need to be repeated.</div></div>
 
     <div class="step"><div class="step-num">1</div><div class="step-body">
-      <div class="step-title">Create a Devin account at <a href="https://app.devin.ai" target="_blank">app.devin.ai</a></div>
+      <div class="step-title">Create a Devin account at <a href="https://app.devin.ai" target="_blank" rel="noopener">app.devin.ai</a></div>
       <div class="step-desc">Use your work email. Your admin needs to invite you to the team org — ask them to do this before you start.</div>
     </div></div>
     <div class="step"><div class="step-num">2</div><div class="step-body">
       <div class="step-title">Connect your GitHub account</div>
-      <div class="step-desc"><a href="https://app.devin.ai/settings/integrations/github" target="_blank">Settings → Integrations → GitHub</a> → Connect your personal GitHub account. This allows Devin to create PRs and branches as you.</div>
+      <div class="step-desc"><a href="https://app.devin.ai/settings/integrations/github" target="_blank" rel="noopener">Settings → Integrations → GitHub</a> → Connect your personal GitHub account. This allows Devin to create PRs and branches as you.</div>
     </div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body">
       <div class="step-title">Connect your Microsoft Teams account</div>
-      <div class="step-desc"><a href="https://app.devin.ai/settings/integrations/microsoft-teams" target="_blank">Settings → Integrations → Microsoft Teams</a> → Link your account. Your Teams email must match your Devin email. This is required to receive Devin notifications and to use <code>@Devin</code> in Teams.</div>
+      <div class="step-desc"><a href="https://app.devin.ai/settings/integrations/microsoft-teams" target="_blank" rel="noopener">Settings → Integrations → Microsoft Teams</a> → Link your account. Your Teams email must match your Devin email. This is required to receive Devin notifications and to use <code>@Devin</code> in Teams.</div>
     </div></div>
     <div class="step"><div class="step-num">4</div><div class="step-body">
       <div class="step-title">Self-enroll for auto PR review</div>
-      <div class="step-desc"><a href="https://app.devin.ai/settings/review" target="_blank">Settings → Review</a> → Click <strong>"Add myself (@yourusername)"</strong>. Reviewer will now automatically review any PR you open or are assigned to.</div>
+      <div class="step-desc"><a href="https://app.devin.ai/settings/review" target="_blank" rel="noopener">Settings → Review</a> → Click <strong>"Add myself (@yourusername)"</strong>. Reviewer will now automatically review any PR you open or are assigned to.</div>
     </div></div>
     <div class="step"><div class="step-num">5</div><div class="step-body">
       <div class="step-title">Install Devin Desktop</div>
-      <div class="step-desc">Download from <a href="https://windsurf.com" target="_blank">windsurf.com</a>. Sign in with your work account. In the Agent Command Center, connect to Devin Cloud to enable the local → cloud handoff.</div>
+      <div class="step-desc">Download from <a href="https://windsurf.com" target="_blank" rel="noopener">windsurf.com</a>. Sign in with your work account. In the Agent Command Center, connect to Devin Cloud to enable the local → cloud handoff.</div>
     </div></div>
     <div class="step"><div class="step-num">6</div><div class="step-body">
       <div class="step-title">(Optional) Install the <strong>Devin CLI</strong> for local work</div>
-      <div class="step-desc">A local command-line agent for quick fixes and code exploration, with <code>/handoff</code> to send longer tasks to cloud Devin.<br><code>curl -fsSL https://cli.devin.ai/install.sh | bash</code> · <a href="https://docs.devin.ai/work-with-devin/devin-cli" target="_blank">Devin CLI docs</a></div>
+      <div class="step-desc">A local command-line agent for quick fixes and code exploration, with <code>/handoff</code> to send longer tasks to cloud Devin.<br><code>curl -fsSL https://cli.devin.ai/install.sh | bash</code> · <a href="https://docs.devin.ai/work-with-devin/devin-cli" target="_blank" rel="noopener">Devin CLI docs</a></div>
     </div></div>
     <div class="step"><div class="step-num">7</div><div class="step-body">
       <div class="step-title">Bookmark these two URLs</div>
@@ -1169,13 +1194,13 @@ Fast PR review: replace github.com → devinreview.com in any PR URL</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Reviewer:</strong> Open a test PR in any repo. Within 5 minutes, a Devin Review comment should appear on the PR. If not, check Settings → Review → verify the repo is listed and auto-review is ON.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Tester:</strong> Send <code>@Devin !test</code> in the <code>qa-alerts</code> channel. Tester should respond with a session link and post a pass/fail summary within 10–30 minutes.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Test Fixer:</strong> Take a complete Defect (repro, expected vs actual, failing test + stack trace, regression commit, original story AC), label it <code>JAI_Agent</code>, move it to <strong>Ready for Work</strong>, then send <code>@Devin !fix [J1-KEY]</code>. Fixer should open a fix PR and move the ticket to <strong>In Review</strong>.</div></div>
-    <div class="verify-item"><div class="verify-pip"></div><div><strong>Check schedules:</strong> Go to <a href="https://app.devin.ai/settings/schedules" target="_blank">Settings → Schedules</a>. All 7 schedules should show status <strong>Active</strong>. If any show <strong>Error</strong>, click to see the error and fix the prompt or cron expression.</div></div>
-    <div class="verify-item"><div class="verify-pip"></div><div><strong>Check automations:</strong> Go to <a href="https://app.devin.ai/automations" target="_blank">Automations</a>. All 6 automations should be enabled. Break a CI check on a test branch — within 2 minutes Devin should post a fix attempt to the PR.</div></div>
+    <div class="verify-item"><div class="verify-pip"></div><div><strong>Check schedules:</strong> Go to <a href="https://app.devin.ai/settings/schedules" target="_blank" rel="noopener">Settings → Schedules</a>. All 7 schedules should show status <strong>Active</strong>. If any show <strong>Error</strong>, click to see the error and fix the prompt or cron expression.</div></div>
+    <div class="verify-item"><div class="verify-pip"></div><div><strong>Check automations:</strong> Go to <a href="https://app.devin.ai/automations" target="_blank" rel="noopener">Automations</a>. All 6 automations should be enabled. Break a CI check on a test branch — within 2 minutes Devin should post a fix attempt to the PR.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Test AGENTS.md:</strong> Start a session in Devin and ask: <em>"What are the architecture conventions for this repo?"</em>. Devin should accurately describe what's in your AGENTS.md.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Test REVIEW.md:</strong> Open the Devin Review for any PR. In the chat sidebar, ask: <em>"What are the critical review areas for this repo?"</em>. Devin should cite your REVIEW.md.</div></div>
     <div class="verify-item"><div class="verify-pip"></div><div><strong>Confirm Jira ↔ GitHub link:</strong> Add the <code>devin</code> label to a real Jira ticket. Within 2 minutes, Devin should post a comment on the ticket with a session link and start implementing.</div></div>
 
-    <div class="callout tip" style="margin-top:20px"><div class="callout-icon">🎉</div><div><strong>You're set up.</strong> All seven agents are live. Share <a href="https://aayushus.github.io/" target="_blank">aayushus.github.io/</a> with the team and pin it in the <code>engineering</code> channel. The SOP tab in that page is your day-to-day operating reference.</div></div>
+    <div class="callout tip" style="margin-top:20px"><div class="callout-icon">🎉</div><div><strong>You're set up.</strong> All seven agents are live. Share <a href="https://aayushus.github.io/" target="_blank" rel="noopener">aayushus.github.io/</a> with the team and pin it in the <code>engineering</code> channel. The SOP tab in that page is your day-to-day operating reference.</div></div>
   </section>
 
 </main>
@@ -1200,9 +1225,10 @@ function markDone(btn){
   persistSection(sections().indexOf(btn.closest('.section'))+1,done);
   updateProgress();
 }
+// Fired from the checkbox's native change event — reads, never flips,
+// so mouse, label, and keyboard (Space) all toggle exactly once.
 function togglePrereq(item){
   const cb=item.querySelector('input');
-  cb.checked=!cb.checked;
   item.classList.toggle('checked',cb.checked);
   persistPrereq([...document.querySelectorAll('.prereq-item')].indexOf(item),cb.checked);
 }
